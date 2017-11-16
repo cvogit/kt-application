@@ -1,0 +1,45 @@
+<script type="text/javascript">
+
+	const electron = window.require('electron');
+	const ipcRenderer  = electron.ipcRenderer;
+	var axios = require('axios');
+
+	ipcRenderer.on('getRequest', (event, arg) => {
+		
+	  axios.get('http://jsonplaceholder.typicode.com/posts/'+arg, {
+	  })
+	  .then(function (response) {
+	  	ipcRenderer.send('getResult', response.data);
+	  })
+	  .catch(function (error) {
+	     console.log(error);
+	  });
+	});
+
+	ipcRenderer.on('postRequest', (event, arg) => {
+		
+	  axios.post('http://jsonplaceholder.typicode.com/posts', {
+	  	title: arg.title,
+	  	body: arg.body,
+	  	userId: arg.userId
+	  })
+	  .then(function (response) {
+	  	ipcRenderer.send('getResult', response.data);
+	  })
+	  .catch(function (error) {
+	     console.log(error);
+	  });
+	});
+
+	ipcRenderer.on('deleteRequest', (event, arg) => {
+		const id = arg;
+	  axios.delete('http://jsonplaceholder.typicode.com/posts/'+id, {
+	  })
+	  .then(function (response) {
+	  	ipcRenderer.send('deleteResult', response.statusText, id);
+	  })
+	  .catch(function (error) {
+	     console.log(error);
+	  });
+	});
+</script>

@@ -1,3 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+A practice app with electron and reactjs.
 
-kt-application is a tool, working together with kt-server to manage a business.
+1. Clone the repository and use ```yarn install``` to download the dependencies.
+
+2. ```npm run electron-dev``` to test the application in dev mode.
+
+To build a dist for your OS use ```npm run electron-pack``` or download from the distribution tab.

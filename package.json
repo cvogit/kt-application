@@ -1,14 +1,15 @@
 {
-  "name": "kt-center",
+  "name": "electron-api-test",
+  "author": "cvogit",
   "version": "0.1.0",
+  "description": "A practive application built with Electron and React.",
   "private": true,
-  "description": "An application for managing kt business with kt-server.",
   "dependencies": {
     "axios": "^0.16.2",
     "electron-is-dev": "^0.3.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.11"
+    "react-scripts": "1.0.10"
   },
   "homepage": "./",
   "main": "public/main.js",
@@ -20,16 +21,20 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "build --em.main=build/main.js",
     "electron-pack-win": "build --em.main=build/main.js --win",
-    "preelectron-pack": "yarn build"
+    "electron-pack-mac": "build --em.main=build/main.js --mac",
+    "preelectron-pack": "yarn build",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "concurrently": "^3.5.0",
     "electron": "^1.7.5",
-    "electron-builder": "^19.24.1",
+    "electron-builder": "^19.22.1",
+    "electron-packager": "^8.7.2",
     "wait-on": "^2.0.2"
   },
   "build": {
-    "appId": "com.kt-center.app",
+    "appId": "com.electron.p1.app",
     "files": [
       "build/**/*",
       "node_modules/**/*"
