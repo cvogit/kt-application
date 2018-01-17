@@ -5,11 +5,13 @@
   "description": "A practive application built with Electron and React.",
   "private": true,
   "dependencies": {
+    "animated": "^0.2.1",
     "axios": "^0.16.2",
     "electron-is-dev": "^0.3.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10"
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
+    "react-scripts": "1.0.10",
+    "react-transition-group": "^2.2.1"
   },
   "homepage": "./",
   "main": "public/main.js",
@@ -27,11 +29,11 @@
     "dist": "electron-builder"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "electron": "^1.7.5",
-    "electron-builder": "^19.22.1",
+    "concurrently": "^3.5.1",
+    "electron": "^1.8.1",
+    "electron-builder": "^19.53.7",
     "electron-packager": "^8.7.2",
-    "wait-on": "^2.0.2"
+    "wait-on": "^2.1.0"
   },
   "build": {
     "appId": "com.electron.p1.app",

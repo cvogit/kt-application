@@ -11,8 +11,13 @@ let win;
 let requestWin = null;
 
 function createWindow() {
-	win = new BrowserWindow({width: 900, height: 680, backgroundColor: '#fff', show: false});
+	var screenElectron = electron.screen;
+	var mainScreen = screenElectron.getPrimaryDisplay();
+	var dimensions = mainScreen.size;
+	
+	win = new BrowserWindow({backgroundColor: '#fff', show: false, height: dimensions.height, width: dimensions.width});
 	win.webContents.openDevTools();
+	win.setResizable(false);
 	showWindow();
 	win.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 	win.on('closed', () => win = null);
@@ -25,14 +30,15 @@ function showWindow() {
 	});
 }
 
-function createRequest() {
+function createRequestWindow() {
 	requestWin = new BrowserWindow({width:800, height:600, show:false});
-	requestWin.loadURL(isDev ? `file://${path.join(__dirname, './electron-win/Request.html')}` : `file://${path.join(__dirname, '../build/electron-win/Request.html')}`);
+	requestWin.loadURL(isDev ? `file://${path.join(__dirname, './electron-win/Requests.html')}` : `file://${path.join(__dirname, '../build/electron-win/Request.html')}`);
+	requestWin.webContents.openDevTools();
 	requestWin.on('closed', () => requestWin = null);
 }
 
 app.on('ready', createWindow);
-app.on('ready', createRequest);
+app.on('ready', createRequestWindow);
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
@@ -45,36 +51,59 @@ app.on('activate', () => {
 		createWindow();
 });
 
+// Requests to the server
+//
 
-// Listen to get request
-ipcMain.on('getRequest', (event, arg) => {
-	requestWin.webContents.send('getRequest', arg);
+// Register user
+ipcMain.on('postRegisterRequest', (event, arg) => {
+	// TODO: Validate request
+	requestWin.webContents.send('postRegisterRequest', arg);
 });
 
-ipcMain.on('getResult', (event, arg) => {
-	win.webContents.send('getResult', arg);
+// Login
+ipcMain.on('getLoginRequest', (event, arg) => {
+	// TODO: validate login??
+	requestWin.webContents.send('getLoginRequest', arg);
 });
 
-// Listen to post request
-ipcMain.on('postRequest', (event, arg) => {
-	requestWin.webContents.send('postRequest', arg);
+
+// Results from the server
+
+// To: Register.js
+ipcMain.on('registerSuccess', (event, arg) => {
+	win.webContents.send('registerSuccess', arg);
+});
+ipcMain.on('registerFailure', (event, arg) => {
+	console.log(arg);
+	win.webContents.send('registerFailure', arg);
 });
 
-ipcMain.on('postResult', (event, arg) => {
-	win.webContents.send('postResult', arg);
+// To: App.js
+ipcMain.on('loginSuccess', (event,arg) => {
+	// Tell user login is successful and initate loading resources
+	win.webContents.send('loginSuccess');
+});
+ipcMain.on('loginFailure', (event, arg) => {
+	win.webContents.send('loginFailure');
 });
 
-// Listen to delete request
-ipcMain.on('deleteRequest', (event, arg) => {
-	if(arg > 0 && arg < 101)
-		requestWin.webContents.send('deleteRequest', arg);
-	else
-		win.webContents.send('deleteResult', arg);
+// To: App.js
+ipcMain.on('userInfoSuccess', (event, arg) => {
+	win.webContents.send('appReady');
+});
+// To: Sidebar.js
+ipcMain.on('userRolesSuccess', (event, arg) => {
+	win.webContents.send('userRolesSuccess', arg.roles);
+});
+ipcMain.on('setUpFailure', (event, arg) => {
+	win.webContents.send('setUpFailure');
 });
 
-ipcMain.on('deleteResult', (event, status, arg) => {
-	if(status === 'OK')
-		win.webContents.send('deleteResult', arg);
-	else
-		win.webContents.send('deleteError', arg);
-});
+	// var regexTest = /^([a-zA-Z0-9_-]){1,64}$/;
+	// if (regexTest.test(arg.firstName)	&&
+	// 		regexTest.test(arg.lastName)		&& 
+	// 		regexTest.test(arg.email)			&&
+	// 		regexTest.test(arg.password)		&&
+	// 		regexTest.test(arg.passwordConfirmation)			&&
+	// 		(arg.password) === (arg.passwordConfirmation)	)
+// 	win.webContents.send('postRegisterRequestInvalid', "An input field is missing or incorrect.");

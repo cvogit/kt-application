@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 
-import PostTable from './PostTable';
-import RequestTable from './RequestTable';
-import '../css/Content.css';
+import '../css/content.css';
+
+const electron = window.require('electron');
+const ipcRenderer  = electron.ipcRenderer;
 
 class Content extends Component {
-	render() {
+	constructor(props) {
+		super(props);
+		this.state = {
+		};
+
+	}
+
+	componentDidMount() {
+	}
+
+
+
+	render() {	
 		return (
-			<div className="App-body">
-				<div className="test-container">
-					<p>
-						API provided by http://jsonplaceholder.typicode.com
-					</p>
-					<RequestTable />
-					<PostTable/>
-				</div>
+			<div className="content">
+				
 			</div>
 		);
 	}

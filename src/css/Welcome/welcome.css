@@ -1,0 +1,12 @@
+.welcome-bg {
+	background-color: #40e1f9;
+	height:100%;
+}
+
+.welcome-container {
+	background-color: rgba(0, 0, 0, 0.4);
+	height: 350px;
+	position: absolute;
+	top: 		30%;
+	width: 	100%;
+}

@@ -1,0 +1,33 @@
+.sidebar {
+	height: 100%;
+	width: 200px;
+	max-width: 200px;
+	background-color: #1f1f1f;
+}
+
+.sidebar-header {
+	height: 200px;
+	left: 5px;
+	width: 190px;
+	border-width: thin;
+	border-bottom: 2px solid #4c4c4c;
+	position: relative;
+}
+
+.home-btn {
+	background-color: #848080;
+	position: relative;
+	top: 5px;
+	display: block;
+	height: 190px;
+	width: 190px;
+	border-radius: 50%;
+	/* Home icon
+	*/
+	text-decoration: none;
+	font-size: 10em;
+	color: #d6d6d6;
+}
+.home-btn:active {
+	background-color: #fff;
+}
