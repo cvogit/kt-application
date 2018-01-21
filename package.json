@@ -1,5 +1,5 @@
 {
-  "name": "electron-api-test",
+  "name": "kt-application",
   "author": "cvogit",
   "version": "0.1.0",
   "description": "A practive application built with Electron and React.",
@@ -11,6 +11,7 @@
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-scripts": "1.0.10",
+    "react-toolbox": "^2.0.0-beta.12",
     "react-transition-group": "^2.2.1"
   },
   "homepage": "./",
@@ -26,13 +27,15 @@
     "electron-pack-mac": "build --em.main=build/main.js --mac",
     "preelectron-pack": "yarn build",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "toolbox": "react-toolbox-themr"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
     "electron": "^1.8.1",
     "electron-builder": "^19.53.7",
     "electron-packager": "^8.7.2",
+    "react-toolbox-themr": "^1.0.2",
     "wait-on": "^2.1.0"
   },
   "build": {
@@ -44,5 +47,19 @@
     "directories": {
       "buildResources": "assets"
     }
+  },
+  "reactToolbox": {
+    "include": [
+      "BUTTON",
+      "DATE_PICKER"
+    ],
+    "customProperties": {
+      "animation-duration": "0.3s",
+      "color-accent": "var(--palette-pink-a200)",
+      "color-accent-dark": "var(--palette-pink-700)",
+      "color-primary-contrast": "var(--color-dark-contrast)",
+      "color-accent-contrast": "var(--color-dark-contrast)"
+    },
+    "output": "assets/react-toolbox"
   }
 }

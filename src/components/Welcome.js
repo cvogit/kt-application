@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import theme from '../../assets/react-toolbox/theme'
+import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
+
 import Login from './welcome/Login';
 import Register from './welcome/Register';
 
