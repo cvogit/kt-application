@@ -1,8 +1,10 @@
 .sidebar {
 	height: 100%;
-	width: 200px;
+	width:  16%;
 	max-width: 200px;
 	background-color: #1f1f1f;
+	position: relative;
+	float: left;
 }
 
 .sidebar-header {

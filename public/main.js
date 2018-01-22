@@ -51,8 +51,9 @@ app.on('activate', () => {
 		createWindow();
 });
 
+// **********************
 // Requests to the server
-//
+// **********************
 
 // Register user
 ipcMain.on('postRegisterRequest', (event, arg) => {
@@ -66,19 +67,19 @@ ipcMain.on('getLoginRequest', (event, arg) => {
 	requestWin.webContents.send('getLoginRequest', arg);
 });
 
-
+// ***********************
 // Results from the server
+// ***********************
 
-// To: Register.js
+// To: Register
 ipcMain.on('registerSuccess', (event, arg) => {
 	win.webContents.send('registerSuccess', arg);
 });
 ipcMain.on('registerFailure', (event, arg) => {
-	console.log(arg);
 	win.webContents.send('registerFailure', arg);
 });
 
-// To: App.js
+// To: App
 ipcMain.on('loginSuccess', (event,arg) => {
 	// Tell user login is successful and initate loading resources
 	win.webContents.send('loginSuccess');
@@ -87,17 +88,42 @@ ipcMain.on('loginFailure', (event, arg) => {
 	win.webContents.send('loginFailure');
 });
 
-// To: App.js
+// To: App
 ipcMain.on('userInfoSuccess', (event, arg) => {
 	win.webContents.send('appReady');
 });
-// To: Sidebar.js
+// To: Sidebar
 ipcMain.on('userRolesSuccess', (event, arg) => {
 	win.webContents.send('userRolesSuccess', arg.roles);
 });
 ipcMain.on('setUpFailure', (event, arg) => {
 	win.webContents.send('setUpFailure');
 });
+
+// ****************
+// Client data flow
+// ****************
+
+// From: Sidebar, Tab
+ipcMain.on('appSelectContent', (event, arg) => {
+	console.log(arg);
+	win.webContents.send('appChangeContent', arg);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// var regexTest = /^([a-zA-Z0-9_-]){1,64}$/;
 	// if (regexTest.test(arg.firstName)	&&

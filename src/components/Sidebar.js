@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Tab from './sidebar/Tab.js';
-
 import '../css/sidebar/sidebar.css';
 
 const electron = window.require('electron');
@@ -20,7 +19,7 @@ class Sidebar extends Component {
 	}
 
 	handleHomeButton(event) {
-		event.preventDefault();
+		ipcRenderer.send('appSelectContent', "home");
 	}
 
 	componentDidMount() {
@@ -36,26 +35,24 @@ class Sidebar extends Component {
 		});
 	}
 
-	RenderTabs = () => {
-		var rolesArray = this.state.roles.split(" ");
-		var rolesTab = rolesArray.map(function(role){
+	RenderSidebar = () => {
+		const rolesArray = this.state.roles.split(" ");
+		const getTabs = rolesArray.map(function(role){
 			return <Tab key={role} role={role} />
 		});
 		return (
-			<div className="sidebar-tabs"> { rolesTab } </div>
+			<div className="sidebar">
+				<div className="sidebar-header">
+					<a className="home-btn" href="#" onClick={this.handleHomeButton} value="home">H</a>
+				</div>
+				<div className="sidebar-tabs"> { getTabs } </div>
+			</div>
 		);
 	}
 
-	
-
 	render() {
 		return (
-			<div className="sidebar">
-				<div className="sidebar-header">
-					<a className="home-btn" href="#" onClick={this.props.handleHomeButton} value="home">H</a>
-				</div>
-				<this.RenderTabs />
-			</div>
+			<this.RenderSidebar />
 		);
 	}
 }

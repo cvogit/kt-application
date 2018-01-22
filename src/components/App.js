@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import '../assets/react-toolbox/theme.css';
+import theme from '../assets/react-toolbox/theme.js';
+import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
+
 import Dashboard from './Dashboard';
 import Loading from './commons/Loading';
 import PopUp from './commons/PopUp';
@@ -86,11 +90,6 @@ class App extends Component {
 					? <Loading />
 					: null
 				}
-				{
-					hasPopUp 
-					? <div> { listItems } </div>
-					: null
-				}
 			</div>
 			);
 	};
@@ -98,7 +97,9 @@ class App extends Component {
 	render() {
 
 		return (
-			<this.RenderApp />
+			<ThemeProvider theme={theme}>
+				<this.RenderApp />
+			</ThemeProvider>
 		);
 	}
 }
