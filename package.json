@@ -51,7 +51,8 @@
   "reactToolbox": {
     "include": [
       "BUTTON",
-      "DATE_PICKER"
+      "DATE_PICKER",
+      "TABS"
     ],
     "customProperties": {
       "animation-duration": "0.3s",
