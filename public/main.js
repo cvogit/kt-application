@@ -67,6 +67,11 @@ ipcMain.on('getLoginRequest', (event, arg) => {
 	requestWin.webContents.send('getLoginRequest', arg);
 });
 
+// Get Announcements
+ipcMain.on('getAnnouncementsRequest', (event, arg) => {
+	requestWin.webContents.send('getAnnouncementsRequest');
+});
+
 // ***********************
 // Results from the server
 // ***********************
@@ -92,6 +97,7 @@ ipcMain.on('loginFailure', (event, arg) => {
 ipcMain.on('userInfoSuccess', (event, arg) => {
 	win.webContents.send('appReady');
 });
+
 // To: Sidebar
 ipcMain.on('userRolesSuccess', (event, arg) => {
 	win.webContents.send('userRolesSuccess', arg.roles);
@@ -99,6 +105,16 @@ ipcMain.on('userRolesSuccess', (event, arg) => {
 ipcMain.on('setUpFailure', (event, arg) => {
 	win.webContents.send('setUpFailure');
 });
+
+
+ipcMain.on('getAnnouncementsSuccess', (event, arg) => {
+	win.webContents.send('getAnnouncementsSuccess', arg.result, arg.offset, arg.total);
+});
+ipcMain.on('getAnnouncementsFailure', (event, arg) => {
+	console.log(arg);
+});
+
+
 
 // ****************
 // Client data flow

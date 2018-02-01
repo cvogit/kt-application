@@ -21,20 +21,6 @@ class App extends Component {
 		this.state = {
 			isLoggedIn	: 	false,
 			isLoading		: 	false,
-			hasPopUp 		: 	true,
-			popUps			: 	[
-				{
-					id 			: 1,
-					title 	: "hi",
-					content : "hello"
-				},
-				{
-					id 			: 2,
-					title 	: "yolo",
-					content : "hello"
-				}
-			],
-			popUpId			: 	1,
 		},
 
 		this.handleLoginSuccess 	= this.handleLoginSuccess.bind(this);
@@ -73,12 +59,7 @@ class App extends Component {
 	RenderApp = () => {
 		const isLoggedIn 	= this.state.isLoggedIn;
 		const isLoading  	= this.state.isLoading;
-		const hasPopUp 		= this.state.hasPopUp;
-		const listItems = this.state.popUps.map((link) =>
-        <PopUp 	title={link.title} 
-        				content={link.content} 
-        				key={link.id} />
-    );
+		
 		return (
 			<div className="app-body">
 				{	isLoggedIn 

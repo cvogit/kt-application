@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+import HomePage 		from './content/HomePage';
+import ManagerPage 	from './content/ManagerPage';
+import TeacherPage 	from './content/TeacherPage';
+import UserPage 		from './content/UserPage';
+
 import '../css/content.css';
 
 const electron = window.require('electron');
@@ -26,24 +31,25 @@ class Content extends Component {
 	}
 
 	RenderContent = () => {
-		const content = this.state.content;
-		const getContent = (content) => {
-			if(content === "home")
-				return "home"
-			else if(content === "user")
-				return "user"
-			else if(content === "manager")
-				return "manager"
-			else if(content === "teacher")
-				return "teacher"
-		}
+		const stateContent = this.state.content;
+		let content = null; 
+
+		if(stateContent === "home")
+			content = <HomePage />;
+		else if(stateContent === "user")
+			content = <UserPage />;
+		else if(stateContent === "manager")
+			content = <ManagerPage />;
+		else if(stateContent === "teacher")
+			content = <TeacherPage />;
 
 		return (
-			<div className="content"> { getContent } </div>
+			<div className="content"> { content } </div>
 		);
 	}
 
 	render() {	
+
 		return (
 			<this.RenderContent />
 		);

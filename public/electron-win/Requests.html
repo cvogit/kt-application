@@ -19,6 +19,7 @@
 		});
 	});
 
+	// Register
 	ipcRenderer.on('postRegisterRequest', (event, arg) => {
 		axios.post(baseUrl+'/register', {
 			firstName: 				arg.firstName,
@@ -35,6 +36,7 @@
 		});
 	});
 
+	// Login
 	ipcRenderer.on('getLoginRequest', (event, arg) => {
 		axios.get(baseUrl+'/login', {
 		params: {
@@ -78,6 +80,19 @@
 				ipcRenderer.send('loginFailure', error.response.data);
 		});
 	});
+ 
+	// Get anouncements
+	ipcRenderer.on('getAnnouncementsRequest', (event, arg) => {
+		axios.get(baseUrl+'/announcements')
+		.then(function (response) {
+			ipcRenderer.send('getAnnouncementsSuccess', response.data);
+		})
+		.catch(function (error) {
+			ipcRenderer.send('getAnnouncementsFailure', error.response.data);
+		});
+
+	});
+	
 
 	ipcRenderer.on('initialSetUpRequests', (event, arg) => {
 
