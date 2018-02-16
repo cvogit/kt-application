@@ -10,13 +10,13 @@ class Announcement extends Component {
 		return (
 			<div className="announcement-container">
 				<div className="announcement-date">			
-					{ this.props.date }
+					<h5>{ this.props.date }</h5>
 				</div>
 				<div className="announcement-title">
-					{ this.props.title }
+					<h2>{ this.props.title }</h2>
 				</div>
 				<div className="announcement-content">
-					{ this.props.content }
+					<p>{ this.props.content }</p>
 				</div>
 			</div>
 		);

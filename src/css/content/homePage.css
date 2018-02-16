@@ -7,7 +7,7 @@
 	height: 200px;
 	line-height: 100px;
 	text-align: center;
-	background-color: #c1c1c1;
+	background-color: #a2f1df;
 }
 
 .banner-content {
@@ -19,6 +19,35 @@
 }
 
 .announcement-container {
+	background-color: #dbffe0;
+	border: 1px solid #6b6b6b;
+	border-radius: 10px;
 	margin: 20px auto;
 	width: 80%;
+}
+
+.announcement-date {
+	background-color: #c1c1c1;
+	border-radius: 10px 10px 0 0;
+	position: relative;
+	text-align: left;
+	padding: 5px;
+}
+
+.announcement-date h5 {
+	font-weight: 500;
+}
+
+.announcement-title {
+
+}
+
+.announcement-title h4 {
+	font-weight: 500;
+	font-size: 25px;
+}
+
+.announcement-content {
+	margin: 0 10px 10px 10px;
+	text-align: left;
 }

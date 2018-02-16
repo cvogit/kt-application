@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from 'react-toolbox/lib/button/Button';
+import Navigation from 'react-toolbox/lib/navigation/Navigation';
 
 import Tab from './sidebar/Tab.js';
 import '../css/sidebar/sidebar.css';
@@ -16,14 +18,16 @@ class Sidebar extends Component {
 
 		this.handleHomeButton 	= this.handleHomeButton.bind(this);
 		this.handleRolesSet 		= this.handleRolesSet.bind(this);
-	}
+		this.handleTabSelect 		= this.handleTabSelect.bind(this);
 
-	handleHomeButton(event) {
-		ipcRenderer.send('appSelectContent', "home");
 	}
 
 	componentDidMount() {
 		ipcRenderer.on('userRolesSuccess', 	this.handleRolesSet);
+	}
+
+	handleHomeButton(event) {
+		ipcRenderer.send('appSelectContent', "home");
 	}
 
 	handleRolesSet(event, arg) {
@@ -31,21 +35,38 @@ class Sidebar extends Component {
 		tRoles += arg;
 		this.setState({
 			roles: tRoles,
-			active: "",
 		});
 	}
 
-	RenderSidebar = () => {
-		const rolesArray = this.state.roles.split(" ");
-		const getTabs = rolesArray.map(function(role){
-			return <Tab key={role} role={role} />
+	handleTabSelect(event) {
+		event.preventDefault();
+		this.setState({
+			active: event.target.value,
 		});
+		
+		ipcRenderer.send('appSelectContent', event.target.value);
+	}
+
+	RenderSidebar = () => {
+		const rolesArray 	= this.state.roles.split(" ");
+		const activeTab   = this.state.active;
+		const tabSelect 	= this.handleTabSelect
+
+		const getTabs = rolesArray.map(function(role){
+			if (activeTab == role)
+				return <Button className="tab-active" label={role} accent onClick={tabSelect} value={role} />
+			else 
+				return <Button className="tab" label={role} accent onClick={tabSelect} value={role} />	
+		});
+
 		return (
 			<div className="sidebar">
 				<div className="sidebar-header">
 					<a className="home-btn" href="#" onClick={this.handleHomeButton} value="home">H</a>
 				</div>
-				<div className="sidebar-tabs"> { getTabs } </div>
+				<Navigation type='vertical'>
+					{ getTabs } 
+				</Navigation>
 			</div>
 		);
 	}

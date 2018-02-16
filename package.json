@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "animated": "^0.2.1",
+    "animejs": "^2.2.0",
     "axios": "^0.16.2",
     "electron-is-dev": "^0.3.0",
     "react": "^15.6.2",
@@ -50,8 +51,11 @@
   },
   "reactToolbox": {
     "include": [
+      "AVATAR",
       "BUTTON",
       "DATE_PICKER",
+      "LINK",
+      "NAVIGATION",
       "TABS"
     ],
     "customProperties": {
