@@ -7,7 +7,7 @@
 	height: 200px;
 	line-height: 100px;
 	text-align: center;
-	background-color: #a2f1df;
+	background-color: #5B9ACF;
 }
 
 .banner-content {
@@ -18,28 +18,29 @@
 	font-size: 65px;	
 }
 
-.announcement-container {
-	background-color: #dbffe0;
-	border: 1px solid #6b6b6b;
-	border-radius: 10px;
-	margin: 20px auto;
+.announcements-container {
+	margin: 40px auto;
+	padding: 0;
 	width: 80%;
 }
 
-.announcement-date {
-	background-color: #c1c1c1;
-	border-radius: 10px 10px 0 0;
-	position: relative;
-	text-align: left;
-	padding: 5px;
+.announcement-container {
+	margin: 0px 0px 30px 0px;
 }
 
-.announcement-date h5 {
-	font-weight: 500;
+.announcement-date {
+	padding: 0px;
+	text-align: center;
+	margin: 15px 0px 0px 0px;
+}
+
+.announcement-date h6 {
+	font-size: 12px;
 }
 
 .announcement-title {
-
+	font-size: 20px;
+	color: #FD611E;
 }
 
 .announcement-title h4 {
@@ -48,6 +49,17 @@
 }
 
 .announcement-content {
-	margin: 0 10px 10px 10px;
+	border-left: 1.2px solid #5b9acf;
+	padding: 0px 20px;
 	text-align: left;
+}
+
+.announcement-content p {
+	padding: 10px 0px 0px 0px;
+}
+
+.announcement-bar {
+	border-bottom: 1.2px solid #5b9acf;
+	flex: 0 0 80%;
+	margin: 20px auto;
 }

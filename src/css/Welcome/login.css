@@ -13,7 +13,7 @@
 	color: #000;
 	text-align: center;
 	text-shadow: 0 1px rgba(255, 255, 255, 0.25);
-	background: rgb(64, 225, 249);
+	background: #5b9acf;
 	border-radius: 4px;
 	background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
 	background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
@@ -37,28 +37,8 @@
 	height: 	80%;
 	margin: 	0;
 	padding:	6% 25px 0 25px;
-	width : 	250px;
+	width : 	100%;
 	cursor: 	pointer;
-}
-.login-form a {
-	color: green; 
-	background-color: transparent; 
-	text-decoration: none;
-}
-.login-form a:visited {
-    color: pink;
-    background-color: transparent;
-    text-decoration: none;
-}
-.login-form a:hover {
-    color: red;
-    background-color: transparent;
-    text-decoration: underline;
-}
-.login-form a:active {
-    color: yellow;
-    background-color: transparent;
-    text-decoration: underline;
 }
 input[type="password"], input[type="email"] {
 	background: center left no-repeat, linear-gradient(to bottom, #d6d7d7, #dee0e0);
@@ -93,7 +73,7 @@ input[type="password"]:focus, input[type="email"]:focus {
 	margin: 35px auto 0px auto;
 	position:relative;
 	cursor:pointer;
-	background-color: rgb(43, 195, 218);
+	background-color: #5b9acf;
 	border: none;  
 	background-image: linear-gradient(to bottom,#3db0a6,#3111);
 	border-top-left-radius: 5px;
@@ -105,7 +85,7 @@ input[type="password"]:focus, input[type="email"]:focus {
 }
 .login-btn:hover {
 	transition-duration: 0.2s;
-	background-color: #3bb7ab;
+	background-color: #2783d0;
 }
 .login-btn:active {
 	transition-duration: 0.1s;
@@ -113,5 +93,10 @@ input[type="password"]:focus, input[type="email"]:focus {
 	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #31524d, 0px 5px 3px #999;
 }
 .password-reset, .toggle-register {
-	margin:	5px 0;
+	color: green; 
+  text-decoration: underline;
+}
+
+.password-reset a:hover, .toggle-register a:hover {
+  color: red !important;
 }

@@ -8,6 +8,7 @@
     "animated": "^0.2.1",
     "animejs": "^2.2.0",
     "axios": "^0.16.2",
+    "bootstrap": "^4.0.0",
     "electron-is-dev": "^0.3.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
@@ -60,8 +61,8 @@
     ],
     "customProperties": {
       "animation-duration": "0.3s",
-      "color-accent": "var(--palette-pink-a200)",
-      "color-accent-dark": "var(--palette-pink-700)",
+      "color-accent": "var(--palette-blue-a200)",
+      "color-accent-dark": "var(--palette-blue-700)",
       "color-primary-contrast": "var(--color-dark-contrast)",
       "color-accent-contrast": "var(--color-dark-contrast)"
     },

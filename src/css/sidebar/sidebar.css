@@ -1,14 +1,14 @@
 .sidebar {
 	height: 100%;
-	width: 200px;
+	width: 120px;
 	background-color: #1f1f1f;
 	float: left;
 }
 
 .sidebar-header {
-	height: 200px;
+	height: 120px;
 	left: 5px;
-	width: 190px;
+	width: 110px;
 	border-width: thin;
 	border-bottom: 2px solid #4c4c4c;
 	position: relative;
@@ -19,13 +19,18 @@
 	position: relative;
 	top: 5px;
 	display: block;
-	height: 190px;
-	width: 190px;
+	height: 110px;
+	width: 110px;
 	border-radius: 50%;
 	/* Home icon
 	*/
 	text-decoration: none;
-	font-size: 10em;
+	font-size: 5em;
+	color: #d6d6d6;
+}
+
+.home-btn:hover {
+	text-decoration: none;
 	color: #d6d6d6;
 }
 

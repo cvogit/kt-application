@@ -39,7 +39,7 @@ class HomePage extends Component {
 
 	RenderHomePage = () => {
 		const count = this.state.offset;
-    const ann 	= this.state.announcements.map(function(announcement) {
+    const announcements 	= this.state.announcements.map(function(announcement) {
 				return <Announcement key={announcement.created_at}
 														 date={announcement.created_at}
 														 title={announcement.title}
@@ -49,9 +49,11 @@ class HomePage extends Component {
 		return (
 			<div className="home-page">
 				<Banner />
-				{ ann }
+				<div className="announcements-container">
+					{ announcements }
 
-				{ count }
+					{ count }
+				</div>
 			</div>
 			);
 	}
