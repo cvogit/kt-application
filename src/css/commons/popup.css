@@ -1,7 +1,26 @@
 .popup-container {
-	background-color: #fff;
-	width: 100px;
+	border: 1px solid #848484;
+	border-radius: 10px;
+	width: 200px;
 	height: 100px;
 	position: absolute;
 	right: 0;
+	margin: -150px 10px 0 0;
+}
+
+.popup-title {
+	background-color: #c1c1c1;
+	border-radius: 10px 10px 0 0;
+	height: 30%;
+}
+
+.popup-title h5 {
+	line-height: inherit;
+}
+
+.popup-content {
+	background-color: #dadada;
+	border-radius: 0 0 10px 10px;
+	font-size: 15px;
+	height: 70%;
 }

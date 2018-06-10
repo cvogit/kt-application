@@ -10,11 +10,18 @@
     "axios": "^0.16.2",
     "bootstrap": "^4.0.0",
     "electron-is-dev": "^0.3.0",
+    "fs-jetpack": "^1.3.0",
+    "is-online": "^7.0.0",
+    "jquery": "^3.3.1",
+    "jquery.js": "0.0.2-security",
+    "mkdirp": "^0.5.1",
+    "popper.js": "^1.14.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
+    "react-dropzone": "^4.2.9",
+    "react-paginate": "^5.1.0",
     "react-scripts": "1.0.10",
-    "react-toolbox": "^2.0.0-beta.12",
-    "react-transition-group": "^2.2.1"
+    "react-toolbox": "^2.0.0-beta.12"
   },
   "homepage": "./",
   "main": "public/main.js",
@@ -43,12 +50,14 @@
   "build": {
     "appId": "com.electron.p1.app",
     "files": [
+      "*.js",
       "build/**/*",
       "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "assets"
-    }
+    },
+    "asar": "false"
   },
   "reactToolbox": {
     "include": [
@@ -57,15 +66,12 @@
       "DATE_PICKER",
       "LINK",
       "NAVIGATION",
-      "TABS"
+      "PROGRESS_BAR",
+      "TABS",
+      "TIME_PICKER",
+      "TOOLTIP"
     ],
-    "customProperties": {
-      "animation-duration": "0.3s",
-      "color-accent": "var(--palette-blue-a200)",
-      "color-accent-dark": "var(--palette-blue-700)",
-      "color-primary-contrast": "var(--color-dark-contrast)",
-      "color-accent-contrast": "var(--color-dark-contrast)"
-    },
+    "customProperties": {},
     "output": "assets/react-toolbox"
   }
 }

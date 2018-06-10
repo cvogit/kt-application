@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GoogleSignIn 		from '../commons/GoogleSignIn';
 
 import '../../css/Welcome/register.css';
 
@@ -16,11 +17,8 @@ class Register extends Component {
 			confirmPassword : '',
 			popUp	: {},
 		};
-		this.handleFirstNameChange 	= this.handleFirstNameChange.bind(this);
-		this.handleLastNameChange 	= this.handleLastNameChange.bind(this);
-		this.handleEmailChange 			= this.handleEmailChange.bind(this);
+		this.handleSetGoogleUser 	= this.handleSetGoogleUser.bind(this);
 		this.handlePasswordChange 	= this.handlePasswordChange.bind(this);
-
 		this.handleConfirmPasswordChange 	= this.handleConfirmPasswordChange.bind(this);
 		this.handleRegisterSubmit			= this.handleRegisterSubmit.bind(this);
 	}
@@ -32,16 +30,14 @@ class Register extends Component {
 		this.setState({popUp: arg.message });
 	}
 
-	handleFirstNameChange(event) {
-		this.setState({firstName: event.target.value});
-	}
-
-	handleLastNameChange(event) {
-		this.setState({lastName: event.target.value});
-	}
-
-	handleEmailChange(event) {
-		this.setState({email: event.target.value});
+	handleSetGoogleUser(googleUser) {
+		var profile 	= googleUser.getBasicProfile();
+		var nameArray = profile.getName().split(" ");
+		this.setState({
+			email: 			profile.getEmail(),
+			firstName: 	nameArray[0],
+			lastName: 	nameArray[nameArray.length - 1],
+		});
 	}
 
 	handlePasswordChange(event) {
@@ -63,11 +59,9 @@ class Register extends Component {
 					<div className="register-header">
 						<h1>Register</h1>
 					</div>
+					<GoogleSignIn onGoogleSignIn={this.handleSetGoogleUser} />
 					<form className="register-form">
 						<label>
-							<input type="name" id="firstName" className="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleFirstNameChange} />
-							<input type="name" id="lastName" className="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleLastNameChange} />
-							<input type="email" id="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
 							<input type="password" id="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} />
 							<input type="password" id="confirmPassword" placeholder="Retype Password" value={this.state.confirmPassword} onChange={this.handleConfirmPasswordChange} />
 						</label>

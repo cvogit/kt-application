@@ -5,9 +5,6 @@ import Register from './welcome/Register';
 
 import '../css/Welcome/welcome.css';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class Welcome extends Component {
 	constructor(props) {
 		super(props);
@@ -30,7 +27,6 @@ class Welcome extends Component {
 
 	RenderWelcome = () => {
 		const select 				= this.state.select;
-		const result 				=	this.state.registerResultContainer;
 		return (
 			<div className="welcome-bg">
 				<div className="welcome-container">

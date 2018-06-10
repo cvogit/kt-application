@@ -1,0 +1,157 @@
+<script type="text/javascript">
+
+	const electron = window.require('electron');
+	const ipcRenderer  = electron.ipcRenderer;
+	const axios = require('axios');
+
+	const baseUrl = 'http://localhost';
+
+	var user = null;
+
+	// Register
+	ipcRenderer.on('postRegisterRequest', (event, arg) => {
+		console.log("Sending register request.");
+		axios.post(baseUrl+'/register', {
+			firstName: 				arg.firstName,
+			lastName: 				arg.lastName,
+			email: 						arg.email,
+			password: 				arg.password,
+			password_confirmation: 			arg.confirmPassword,
+		})
+		.then(function (response) {
+		console.log("Register successful.");
+
+			ipcRenderer.send('registerSuccess', response.data);
+		})
+		.catch(function (error) {
+			ipcRenderer.send('registerFailure', error.response.data);
+		});
+	});
+
+	// Login
+	ipcRenderer.on('getLoginRequest', (event, arg) => {
+		axios.get(baseUrl+'/login', {
+		params: {
+				email: 		arg.email,
+				password: arg.password,
+			}
+		})
+		.then(function (response) {
+			if ( response.data.result.userId && response.data.result.token)
+			{
+				axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.result.token;
+				const userId = response.data.result.userId;
+				// Prep app for initial resource loading
+				ipcRenderer.send('loginSuccess');
+
+				// Fetch user basic information
+				axios.get(baseUrl+'/users/'+userId
+				)
+				.then(function (response) {
+					user = response.data.result[0];
+					ipcRenderer.send('userInfoSuccess', response.data.result);
+				})
+				.catch(function (error) {
+					ipcRenderer.send('connectionError');
+				});
+				/*
+				// Fetch user payment history
+				axios.get(baseUrl+'/users/'+userId+'/payments'
+				)
+				.then(function (response) {
+					console.log(response.data.result);
+					ipcRenderer.send('getUserPaymentsSuccess', response.data.result);
+				})
+				.catch(function (error) {
+					ipcRenderer.send('connectionError');
+				});
+
+				// Fetch user images
+				axios.get(baseUrl+'/users/'+userId+'/images'
+				)
+				.then(function (response) {
+					userImageIds = response.data.result;
+
+					userImageIds.forEach(function(image) {
+						console.log(image.imageId);
+					});
+				})
+				.catch(function (error) {
+					ipcRenderer.send('connectionError');
+				});*/
+			}
+			else 
+				ipcRenderer.send('connectionError', {'message' : {'error' : 'Unable to login.'}});
+		})
+		.catch(function (error){
+				ipcRenderer.send('connectionError', error.response.data);
+		});
+	});
+ 
+	// Get anouncements
+	ipcRenderer.on('getAnnouncementsRequest', (event) => {
+		axios.get(baseUrl+'/announcements')
+		.then(function (response) {
+			ipcRenderer.send('getAnnouncementsSuccess', response.data);
+		})
+		.catch(function (error) {
+			ipcRenderer.send('getAnnouncementsFailure', error.response.data);
+		});
+
+	});
+
+
+	// Get user avatar
+	ipcRenderer.on('getUserAvatarRequest', (event) => {
+		axios.get(baseUrl+'/users/'+user.id+'/images/'+user.avatarId, {
+			responseType : 'arraybuffer'
+		})
+		.then(function (response) {
+
+			var image = new Buffer(response.data, 'base64');
+
+			// Get image name from header
+			var imageName = response.headers["content-disposition"];
+			var imageNameStart = imageName.search("=");
+			imageName = imageName.slice(imageNameStart+1, imageName.length).replace(/['"]+/g, '');
+
+			// return image and image name
+			ipcRenderer.send('getUserAvatarSuccess', image, imageName);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Get user image
+	ipcRenderer.on('getUserImageRequest', (event, imageId) => {
+		axios.get(baseUrl+'/users/'+user.id+'/images/'+imageId, {
+			responseType : 'arraybuffer'
+		})
+		.then(function (response) {
+			var image = new Buffer(response.data, 'base64');
+
+			// return image and image id
+			ipcRenderer.send('getUserImageSuccess', image, imageId);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Get user image
+	ipcRenderer.on('getUserMessagesRequest', (event) => {
+		axios.get(baseUrl+'/messages')
+		.then(function (response) {
+			ipcRenderer.send('getUserMessagesSuccess', response.data);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	ipcRenderer.on('devTest', (event, arg) => {
+		console.log(arg);
+	});
+
+</script>

@@ -21,44 +21,65 @@ class App extends Component {
 		this.state = {
 			isLoggedIn	: 	false,
 			isLoading		: 	false,
-		},
+			isError			: 	false,
+			errorContent: 	"",
+		}
 
-		this.handleLoginSuccess 	= this.handleLoginSuccess.bind(this);
-		this.handleLoggedOut			= this.handleLoggedOut.bind(this);
-		this.handleAppReady 			= this.handleAppReady.bind(this);
+		this.AppReady 			= this.AppReady.bind(this);
+		this.LoginSuccess 	= this.LoginSuccess.bind(this);
+		this.LoggedOut			= this.LoggedOut.bind(this);
+		this.OfflineError 	= this.OfflineError.bind(this);
+		this.ResetError 		= this.ResetError.bind(this);
 	}
 
 	componentDidMount() {
-		ipcRenderer.on('loggedOut', 		this.handleLoggedOut);
-		ipcRenderer.on('loginSuccess', 	this.handleLoginSuccess);
-		ipcRenderer.on('appReady', 			this.handleAppReady);
+		ipcRenderer.on('appReady', 			this.AppReady);
+		ipcRenderer.on('loginSuccess', 	this.LoginSuccess);
+		ipcRenderer.on('loggedOut', 		this.LoggedOut);
+		ipcRenderer.on('offlineError', 	this.OfflineError);
 	}
 
 
-	handleAppReady(event)	{
-		setTimeout(() => {
-			this.setState({
-				isLoading: 		false,
-			})
-		}, 1500);
+	AppReady(event, arg)	{
+		this.setState({
+			isLoading: 		!arg,
+		})
 	}
 
-	handleLoginSuccess(event)	{
+	LoginSuccess(event)	{
 		this.setState({
 			isLoggedIn: true,
 			isLoading: 	true,
 		});
 	}
 
-	handleLoggedOut(event)	{
+	LoggedOut(event)	{
 		this.setState({
 			isLoggedIn: 	false,
+		});
+	}
+
+	OfflineError(event, arg) {
+		this.setState({
+			isError			: 	true,
+			errorContent: 	arg,
+		});
+
+		setTimeout(this.ResetError, 3000);
+	}
+
+	ResetError() {
+		this.setState({
+			isError			: 	false,
+			errorContent: 	"",
 		});
 	}
 
 	RenderApp = () => {
 		const isLoggedIn 	= this.state.isLoggedIn;
 		const isLoading  	= this.state.isLoading;
+		const isError 		= this.state.isError;
+		const errorContent= this.state.errorContent;
 		
 		return (
 			<div className="app-body">
@@ -71,6 +92,12 @@ class App extends Component {
 					? <Loading />
 					: null
 				}
+				{
+					isError
+					? <PopUp content={errorContent} />
+					: null
+				}
+
 			</div>
 			);
 	};

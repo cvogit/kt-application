@@ -1,0 +1,9 @@
+#g-signin2 {
+	display: table;
+	margin: auto;
+	padding: 10px 0px;
+}
+
+#g-signin2 > div {
+	width: 250px !important;
+}

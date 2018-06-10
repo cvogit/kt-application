@@ -15,6 +15,7 @@ class Content extends Component {
 		super(props);
 		this.state = {
 			content : "home",
+			resources: null,
 		};
 		this.handleChangeContent = this.handleChangeContent.bind(this);
 	}
@@ -24,9 +25,10 @@ class Content extends Component {
 
 	}
 
-	handleChangeContent(event, arg) {
+	handleChangeContent(event, page, resources) {
 		this.setState({
-			content: arg
+			content: page,
+			resources: resources,
 		});
 	}
 
@@ -37,7 +39,7 @@ class Content extends Component {
 		if(stateContent === "home")
 			content = <HomePage />;
 		else if(stateContent === "user")
-			content = <UserPage />;
+			content = <UserPage resources={this.state.resources} />;
 		else if(stateContent === "manager")
 			content = <ManagerPage />;
 		else if(stateContent === "teacher")

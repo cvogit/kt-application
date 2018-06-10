@@ -5,9 +5,6 @@ import Content from './Content.js';
 
 import '../css/dashboard.css';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Button from 'react-toolbox/lib/button/Button';
 import Navigation from 'react-toolbox/lib/navigation/Navigation';
 
-import Tab from './sidebar/Tab.js';
 import '../css/sidebar/sidebar.css';
+
+import homeIcon from '../images/home_icon.png';
 
 const electron = window.require('electron');
 const ipcRenderer  = electron.ipcRenderer;
@@ -19,7 +20,7 @@ class Sidebar extends Component {
 		this.handleHomeButton 	= this.handleHomeButton.bind(this);
 		this.handleRolesSet 		= this.handleRolesSet.bind(this);
 		this.handleTabSelect 		= this.handleTabSelect.bind(this);
-
+		this.getMonthFromDate 	= this.getMonthFromDate.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,11 +29,15 @@ class Sidebar extends Component {
 
 	handleHomeButton(event) {
 		ipcRenderer.send('appSelectContent', "home");
+		this.setState({
+			active: "home",
+		});
 	}
 
 	handleRolesSet(event, arg) {
-		var tRoles = this.state.roles;
-		tRoles += arg;
+		var tRoles = "user ";
+		if(arg !== null)
+			tRoles += arg;
 		this.setState({
 			roles: tRoles,
 		});
@@ -47,22 +52,38 @@ class Sidebar extends Component {
 		ipcRenderer.send('appSelectContent', event.target.value);
 	}
 
+	getMonthFromDate(pDate) {
+		const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+		  "July", "Aug", "Sept", "Oct", "Nov", "Dec"
+		];
+
+		return monthNames[pDate.getMonth()];
+	}
+
 	RenderSidebar = () => {
 		const rolesArray 	= this.state.roles.split(" ");
 		const activeTab   = this.state.active;
-		const tabSelect 	= this.handleTabSelect
+		const tabSelect 	= this.handleTabSelect;
+		const date 				= new Date();
+		const currentDate = date.getDate();
+		const currentMonth = this.getMonthFromDate(date);
 
 		const getTabs = rolesArray.map(function(role){
-			if (activeTab == role)
-				return <Button className="tab-active" label={role} accent onClick={tabSelect} value={role} />
-			else 
-				return <Button className="tab" label={role} accent onClick={tabSelect} value={role} />	
+			if (activeTab === role)
+				return <Button className="tab-active" key={role} label={role} accent onClick={tabSelect} value={role} />
+			else if ( role !== '')
+				return <Button className="tab" key={role} label={role} accent onClick={tabSelect} value={role} />	
 		});
+
 
 		return (
 			<div className="sidebar">
 				<div className="sidebar-header">
-					<a className="home-btn" href="#" onClick={this.handleHomeButton} value="home">H</a>
+					<a className="home-btn" onClick={this.handleHomeButton} value="home">
+						<img src={homeIcon} alt="home-icon"/>
+					</a>
+					<h3 className="sidebar-month"> {currentMonth} </h3>
+					<h4 className="sidebar-date"> {currentDate} </h4>
 				</div>
 				<Navigation type='vertical'>
 					{ getTabs } 
