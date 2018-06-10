@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+/public/users
 
 # production
 /build
