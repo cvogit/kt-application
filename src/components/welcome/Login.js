@@ -21,6 +21,7 @@ class Login extends Component {
 	}
 
 	componentDidMount() {
+
 	}
 
 	handleSetGoogleUser(googleUser) {

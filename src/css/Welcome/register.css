@@ -4,7 +4,7 @@
 	border-radius: 5px;
 	height:				300px;
 	margin:				25px auto;
-	width:				500px;
+	width:				300px;
 }
 .register-header {
 	height: 14%;
@@ -36,7 +36,7 @@
 	color: green; 
 	background-color: transparent; 
 	text-decoration: none;
-	width: 	80%;
+	width: 	84%;
 	height: 60%;
 	margin: auto;
 	cursor: pointer;
@@ -122,5 +122,9 @@ input[type="email"], input[type="password"], input[type="password"]{
 	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #31524d, 0px 5px 3px #999;
 }
 .toggle-login {
-	margin: 45px auto 0 auto;
+	margin: 30px auto 0 auto;
+}
+.toggle-login > a {
+	display: table;
+	margin: 10px 0px 10px 10px;
 }

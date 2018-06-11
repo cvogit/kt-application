@@ -9,15 +9,13 @@ class GoogleSignIn extends React.Component{
 
 	constructor(props){
 		super(props);
-		this.state = {
-			signedIn: false,
-		}
 		this.onSignIn 	= this.onSignIn.bind(this);
+
 	}
 
 	componentDidMount() {
 		gapi.signin2.render('g-signin2', {
-			'scope': 'profile email',
+			'scope': 'profile email https://mail.google.com/',
 			'width': 200,
 			'height': 50,
 			'longtitle': true,
@@ -26,9 +24,15 @@ class GoogleSignIn extends React.Component{
 		});
 	}
 
+
 	onSignIn(googleUser) {
+		// Load google apis
+		gapi.load('client:auth2', function() {
+		    gapi.client.load('gmail', 'v1', function() {
+		      
+		    });
+		});
 		this.props.onGoogleSignIn(googleUser);
-		this.setState({signedIn: true });
 	}
 
 	RenderGoogleSignIn = () => {

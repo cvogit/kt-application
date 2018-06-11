@@ -73,13 +73,13 @@ class UserPage extends Component {
 		var userpageCenter;
 
 
-		if(userpageIndex == 0) {
+		if(userpageIndex === 0) {
 			userpageCenter = <UserFeed />
-		} else if(userpageIndex == 1) {
+		} else if(userpageIndex === 1) {
 			userpageCenter = <UserPictures />
-		} else if(userpageIndex == 2) {
+		} else if(userpageIndex === 2) {
 			userpageCenter = <UserHistory />
-		} else if(userpageIndex == 3) {
+		} else if(userpageIndex === 3) {
 			userpageCenter = <UserEdit />
 		}
 

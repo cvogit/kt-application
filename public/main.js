@@ -12,6 +12,9 @@ const jetpack 	= require('fs-jetpack');
 let win;
 let requestWin = null;
 
+// User Google account data
+var userGoogle = null;
+
 // Saved user data
 var userLocalInfo = null;
 
@@ -49,12 +52,12 @@ function showWindow() {
 }
 
 function createRequestWindow() {
-	requestWin = new BrowserWindow({width:800, height:600, show:true});
+	requestWin = new BrowserWindow({width:800, height:600, show:false});
 	requestWin.loadURL(isDev ? `file://${path.join(__dirname, './Requests.html')}` : `file://${path.join(__dirname, '../build/Requests.html')}`);
 	requestWin.webContents.openDevTools();
 	requestWin.on('closed', () => requestWin = null);
 }
-
+ 
 app.on('ready', createWindow);
 app.on('ready', createRequestWindow);
 app.on('window-all-closed', () => {
@@ -196,6 +199,19 @@ ipcMain.on('userFeedReady', (event, arg) => {
 });
 
 // ***********************
+// Request to Google
+// ***********************
+
+// Request for usr mails
+ipcMain.on('getGoogleMailRequest', (event, arg) => {
+	requestWin.webContents.send('getGoogleMailRequest', arg);
+});
+
+ipcMain.on('resultGoogleMailRequest', (event, result) => {
+	console.log(result);
+});
+
+// ***********************
 // Results from the server
 // ***********************
 
@@ -306,4 +322,14 @@ ipcMain.on('appSelectContent', (event, arg) => {
 		win.webContents.send('appChangeContent', arg,	userResources);
 	}
 	win.webContents.send('appChangeContent', arg);
+});
+
+// Set user google data
+ipcMain.on('appUserGoogleLogin', (event, arg) => {
+	userGoogle = arg;
+});
+
+// Return user google data
+ipcMain.on('registerSuccess', (event, result) => {
+	//win.webContents.send('registerSuccess', userGoogle);
 });

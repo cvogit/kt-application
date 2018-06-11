@@ -103,24 +103,26 @@
 
 	// Get user avatar
 	ipcRenderer.on('getUserAvatarRequest', (event) => {
-		axios.get(baseUrl+'/users/'+user.id+'/images/'+user.avatarId, {
-			responseType : 'arraybuffer'
-		})
-		.then(function (response) {
+		if(user.avatarId !== 0) {
+			axios.get(baseUrl+'/users/'+user.id+'/images/'+user.avatarId, {
+				responseType : 'arraybuffer'
+			})
+			.then(function (response) {
 
-			var image = new Buffer(response.data, 'base64');
+				var image = new Buffer(response.data, 'base64');
 
-			// Get image name from header
-			var imageName = response.headers["content-disposition"];
-			var imageNameStart = imageName.search("=");
-			imageName = imageName.slice(imageNameStart+1, imageName.length).replace(/['"]+/g, '');
+				// Get image name from header
+				var imageName = response.headers["content-disposition"];
+				var imageNameStart = imageName.search("=");
+				imageName = imageName.slice(imageNameStart+1, imageName.length).replace(/['"]+/g, '');
 
-			// return image and image name
-			ipcRenderer.send('getUserAvatarSuccess', image, imageName);
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+				// return image and image name
+				ipcRenderer.send('getUserAvatarSuccess', image, imageName);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+		}
 	});
 
 	// Get user image
@@ -152,6 +154,20 @@
 
 	ipcRenderer.on('devTest', (event, arg) => {
 		console.log(arg);
+	});
+
+	ipcRenderer.on('getGoogleMailRequest', (event, arg) => {
+		console.log(arg);
+		axios.get('https://www.googleapis.com/gmail/v1/users/userId/messages', {
+			userId: 				'me',
+			maxResult: 			arg,
+		})
+		.then(function (response) {
+			ipcRenderer.send('resultGoogleMailRequest', response.data);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 	});
 
 </script>
