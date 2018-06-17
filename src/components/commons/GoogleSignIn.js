@@ -10,7 +10,7 @@ class GoogleSignIn extends React.Component{
 	constructor(props){
 		super(props);
 		this.onSignIn 	= this.onSignIn.bind(this);
-
+		this.loadGoogleApi 	= this.loadGoogleApi.bind(this);
 	}
 
 	componentDidMount() {
@@ -27,12 +27,18 @@ class GoogleSignIn extends React.Component{
 
 	onSignIn(googleUser) {
 		// Load google apis
-		gapi.load('client:auth2', function() {
-		    gapi.client.load('gmail', 'v1', function() {
-		      
-		    });
-		});
+		this.loadGoogleApi();
 		this.props.onGoogleSignIn(googleUser);
+	}
+
+	loadGoogleApi() {
+		// Load client api
+		gapi.load('client:auth2', function() {
+			// Load gmail api
+	    gapi.client.load('gmail', 'v1', function() {
+	      
+	    });
+		});
 	}
 
 	RenderGoogleSignIn = () => {

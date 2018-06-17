@@ -7,7 +7,6 @@ import UserFeed 			from './userpage/UserFeed';
 import UserPictures 	from './userpage/UserPictures';
 import UserHistory 		from './userpage/UserHistory';
 import UserEdit 			from './userpage/UserEdit';
-import UserSidebar 		from './userpage/UserSidebar';
 
 import '../../assets/react-toolbox/theme.css';
 import '../../css/content/userPage.css';
@@ -67,9 +66,8 @@ class UserPage extends Component {
 	RenderUserPage = () => {
 		var avatarImage 		= this.state.avatar;
 		var userpageIndex 	= this.state.userpageIndex;
-		var userpageSidebar = <UserSidebar 	firstName={this.state.userFirstName} 
-																				lastName={this.state.userLastName} 
-																				userPhone={this.state.userPhone} />;
+		var userName 	= this.state.userFirstName + " " + this.state.userLastName;
+		var userPhone =	this.state.userPhone;
 		var userpageCenter;
 
 
@@ -88,11 +86,17 @@ class UserPage extends Component {
 				<Banner alt="banner-icon" />
 				<div className="userpage-content">
 					<div className="userpage-header">
-						<div className="userpage-avatar-container">
-							<div className="userpage-avatar-box">
-								<div className="userpage-avatar-box-bottom">
-									<img className="avatar" src={avatarImage} alt="user-avatar"/>
+						<div className="upper-header">
+							<div className="userpage-avatar-container">
+								<div className="userpage-avatar-box">
+									<div className="userpage-avatar-box-bottom">
+										<img className="avatar" src={avatarImage} alt="user-avatar"/>
+									</div>
 								</div>
+							</div>
+							<div className="user-info-container">
+								<h4> {userName} </h4>
+								<h5> {userPhone} </h5>
 							</div>
 						</div>
 						<div className="userpage-navigation-container">
@@ -106,8 +110,6 @@ class UserPage extends Component {
 							</div>
 						</div>
 					</div>
-
-					{userpageSidebar}
 					{userpageCenter}
 				</div>
 			</div>

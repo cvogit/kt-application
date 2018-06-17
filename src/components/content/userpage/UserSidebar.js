@@ -15,7 +15,7 @@ class UserSidebar extends Component {
 	}
 
 	RenderUserSidebar = () => {
-		var userName = this.props.firstName + " " + this.props.lastName;
+		var userName 	= this.props.firstName + " " + this.props.lastName;
 		var userPhone = this.props.phoneNum;
 		return (
 			<div className="userpage-sidebar">
