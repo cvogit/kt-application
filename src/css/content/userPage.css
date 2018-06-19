@@ -152,6 +152,16 @@
 			overflow: hidden;
 			background-color: #fff;
 		}
+
+		.mail-snippet-container:hover {
+			cursor: pointer;
+			margin: 3px 0px;
+			height: 40px;
+			width: 100%;
+			overflow: hidden;
+			background-color: #fff;
+		}
+
 			.snippet-from {
 				float: left;
 				margin: 0 70px 0 15px;

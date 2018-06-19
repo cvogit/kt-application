@@ -24,10 +24,11 @@ class UserFeed extends Component {
 		};
 		this.getGoogleInboxMail	= this.getGoogleInboxMail.bind(this);
 		this.getGoogleSentMail	= this.getGoogleSentMail.bind(this);
+		this.addMail						= this.addMail.bind(this);
 
-		this.addMail				= this.addMail.bind(this);
-		this.handleDialogToggle	= this.handleDialogToggle.bind(this);
+		this.handleDialogExit		= this.handleDialogExit.bind(this);
 		this.handleButtonSelect = this.handleButtonSelect.bind(this);
+		this.handleMailClick 		= this.handleMailClick.bind(this);
 	}
 
 	componentWillMount() {
@@ -155,14 +156,19 @@ class UserFeed extends Component {
 		});
   }
 
-  handleDialogToggle() {
-    this.setState({dialogActive: !this.state.dialogActive});
+  handleDialogExit() {
+    this.setState({
+    	dialogActive: false,
+    });
   }
 
-  actions = [{
-    label: 'Exit',
-    onClick: this.handleDialogToggle
-  }];
+  handleMailClick(pDialogContent) {
+  	console.log(pDialogContent);
+  	this.setState({
+  		dialogActive: true,
+  		dialogContent: pDialogContent,
+  	});
+  }
 
 	RenderUserFeed = () => {
 		const boxSelect 	= this.handleButtonSelect;
@@ -170,14 +176,6 @@ class UserFeed extends Component {
 		const activeButton = this.state.buttonActive;
 		var mailSnippets = null;
 		var mail;
-		/*		        	
-		if(this.state.inbox.length > 0) {
-			var payloadLength = this.state.inbox[2].Payload.length;
-			console.log(payloadLength);
-			var html = this.state.inbox[2].Payload[payloadLength - 1];
-			mail = <div dangerouslySetInnerHTML={{__html: html}}></div>;
-		}
-		*/
 
 		// Render the mail box buttons
 		const renderButtons = buttons.map(function(button){
@@ -189,30 +187,41 @@ class UserFeed extends Component {
 
 		// Render the mails in the current box
 		if(activeButton === 'Inbox') {
-			mailSnippets = this.state.inbox.map(function(mail) {
-					return <MailSnippet key={mail.Id}
-															box="Inbox"
-															snippet={mail.Snippet}
-															date={mail.Date.value}
-															from={mail.From.value} />;
-				});
-		} else if(activeButton === 'Sent') {
-			mailSnippets = this.state.sent.map(function(mail) {
+			mailSnippets = this.state.inbox.map((mail) => {
+				const tPayload = mail.Payload[mail.Payload.length - 1];
 				return <MailSnippet key={mail.Id}
-														box="Sent"
+														content={tPayload}
 														snippet={mail.Snippet}
 														date={mail.Date.value}
-														from={mail.To.value} />;
+														from={mail.From.value}
+														onClick={this.handleMailClick} />;
+			});
+		} else if(activeButton === 'Sent') {
+			mailSnippets = this.state.sent.map((mail) => {
+				const tPayload = mail.Payload[mail.Payload.length - 1];
+				return <MailSnippet key={mail.Id}
+														content={tPayload}
+														snippet={mail.Snippet}
+														date={mail.Date.value}
+														from={mail.To.value}
+														onClick={this.handleMailClick} />;
 			
 			});
 		}
+
+		const actions = [{
+	    label: 'Exit',
+	    onClick: this.handleDialogExit
+	  }];
+
 		// Render the dialog with the mail being slected
-		var dialog = 	<Dialog actions={this.actions} active={this.state.dialogActive} title='My awesome dialog' type="small">
-				          	<p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
+		var dialog = 	<Dialog actions={actions} active={this.state.dialogActive} type="normal">
+				          	<div dangerouslySetInnerHTML={{__html: this.state.dialogContent}}></div>
 				        	</Dialog>;
 
 		return (
 			<div className="userpage-center-content">
+				{dialog}
 				<div className="mail-boxes">
 					{renderButtons}
 				</div>
