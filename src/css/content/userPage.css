@@ -4,7 +4,7 @@
  }
 
 .userpage-content {
-  background-color: rgba(168, 215, 255, 0.15);
+  background-color: rgba(168, 215, 255, 0.45);
   margin: 100px auto;
   padding: 0px;
   width: 1335px;
@@ -146,21 +146,40 @@
 	}
 
 		.mail-snippet-container {
+			margin: 3px 0px;
+			height: 40px;
 			width: 100%;
 			overflow: hidden;
 			background-color: #fff;
 		}
+			.snippet-from {
+				float: left;
+				margin: 0 70px 0 15px;
+				text-align: left;
+				line-height: 40px;
+				width: 10%;
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.snippet-content {
+				float: left;
+				text-align: left;
+				line-height: 40px;
+				width: 40%;
+				height: 100%;
+				overflow: hidden;
+			}
 
 			.snippet-date {
-				text-align: left;
-			}
-
-			.snippet-from {
-				text-align: left;
-			}
-
-			.snippet-subject {
-				text-align: left;
+				float: right;
+				font-size: 10px;
+				margin: 0 15px 0 0;
+				text-align: right;
+				line-height: 40px;
+				width: 15%;
+				height: 100%;
+				overflow: hidden;
 			}
 
 

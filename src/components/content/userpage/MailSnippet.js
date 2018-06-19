@@ -11,16 +11,28 @@ class MailSnippet extends Component {
 	}
 
 	RenderMailSnippet = () => {
+		// Fix up 'From'
+		const pFrom 		= this.props.from.replace(/<.*>/,"");
+		if(this.props.box === 'Sent')
+			console.log(this.props.from);
+		// Fix up 'Snippet'
+		var textArea	= document.createElement("textarea");
+		textArea.innerHTML = this.props.snippet;
+		const pSnippet	= textArea.value;
+
+		// Date
+		var tDate = this.props.date;
+
 		return (
 			<div className="mail-snippet-container">
 				<div className="snippet-from">
-					{this.props.from}
+					{pFrom}
+				</div>
+				<div className="snippet-content">
+					{pSnippet}
 				</div>
 				<div className="snippet-date">
-					{this.props.date}
-				</div>
-				<div className="snippet-subject">
-					{this.props.subject}
+					{tDate}
 				</div>
 			</div>
 			);

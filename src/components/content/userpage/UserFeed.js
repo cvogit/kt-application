@@ -72,6 +72,7 @@ class UserFeed extends Component {
 						Id: this.state.inbox.length,
 						From: response.payload.headers.find( header => header.name === 'From' ),
 						Subject: response.payload.headers.find( header => header.name === 'Subject' ),
+						Snippet: response.snippet,
 						Date: response.payload.headers.find( header => header.name === 'Date' ),
 						Payload: tMessageArray,
 						AttachmentId: tAttachmentId,
@@ -119,11 +120,12 @@ class UserFeed extends Component {
 						Id: this.state.sent.length,
 						To: response.payload.headers.find( header => header.name === 'To' ),
 						Subject: response.payload.headers.find( header => header.name === 'Subject' ),
+						Snippet: response.snippet,
 						Date: response.payload.headers.find( header => header.name === 'Date' ),
 						Payload: tMessageArray,
 						AttachmentId: tAttachmentId,
 					};
-					console.log(tMail);
+
     			this.addMail(tMail, 'Sent');
 	   		});
 			}
@@ -188,28 +190,21 @@ class UserFeed extends Component {
 		// Render the mails in the current box
 		if(activeButton === 'Inbox') {
 			mailSnippets = this.state.inbox.map(function(mail) {
-					var tSubject;
-					if(!mail.Subject) {
-						tSubject = "No Subject";
-					}
-						return <MailSnippet key={mail.Id}
-																subject={tSubject}
-																date={mail.Date.value}
-																from={mail.From.value} />;
-					});
+					return <MailSnippet key={mail.Id}
+															box="Inbox"
+															snippet={mail.Snippet}
+															date={mail.Date.value}
+															from={mail.From.value} />;
+				});
 		} else if(activeButton === 'Sent') {
 			mailSnippets = this.state.sent.map(function(mail) {
-				var tSubject;
-				if(!mail.Subject) {
-					tSubject = "No Subject";
-				}
-
-					return <MailSnippet key={mail.Id}
-															subject={tSubject}
-															date={mail.Date.value}
-															from={mail.To.value} />;
-				
-				});
+				return <MailSnippet key={mail.Id}
+														box="Sent"
+														snippet={mail.Snippet}
+														date={mail.Date.value}
+														from={mail.To.value} />;
+			
+			});
 		}
 		// Render the dialog with the mail being slected
 		var dialog = 	<Dialog actions={this.actions} active={this.state.dialogActive} title='My awesome dialog' type="small">
