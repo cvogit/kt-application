@@ -16,37 +16,48 @@ class UserFeed extends Component {
 		this.state = {
 			inbox: 		[],
 			sent:     [],
-			nextInboxPageToken: '', 
+			nextInboxPageToken: '',
 			buttons: 'Inbox Sent',
 			buttonActive: 'Inbox',
 			dialogActive: false,
 			dialogContent: '',
 		};
-		this.getGoogleInboxMail	= this.getGoogleInboxMail.bind(this);
-		this.getGoogleSentMail	= this.getGoogleSentMail.bind(this);
+		this.getGoogleMail			= this.getGoogleMail.bind(this);
 		this.addMail						= this.addMail.bind(this);
 
 		this.handleDialogExit		= this.handleDialogExit.bind(this);
 		this.handleButtonSelect = this.handleButtonSelect.bind(this);
 		this.handleMailClick 		= this.handleMailClick.bind(this);
+		this.handlePageClick 		= this.handlePageClick.bind(this);
 	}
 
 	componentWillMount() {
-		this.getGoogleInboxMail(10, this.state.nextInboxPageToken);
-		this.getGoogleSentMail(10, this.state.nextSentPageToken);
+		this.getGoogleMail(15, this.state.nextInboxPageToken, 'Inbox');
+		this.getGoogleMail(15, this.state.nextSentPageToken, 'Sent');
 	}
 
-	getGoogleInboxMail(pMaxResult = 10, nextPageToken = null) {
+	getGoogleMail(pMaxResult = 10, nextPageToken = null, pBox = 'Inbox') {
+		var tBox;
+		if(pBox  === 'Inbox') {
+			tBox = 'in:inbox';
+		} else if(pBox  === 'Inbox') {
+			tBox = 'in:sent';
+		}
+
 		var request = gapi.client.gmail.users.messages.list({
 	    'userId': 'me',
 	    'maxResults': pMaxResult,
-	    'q': 'in:inbox',
+	    'q': tBox,
 	    'pageToken': nextPageToken,
 	  });
 
 	  request.execute((response) => {
-
+	  	// Set variables and state
 	  	var tGMailId = response.messages;
+	  	this.state.total += tGMailId.length;
+	  	this.state.nextInboxPageToken = response.nextPageToken;
+
+
 	   	for( var i = 0; i < tGMailId.length; i++) {
 				var tRequest = gapi.client.gmail.users.messages.get({
 			    'userId': 'me',
@@ -69,65 +80,34 @@ class UserFeed extends Component {
 					  }
 					});
 
-					var tMail = {
-						Id: this.state.inbox.length,
-						From: response.payload.headers.find( header => header.name === 'From' ),
-						Subject: response.payload.headers.find( header => header.name === 'Subject' ),
-						Snippet: response.snippet,
-						Date: response.payload.headers.find( header => header.name === 'Date' ),
-						Payload: tMessageArray,
-						AttachmentId: tAttachmentId,
-					};
-    			this.addMail(tMail, 'Inbox');
-	   		});
-			}
-    });
-  }
+					var tMail;
+					if(pBox  === 'Inbox') {
+						tMail = {
+							Id: this.state.inbox.length,
+							From: response.payload.headers.find( header => header.name === 'From' ),
+							Subject: response.payload.headers.find( header => header.name === 'Subject' ),
+							Snippet: response.snippet,
+							InternalDate: response.internalDate,
+							Date: response.payload.headers.find( header => header.name === 'Date' ),
+							Payload: tMessageArray,
+							AttachmentId: tAttachmentId,
+						};
 
-  getGoogleSentMail(pMaxResult = 10, nextPageToken = null) {
-		var request = gapi.client.gmail.users.messages.list({
-	    'userId': 'me',
-	    'maxResults': pMaxResult,
-	    'q': 'in:sent',
-	    'pageToken': nextPageToken,
-	  });
+	    			this.addMail(tMail, 'Inbox');
+					} else if(pBox  === 'Sent') {
+						tMail = {
+							Id: this.state.sent.length,
+							To: response.payload.headers.find( header => header.name === 'To' ),
+							Subject: response.payload.headers.find( header => header.name === 'Subject' ),
+							Snippet: response.snippet,
+							InternalDate: response.internalDate,
+							Date: response.payload.headers.find( header => header.name === 'Date' ),
+							Payload: tMessageArray,
+							AttachmentId: tAttachmentId,
+						};
 
-	  request.execute((response) => {
-
-	  	var tGMailId = response.messages;
-	   	for( var i = 0; i < tGMailId.length; i++) {
-				var tRequest = gapi.client.gmail.users.messages.get({
-			    'userId': 'me',
-			    'id': tGMailId[i].id,
-			  });
-				
-				tRequest.execute((response) => { 
-					var tMessageArray = [];
-					var tAttachmentId = [];
-					var tPayload = response.payload.parts;
-					
-					tPayload.forEach(function(part) {
-						if(part.body.size !== 0) {
-							if(part.body.data) {
-								var tMessage = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
-						  	tMessageArray.push(tMessage);
-						  } else if (part.body.attachmentId) {
-						  	tAttachmentId.push(part.body.attachmentId);
-						  }
-					  }
-					});
-					
-					var tMail = {
-						Id: this.state.sent.length,
-						To: response.payload.headers.find( header => header.name === 'To' ),
-						Subject: response.payload.headers.find( header => header.name === 'Subject' ),
-						Snippet: response.snippet,
-						Date: response.payload.headers.find( header => header.name === 'Date' ),
-						Payload: tMessageArray,
-						AttachmentId: tAttachmentId,
-					};
-
-    			this.addMail(tMail, 'Sent');
+	    			this.addMail(tMail, 'Sent');
+					}
 	   		});
 			}
     });
@@ -136,13 +116,15 @@ class UserFeed extends Component {
   addMail(pMail, pBox) {
   	if(pBox === 'Inbox') {
   		const currentMails = this.state.inbox;
-  		const newMails = currentMails.concat(pMail);
+  		var newMails = currentMails.concat(pMail);
+  		newMails.sort(function(a,b){return b.InternalDate - a.InternalDate});
 	  	this.setState({
 	  		inbox: newMails
 	  	});
 	  } else if(pBox === 'Sent') {
 	  	const currentMails = this.state.sent;
-  		const newMails = currentMails.concat(pMail);
+  		var newMails = currentMails.concat(pMail);
+  		newMails.sort(function(a,b){return b.InternalDate - a.InternalDate});
 	  	this.setState({
 	  		sent: newMails
 	  	});
@@ -163,19 +145,32 @@ class UserFeed extends Component {
   }
 
   handleMailClick(pDialogContent) {
-  	console.log(pDialogContent);
   	this.setState({
   		dialogActive: true,
   		dialogContent: pDialogContent,
   	});
   }
 
+  handlePageClick(event) {
+		this.setState({
+			selected: event.selected,
+		});
+  };
+
 	RenderUserFeed = () => {
 		const boxSelect 	= this.handleButtonSelect;
 		const buttons 		= this.state.buttons.split(" ");
 		const activeButton = this.state.buttonActive;
+
+		// Variable render the mail snippets
 		var mailSnippets = null;
-		var mail;
+		var currentPageSnippets = null;
+
+		// Variable to render the pagination
+		const count 			= this.state.offset;
+		const pagination 	=	this.state.pagination;
+		const pageCount 	= this.state.offset / 15;
+		const currentPage = this.state.selected * 15;
 
 		// Render the mail box buttons
 		const renderButtons = buttons.map(function(button){
@@ -184,6 +179,7 @@ class UserFeed extends Component {
 			else 
 				return <Button className="mail-box" label={button} key={button} value={button} onClick={boxSelect} flat />	
 		});
+		var i = 0;
 
 		// Render the mails in the current box
 		if(activeButton === 'Inbox') {
@@ -192,7 +188,7 @@ class UserFeed extends Component {
 				return <MailSnippet key={mail.Id}
 														content={tPayload}
 														snippet={mail.Snippet}
-														date={mail.Date.value}
+														date={mail.InternalDate}
 														from={mail.From.value}
 														onClick={this.handleMailClick} />;
 			});
@@ -202,12 +198,13 @@ class UserFeed extends Component {
 				return <MailSnippet key={mail.Id}
 														content={tPayload}
 														snippet={mail.Snippet}
-														date={mail.Date.value}
+														date={mail.InternalDate}
 														from={mail.To.value}
 														onClick={this.handleMailClick} />;
 			
 			});
 		}
+		currentPageSnippets = mailSnippets.slice(currentPage, currentPage + 15);
 
 		const actions = [{
 	    label: 'Exit',
@@ -215,7 +212,7 @@ class UserFeed extends Component {
 	  }];
 
 		// Render the dialog with the mail being slected
-		var dialog = 	<Dialog actions={actions} active={this.state.dialogActive} type="normal">
+		var dialog = 	<Dialog className="dialog-container" actions={actions} active={this.state.dialogActive} type="normal">
 				          	<div dangerouslySetInnerHTML={{__html: this.state.dialogContent}}></div>
 				        	</Dialog>;
 
@@ -226,7 +223,7 @@ class UserFeed extends Component {
 					{renderButtons}
 				</div>
 				<div className="mail-content">
-					{mailSnippets}
+					{currentPageSnippets}
 				</div>
 			</div>
 			);
