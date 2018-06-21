@@ -40,7 +40,7 @@ class UserFeed extends Component {
 		var tBox;
 		if(pBox  === 'Inbox') {
 			tBox = 'in:inbox';
-		} else if(pBox  === 'Inbox') {
+		} else if(pBox  === 'Sent') {
 			tBox = 'in:sent';
 		}
 
@@ -168,9 +168,6 @@ class UserFeed extends Component {
 
 		// Variable to render the pagination
 		const count 			= this.state.offset;
-		const pagination 	=	this.state.pagination;
-		const pageCount 	= this.state.offset / 15;
-		const currentPage = this.state.selected * 15;
 
 		// Render the mail box buttons
 		const renderButtons = buttons.map(function(button){
@@ -179,7 +176,6 @@ class UserFeed extends Component {
 			else 
 				return <Button className="mail-box" label={button} key={button} value={button} onClick={boxSelect} flat />	
 		});
-		var i = 0;
 
 		// Render the mails in the current box
 		if(activeButton === 'Inbox') {
@@ -204,7 +200,6 @@ class UserFeed extends Component {
 			
 			});
 		}
-		currentPageSnippets = mailSnippets.slice(currentPage, currentPage + 15);
 
 		const actions = [{
 	    label: 'Exit',
@@ -223,7 +218,7 @@ class UserFeed extends Component {
 					{renderButtons}
 				</div>
 				<div className="mail-content">
-					{currentPageSnippets}
+					{mailSnippets}
 				</div>
 			</div>
 			);
