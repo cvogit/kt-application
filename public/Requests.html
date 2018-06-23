@@ -45,8 +45,7 @@
 				ipcRenderer.send('loginSuccess');
 
 				// Fetch user basic information
-				axios.get(baseUrl+'/users/'+userId
-				)
+				axios.get(baseUrl+'/users/'+userId)
 				.then(function (response) {
 					user = response.data.result[0];
 					ipcRenderer.send('userInfoSuccess', response.data.result);
@@ -54,6 +53,7 @@
 				.catch(function (error) {
 					ipcRenderer.send('connectionError');
 				});
+
 				/*
 				// Fetch user payment history
 				axios.get(baseUrl+'/users/'+userId+'/payments'
@@ -61,20 +61,6 @@
 				.then(function (response) {
 					console.log(response.data.result);
 					ipcRenderer.send('getUserPaymentsSuccess', response.data.result);
-				})
-				.catch(function (error) {
-					ipcRenderer.send('connectionError');
-				});
-
-				// Fetch user images
-				axios.get(baseUrl+'/users/'+userId+'/images'
-				)
-				.then(function (response) {
-					userImageIds = response.data.result;
-
-					userImageIds.forEach(function(image) {
-						console.log(image.imageId);
-					});
 				})
 				.catch(function (error) {
 					ipcRenderer.send('connectionError');

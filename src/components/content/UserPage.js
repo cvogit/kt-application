@@ -20,19 +20,15 @@ class UserPage extends Component {
 		super(props);
 		this.state = {
 			avatar          : null,
-			userFirstName		: null,
-			userLastName		: null,
-			userPhone 			: null,
+			userResources		: null,
 			userpageIndex   : 0,
 		};
 		
 		this.LoadUserAvatar 			= this.LoadUserAvatar.bind(this);
-		this.handleActive 				= this.handleActive.bind(this);
 		this.handleFixedTabChange = this.handleFixedTabChange.bind(this);
 	}
 
 	componentDidMount() {
-		ipcRenderer.on('loadUserAvatar', this.LoadUserAvatar);
 	}
 
 	componentWillMount() {
@@ -40,9 +36,7 @@ class UserPage extends Component {
 		
 		this.setState({
 			avatar: resources.avatar,
-			userFirstName: 	resources.userInfo.firstName,
-			userLastName: 	resources.userInfo.lastName,
-			userPhone: 			resources.userInfo.phoneNum,
+			userResources: 	resources,
 		});
 	}
 
@@ -52,29 +46,26 @@ class UserPage extends Component {
 		});
 	}
 
-	handleActive(event) {
-
-	}
-
 	handleFixedTabChange(index) {
 		this.setState({
 			userpageIndex: index
 		});
 	}
-
 	
 	RenderUserPage = () => {
-		var avatarImage 		= this.state.avatar;
+		var avatarImage 		= this.state.userResources.avatar;
+		var userPictures 	 	= this.state.userResources.userImages;
 		var userpageIndex 	= this.state.userpageIndex;
-		var userName 	= this.state.userFirstName + " " + this.state.userLastName;
-		var userPhone =	this.state.userPhone;
-		var userpageCenter;
 
+		var userName 	= this.state.userResources.userInfo.firstName + " " + this.state.userResources.userInfo.lastName;
+		var userPhone =	this.state.userResources.userInfo.phoneNum;
+
+		var userpageCenter;
 
 		if(userpageIndex === 0) {
 			userpageCenter = <UserFeed />
 		} else if(userpageIndex === 1) {
-			userpageCenter = <UserPictures />
+			userpageCenter = <UserPictures pictures={userPictures} />
 		} else if(userpageIndex === 2) {
 			userpageCenter = <UserHistory />
 		} else if(userpageIndex === 3) {

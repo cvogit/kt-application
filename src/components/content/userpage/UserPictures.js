@@ -10,16 +10,18 @@ class UserPictures extends Component {
 		this.state = {
 		};
 	}
-
-	componentWillMount() {
-
-	}
-
 	
 	RenderUserPictures = () => {
+		const userPictures = this.props.pictures;
+		var picturesRender = null;
+
+		userPictures.forEach((picture) => {
+			picturesRender = <img  src={picture} alt="user-picture"/>
+		});
+
 		return (
 			<div className="userpage-center-content">
-						
+				{picturesRender}
 			</div>
 			);
 	}

@@ -24,6 +24,7 @@ var userLocalInfo = null;
 var userPageResources 	= null;
 var userAvatar 					= null;
 var userInfo 	 					= null;
+var userImagesId				= [];
 var userImagesPath 	 		= [];
 
 // Path to navigate user files
@@ -158,6 +159,7 @@ function readyUserPageResources() {
 
 	// Ready user images that are missing locally
 	var imgArray = userInfo.imageIds;
+	var imagePath;
 	var userImageFolder = userFolder+'/images/personal/image_';
 	for (var i = 0; i < imgArray.length; i++) {
 		imagePath = userImageFolder+imgArray[i].imageId;
@@ -201,31 +203,12 @@ ipcMain.on('homePageReady', (event, arg) => {
 	requestWin.webContents.send('getAnnouncementsRequest');
 });
 
-// Set up user message feeds
-ipcMain.on('userFeedReady', (event, arg) => {
-	
-});
-
-// ***********************
-// Request to Google
-// ***********************
-
-// Request for usr mails
-ipcMain.on('getGoogleMailRequest', (event, arg) => {
-	requestWin.webContents.send('getGoogleMailRequest', arg);
-});
-
-ipcMain.on('resultGoogleMailRequest', (event, result) => {
-	console.log(result);
-});
-
 // ***********************
 // Results from the server
 // ***********************
 
 // To: Register
 ipcMain.on('registerSuccess', (event, result) => {
-	console.log(result);
 	win.webContents.send('registerSuccess', result);
 });
 ipcMain.on('registerFailure', (event, arg) => {
@@ -257,10 +240,11 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 	// Write user info to file
 	store(userInfo, userInfoPath);
 
-	// Get absolute path to check for local resources
+	// Get absolute path and relative path to check for local resources
 	userFolderAbsolute = getAbsolutePath(userFolder);
 	userFolderRelative = getRelativePath(userFolder);
 
+	// Ready user needed resources
 	var userRoles = "user "+userInfo.roles;
 	userRoles = userRoles.split(" ");
 	userRoles.map(function(role){
@@ -296,7 +280,7 @@ ipcMain.on('getUserAvatarSuccess', (event, image, imageName) => {
 ipcMain.on('getUserImageSuccess', (event, image, imageId) => {
 	var imagePath = userFolder+'/images/personal/image_'+imageId;
 
-	// Write the file and set path to avatar
+	// Write the file and set path
 	store(image, imagePath);
 	userImagesPath.push(getRelativePath(imagePath));
 });
@@ -307,8 +291,6 @@ ipcMain.on('getUserPaymentsSuccess', (event, payments) => {
 	// Write the file and set path to avatar
 	store(payments, avatarPath);
 });
-
-
 
 ipcMain.on('connectionError', (event, arg) => {
 	console.log(arg);
@@ -333,8 +315,8 @@ ipcMain.on('appSelectContent', (event, arg) => {
 });
 
 // Set user google data
-ipcMain.on('appUserGoogleLogin', (event, arg) => {
-	userGoogle = arg;
+ipcMain.on('appUserGoogleLogin', (event, userGoogleInfo) => {
+	userGoogle = userGoogleInfo;
 });
 
 // Return user google data

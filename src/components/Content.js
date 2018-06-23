@@ -15,31 +15,36 @@ class Content extends Component {
 		super(props);
 		this.state = {
 			content : "home",
-			resources: null,
+			userPageResources: null,
 		};
 		this.handleChangeContent = this.handleChangeContent.bind(this);
 	}
 
 	componentDidMount() {
 		ipcRenderer.on('appChangeContent', 		this.handleChangeContent);
-
 	}
 
 	handleChangeContent(event, page, resources) {
+		if( page === "user" ) {
+			this.setState({
+				userPageResources: resources,
+			});
+		}
+
 		this.setState({
 			content: page,
-			resources: resources,
 		});
 	}
 
 	RenderContent = () => {
 		const stateContent = this.state.content;
+		const userPageResources = this.state.userPageResources;
 		let content = null; 
 
 		if(stateContent === "home")
 			content = <HomePage />;
 		else if(stateContent === "user")
-			content = <UserPage resources={this.state.resources} />;
+			content = <UserPage resources={userPageResources} />;
 		else if(stateContent === "manager")
 			content = <ManagerPage />;
 		else if(stateContent === "teacher")
