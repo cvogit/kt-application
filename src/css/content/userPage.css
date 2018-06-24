@@ -98,7 +98,9 @@
 			max-height: 80%;
 			overflow-y: scroll;
 		}
-
+/*
+	UserFeed.js
+*/
 	.mail-boxes {
 		background-color: white;
 		float:left;
@@ -197,5 +199,12 @@
 				overflow: hidden;
 			}
 
+/*
+	UserPictures.js
+*/
 
-
+.tile-viewport > img {
+	cursor: pointer;
+  margin-left: 0px;
+  margin-top: 0px;  width: auto !important;
+}

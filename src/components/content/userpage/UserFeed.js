@@ -67,18 +67,30 @@ class UserFeed extends Component {
 				tRequest.execute((response) => { 
 					var tMessageArray = [];
 					var tAttachmentId = [];
-					var tPayload = response.payload.parts;
+					var tPayload = response.payload;
 
-					tPayload.forEach(function(part) {
-						if(part.body.size !== 0) {
-							if(part.body.data) {
-								var tMessage = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+					if(tPayload) {
+						if(tPayload.body.size === 0) {
+							tPayload.parts.forEach(function(part) {
+								if(part.body.size !== 0) {
+									if(part.body.data) {
+										var tMessage = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+								  	tMessageArray.push(tMessage);
+								  } else if (part.body.attachmentId) {
+								  	tAttachmentId.push(part.body.attachmentId);
+								  }
+							  }
+							});
+						} else {
+							if(tPayload.body.data) {
+								var tMessage = atob(tPayload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
 						  	tMessageArray.push(tMessage);
-						  } else if (part.body.attachmentId) {
-						  	tAttachmentId.push(part.body.attachmentId);
+						  } else if (tPayload.body.attachmentId) {
+						  	tAttachmentId.push(tPayload.body.attachmentId);
 						  }
-					  }
-					});
+						}
+						
+					}
 
 					var tMail;
 					if(pBox  === 'Inbox') {
