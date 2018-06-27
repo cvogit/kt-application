@@ -24,7 +24,6 @@ var userLocalInfo = null;
 var userPageResources 	= null;
 var userAvatar 					= null;
 var userInfo 	 					= null;
-var userImagesId				= [];
 var userImagesPath 	 		= [];
 
 // Path to navigate user files
@@ -64,6 +63,8 @@ function showWindow() {
 function createRequestWindow() {
 	requestWin = new BrowserWindow({width:800, height:600, show:false});
 	requestWin.loadURL(isDev ? `file://${path.join(__dirname, './Requests.html')}` : `file://${path.join(__dirname, '../build/Requests.html')}`);
+	requestWin.webContents.openDevTools();
+	
 	requestWin.on('closed', () => requestWin = null);
 }
  
@@ -146,15 +147,17 @@ function store(file, path) {
 function readyUserPageResources() {
 
 	// Ready user avatar
-	var avatar = userFolder+'/images/avatar/avatar_'+userInfo.avatarId;
-	if ( !isFileExist(avatar)) {
-		// Erase directory for user avatar and fetch avatar if doesn't exist locally
-		jetpack.dir(getAbsolutePath(userFolder+'/images/avatar'), { empty: true,});
-		isOnline().then(online => {
-			requestWin.webContents.send('getUserAvatarRequest');
-		});
-	} else {
-		userAvatar = getRelativePath(userFolder+"/images/avatar/avatar_"+userInfo.avatarId);
+	if(userInfo.avatarId !== 0 && userInfo.avatarId) {
+		var avatar = userFolder+'/images/avatar/avatar_'+userInfo.avatarId;
+		if ( !isFileExist(avatar)) {
+			// Erase directory for user avatar and fetch avatar if doesn't exist locally
+			jetpack.dir(getAbsolutePath(userFolder+'/images/avatar'), { empty: true,});
+			isOnline().then(online => {
+				requestWin.webContents.send('getUserAvatarRequest');
+			});
+		} else {
+			userAvatar = getRelativePath(userFolder+"/images/avatar/avatar_"+userInfo.avatarId);
+		}
 	}
 
 	// Ready user images that are missing locally
@@ -199,8 +202,22 @@ ipcMain.on('getLoginRequest', (event, arg) => {
 });
 
 // Set up home page
-ipcMain.on('homePageReady', (event, arg) => {
+ipcMain.on('homePageReady', (event) => {
 	requestWin.webContents.send('getAnnouncementsRequest');
+});
+
+// Send a post request with the image file
+ipcMain.on('postImagesRequest', (event, pImageFileBase64, pImageType) => {
+	requestWin.webContents.send('postImagesRequest', pImageFileBase64, pImageType);
+});
+
+// Get the image id and send a delete request
+ipcMain.on('deleteImagesRequest', (event, pImageDeleteArray) => {
+	var imageId;
+	pImageDeleteArray.forEach( (imageSrc) => {
+		imageId = parseInt(imageSrc.split(userFolder+'/images/personal/image_')[1]);
+		requestWin.webContents.send('deleteImagesRequest', imageId);
+	});
 });
 
 // ***********************
@@ -259,11 +276,30 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 });
 
 // To: Homepage
-ipcMain.on('getAnnouncementsSuccess', (event, arg) => {
-	win.webContents.send('updateAnnouncements', arg.result, arg.offset, arg.total);
+ipcMain.on('getAnnouncementsSuccess', (event, data) => {
+	win.webContents.send('updateAnnouncements', data.result, data.offset, data.total);
 });
-ipcMain.on('getAnnouncementsFailure', (event, arg) => {
-	console.log(arg);
+ipcMain.on('getAnnouncementsFailure', (event, data) => {
+	console.log(data);
+});
+
+ipcMain.on('postImagesSuccess', (event, pImageId) => {
+	console.log(pImageId);
+});
+
+ipcMain.on('deleteImagesSuccess', (event, pImageId) => {
+	var imagePath = userFolder+'/images/personal/image_'+pImageId;
+	jetpack.remove(getAbsolutePath(imagePath));
+
+	var i = -1;
+	while( i++ < userImagesPath.length ) {
+		if( imagePath === userImagesPath[i] ) {
+			userImagesPath.splice(i, 1);
+			break;
+		}
+	}
+	// Reload UserPictures.js
+	win.webContents.send('loadUserPictures', userImagesPath);
 });
 
 // *******************
@@ -306,8 +342,7 @@ ipcMain.on('connectionError', (event, arg) => {
 ipcMain.on('appSelectContent', (event, arg) => {
 	if (arg === "user")	{
 		userResources = { "avatar": userAvatar, 
-											"userInfo": userInfo, 
-											"userImages": userImagesPath};
+											"userInfo": userInfo};
 
 		win.webContents.send('appChangeContent', arg,	userResources);
 	}
@@ -322,4 +357,11 @@ ipcMain.on('appUserGoogleLogin', (event, userGoogleInfo) => {
 // Return user google data
 ipcMain.on('registerSuccess', (event, result) => {
 	//win.webContents.send('registerSuccess', userGoogle);
+});
+
+// Give user images path to UserPictures.js
+// From: UserPictures.js
+// To:   UserPictures.js
+ipcMain.on('getUserPictures', (event) => {
+	win.webContents.send('loadUserPictures', userImagesPath);
 });

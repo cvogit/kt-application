@@ -34,10 +34,10 @@ class Sidebar extends Component {
 		});
 	}
 
-	handleRolesSet(event, arg) {
+	handleRolesSet(event, pRoles) {
 		var tRoles = "user ";
-		if(arg !== null)
-			tRoles += arg;
+		if(pRoles !== null)
+			tRoles += pRoles;
 		this.setState({
 			roles: tRoles,
 		});

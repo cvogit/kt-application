@@ -76,18 +76,7 @@
 			top: -38px;
 		}
 
-	.userpage-sidebar {
-		width: 14.5%;
-		height: 675px;
-		padding: 0px 8px;
-		position: relative;
-		text-align: left;
-		top: 60px;
-		margin: 0px 1.85%;
-		float: left;
-	}
-
-	.userpage-center-content {
+	.userpage-main-content {
 		height: 700px;
     width:  96%;
     position: relative;
@@ -202,9 +191,40 @@
 /*
 	UserPictures.js
 */
+.image-gallery-sidebar {
+	height: 570px;
+	width: 14.5%;
+	float: left;
+}
+
+.image-gallery-container {
+	height: 570px;
+	width: 85.5%;
+	float: left;
+}
+
+.ReactGridGallery {
+	overflow-y: scroll !important;
+	width:  963px !important;
+	margin: auto !important;
+}
 
 .tile-viewport > img {
 	cursor: pointer;
   margin-left: 0px;
-  margin-top: 0px;  width: auto !important;
+  margin-top: 0px;  
+  width: auto !important;
+}
+
+.image-preview-container {
+	margin: 0 auto;
+	height: 200px;
+	width: 300px;
+}
+
+.image-preview {
+	width: auto;
+}
+
+.file-input {
 }

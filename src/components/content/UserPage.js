@@ -10,7 +10,7 @@ import UserEdit 			from './userpage/UserEdit';
 
 import '../../assets/react-toolbox/theme.css';
 import '../../css/content/userPage.css';
-import fillerUserImage from '../../images/user.png';
+import defaultAvatar from '../../images/default_avatar.png';
 
 const electron = window.require('electron');
 const ipcRenderer  = electron.ipcRenderer;
@@ -24,7 +24,6 @@ class UserPage extends Component {
 			userpageIndex   : 0,
 		};
 		
-		this.LoadUserAvatar 			= this.LoadUserAvatar.bind(this);
 		this.handleFixedTabChange = this.handleFixedTabChange.bind(this);
 	}
 
@@ -33,16 +32,13 @@ class UserPage extends Component {
 
 	componentWillMount() {
 		const resources = this.props.resources;
-		
-		this.setState({
-			avatar: resources.avatar,
-			userResources: 	resources,
-		});
-	}
+		var tAvatar 			= this.props.resources.avatar;
+		if(tAvatar === null)
+			tAvatar = defaultAvatar;
 
-	LoadUserAvatar(event, avatar) {
 		this.setState({
-			avatar: avatar,
+			avatar: tAvatar,
+			userResources: 	resources,
 		});
 	}
 
@@ -53,8 +49,7 @@ class UserPage extends Component {
 	}
 	
 	RenderUserPage = () => {
-		var avatarImage 		= this.state.userResources.avatar;
-		var userPictures 	 	= this.state.userResources.userImages;
+		var avatarImage 		= this.state.avatar;
 		var userpageIndex 	= this.state.userpageIndex;
 
 		var userName 	= this.state.userResources.userInfo.firstName + " " + this.state.userResources.userInfo.lastName;
@@ -65,7 +60,7 @@ class UserPage extends Component {
 		if(userpageIndex === 0) {
 			userpageCenter = <UserFeed />
 		} else if(userpageIndex === 1) {
-			userpageCenter = <UserPictures pictures={userPictures} />
+			userpageCenter = <UserPictures />
 		} else if(userpageIndex === 2) {
 			userpageCenter = <UserHistory />
 		} else if(userpageIndex === 3) {

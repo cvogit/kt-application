@@ -31,7 +31,7 @@ class UserFeed extends Component {
 		this.handlePageClick 		= this.handlePageClick.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.getGoogleMail(15, this.state.nextInboxPageToken, 'Inbox');
 		this.getGoogleMail(15, this.state.nextSentPageToken, 'Sent');
 	}
@@ -150,7 +150,8 @@ class UserFeed extends Component {
 		});
   }
 
-  handleDialogExit() {
+  handleDialogExit(event) {
+		event.preventDefault();
     this.setState({
     	dialogActive: false,
     });
@@ -164,6 +165,7 @@ class UserFeed extends Component {
   }
 
   handlePageClick(event) {
+		event.preventDefault();
 		this.setState({
 			selected: event.selected,
 		});
@@ -224,7 +226,7 @@ class UserFeed extends Component {
 				        	</Dialog>;
 
 		return (
-			<div className="userpage-center-content">
+			<div className="userpage-main-content">
 				{dialog}
 				<div className="mail-boxes">
 					{renderButtons}

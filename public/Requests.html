@@ -2,7 +2,7 @@
 
 	const electron = window.require('electron');
 	const ipcRenderer  = electron.ipcRenderer;
-	const axios = require('axios');
+	const axios 	= require('axios');
 
 	const baseUrl = 'http://localhost';
 
@@ -19,8 +19,6 @@
 			password_confirmation: 			arg.confirmPassword,
 		})
 		.then(function (response) {
-		console.log("Register successful.");
-
 			ipcRenderer.send('registerSuccess', response.data);
 		})
 		.catch(function (error) {
@@ -127,11 +125,27 @@
 		});
 	});
 
-	// Get user image
-	ipcRenderer.on('getUserMessagesRequest', (event) => {
-		axios.get(baseUrl+'/messages')
+	// Post user image
+	ipcRenderer.on('postImagesRequest', (event, imageBase64, imageType) => {
+		const extension = imageType.split("image/")[1];
+		axios.post(baseUrl+'/users/'+user.id+'/images', {
+			imageBase64: 		imageBase64,
+			extension: extension,
+			base64Header: imageType,
+		})
 		.then(function (response) {
-			ipcRenderer.send('getUserMessagesSuccess', response.data);
+			console.log(response);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Delete user image
+	ipcRenderer.on('deleteImagesRequest', (event, imageId) => {
+		axios.delete(baseUrl+'/users/'+user.id+'/images/'+imageId)
+		.then(function (response) {
+			ipcRenderer.send('deleteImagesSuccess', response.data.result);
 		})
 		.catch(function (error) {
 			console.log(error);

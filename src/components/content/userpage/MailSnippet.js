@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
-/* global gapi */
-
 const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
 
 class MailSnippet extends Component {
 	constructor(props) {
@@ -21,7 +18,7 @@ class MailSnippet extends Component {
 
 		// Date
 		var tDate;
-		var tMailDate = new Date(parseInt(this.props.date));
+		var tMailDate = new Date(parseInt(this.props.date, 10));
 		const tCurrentDate = new Date();
 
 		const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
@@ -34,7 +31,7 @@ class MailSnippet extends Component {
 			var tMeridies = ' am';
 
 			if(tHour >= 12) {
-				if(tHour != 12)
+				if(tHour !== 12)
 					tHour = pDate.getHours() - 12;
 				tMeridies = ' pm';
 			}
