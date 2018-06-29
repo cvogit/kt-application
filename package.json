@@ -70,7 +70,8 @@
       "PROGRESS_BAR",
       "TABS",
       "TIME_PICKER",
-      "TOOLTIP"
+      "TOOLTIP",
+      "SNACKBAR"
     ],
     "customProperties": {},
     "output": "assets/react-toolbox"
