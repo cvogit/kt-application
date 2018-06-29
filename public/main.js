@@ -226,7 +226,7 @@ ipcMain.on('deleteImagesRequest', (event, pImageDeleteArray) => {
 
 // To: Register
 ipcMain.on('registerSuccess', (event, result) => {
-	win.webContents.send('registerSuccess', result);
+	win.webContents.send('snackbarMessage', 'Registered, awaiting confirmation.');
 });
 ipcMain.on('registerFailure', (event, arg) => {
 	win.webContents.send('registerFailure', arg);
@@ -235,6 +235,7 @@ ipcMain.on('registerFailure', (event, arg) => {
 // To: App
 ipcMain.on('loginSuccess', (event,arg) => {
 	win.webContents.send('loginSuccess');
+	win.webContents.send('snackbarMessage', 'Logged in.');
 });
 ipcMain.on('loginFailure', (event, arg) => {
 	win.webContents.send('loginFailure');

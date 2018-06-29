@@ -77,11 +77,11 @@
 		}
 
 	.userpage-main-content {
-		height: 700px;
-    width:  96%;
-    position: relative;
-    top: 60px;
-    margin: auto;
+		height: 72%;
+		width: 96%;
+		position: relative;
+		top: 25px;
+		margin: auto;
 	}
 		.dialog-container {
 			max-height: 80%;
@@ -115,8 +115,9 @@
 
 	.mail-content {
 		float: left;
-		margin: 0 2.5%;
-		width: 80%;
+    margin: 0 2.5%;
+    width: 80%;
+    height: 81%;
 	}
 
 	.mail-snippets {

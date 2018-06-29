@@ -4,6 +4,8 @@ import '../assets/react-toolbox/theme.css';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 import theme from '../assets/react-toolbox/theme.js';
 
+import Snackbar from 'react-toolbox/lib/snackbar/Snackbar';
+
 import Dashboard from './Dashboard';
 import Loading from './commons/Loading';
 import PopUp from './commons/PopUp';
@@ -23,6 +25,8 @@ class App extends Component {
 			isLoading		: 	false,
 			isError			: 	false,
 			errorContent: 	"",
+			snackbarActive 		: 	false,
+			snackbarMessage 	:  	'',
 		}
 
 		this.AppReady 			= this.AppReady.bind(this);
@@ -30,6 +34,8 @@ class App extends Component {
 		this.LoggedOut			= this.LoggedOut.bind(this);
 		this.OfflineError 	= this.OfflineError.bind(this);
 		this.ResetError 		= this.ResetError.bind(this);
+		this.handleSnackbarMessage = this.handleSnackbarMessage.bind(this);
+		this.handleSnackbarTimeout = this.handleSnackbarTimeout.bind(this);
 	}
 
 	componentDidMount() {
@@ -37,6 +43,7 @@ class App extends Component {
 		ipcRenderer.on('loginSuccess', 	this.LoginSuccess);
 		ipcRenderer.on('loggedOut', 		this.LoggedOut);
 		ipcRenderer.on('offlineError', 	this.OfflineError);
+		ipcRenderer.on('snackbarMessage', this.handleSnackbarMessage);
 	}
 
 
@@ -58,6 +65,17 @@ class App extends Component {
 			isLoggedIn: 	false,
 		});
 	}
+
+	handleSnackbarMessage(event, message) {
+		this.setState({
+			snackbarMessage: message,
+			snackbarActive: true,
+		});
+	}
+
+	handleSnackbarTimeout(event, instance) {
+    this.setState({ snackbarActive: false });
+  };
 
 	OfflineError(event, arg) {
 		this.setState({
@@ -81,6 +99,12 @@ class App extends Component {
 		const isError 		= this.state.isError;
 		const errorContent= this.state.errorContent;
 		
+		var snackbar = null;
+		if(this.state.snackbarActive) {
+			snackbar =	<div className="snackbar">
+										<h3>{this.state.snackbarMessage}</h3>
+									</div>
+		}
 		return (
 			<div className="app-body">
 				{	isLoggedIn 
@@ -92,13 +116,8 @@ class App extends Component {
 					? <Loading />
 					: null
 				}
-				{
-					isError
-					? <PopUp content={errorContent} />
-					: null
-				}
-
-			</div>
+				{snackbar}
+      </div>
 			);
 	};
 

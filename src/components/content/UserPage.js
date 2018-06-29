@@ -27,9 +27,6 @@ class UserPage extends Component {
 		this.handleFixedTabChange = this.handleFixedTabChange.bind(this);
 	}
 
-	componentDidMount() {
-	}
-
 	componentWillMount() {
 		const resources = this.props.resources;
 		var tAvatar 			= this.props.resources.avatar;

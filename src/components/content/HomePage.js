@@ -24,9 +24,6 @@ class HomePage extends Component {
 		this.handlePageClick = this.handlePageClick.bind(this);
 	}
 
-	componentWillMount() {
-	}
-
 	componentDidMount() {
 		ipcRenderer.send('homePageReady');
 		ipcRenderer.on('updateAnnouncements', 		this.AnnouncementSetUp);

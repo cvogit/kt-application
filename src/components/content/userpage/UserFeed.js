@@ -32,8 +32,8 @@ class UserFeed extends Component {
 	}
 
 	componentDidMount() {
-		this.getGoogleMail(15, this.state.nextInboxPageToken, 'Inbox');
-		this.getGoogleMail(15, this.state.nextSentPageToken, 'Sent');
+		this.getGoogleMail(50, this.state.nextInboxPageToken, 'Inbox');
+		this.getGoogleMail(50, this.state.nextSentPageToken, 'Sent');
 	}
 
 	getGoogleMail(pMaxResult = 10, nextPageToken = null, pBox = 'Inbox') {
