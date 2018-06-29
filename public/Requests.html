@@ -51,18 +51,6 @@
 				.catch(function (error) {
 					ipcRenderer.send('connectionError');
 				});
-
-				/*
-				// Fetch user payment history
-				axios.get(baseUrl+'/users/'+userId+'/payments'
-				)
-				.then(function (response) {
-					console.log(response.data.result);
-					ipcRenderer.send('getUserPaymentsSuccess', response.data.result);
-				})
-				.catch(function (error) {
-					ipcRenderer.send('connectionError');
-				});*/
 			}
 			else 
 				ipcRenderer.send('connectionError', {'message' : {'error' : 'Unable to login.'}});
@@ -84,7 +72,6 @@
 
 	});
 
-
 	// Get user avatar
 	ipcRenderer.on('getUserAvatarRequest', (event) => {
 		if(user.avatarId !== 0) {
@@ -101,7 +88,7 @@
 				imageName = imageName.slice(imageNameStart+1, imageName.length).replace(/['"]+/g, '');
 
 				// return image and image name
-				ipcRenderer.send('getUserAvatarSuccess', image, imageName);
+				ipcRenderer.send('getUserAvatarSuccess', image);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -129,12 +116,11 @@
 	ipcRenderer.on('postImagesRequest', (event, imageBase64, imageType) => {
 		const extension = imageType.split("image/")[1];
 		axios.post(baseUrl+'/users/'+user.id+'/images', {
-			imageBase64: 		imageBase64,
-			extension: extension,
-			base64Header: imageType,
+			imageBase64: 	imageBase64,
+			extension: 		extension,
 		})
 		.then(function (response) {
-			console.log(response);
+			ipcRenderer.send('postImagesSuccess', response.data.result);
 		})
 		.catch(function (error) {
 			console.log(error);

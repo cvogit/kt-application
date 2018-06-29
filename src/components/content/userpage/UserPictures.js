@@ -74,7 +74,7 @@ class UserPictures extends Component {
 	handleSelectImageFile (event) {
     let reader = new FileReader();
     let file = event.target.files[0];
-    console.log(file);
+
     // store the rendered image preview
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -177,8 +177,8 @@ class UserPictures extends Component {
 			<div className="userpage-main-content">
 				{dialog}
 				<div className="image-gallery-sidebar">
-					<Button label='Add Image' raised primary onClick={openUploadDialog} />
-					<Button label='Delete Selected' raised primary onClick={openDeleteDialog} />
+					<Button className="picture-button" label='Add Image' raised primary onClick={openUploadDialog} />
+					<Button className="picture-button" label='Delete Selected' raised primary onClick={openDeleteDialog} />
 				</div>
 				<div className="image-gallery-container">
 					<Gallery images={galleryImages} onSelectImage={this.handleSelectImage} backdropClosesModal={true} />

@@ -284,7 +284,7 @@ ipcMain.on('getAnnouncementsFailure', (event, data) => {
 });
 
 ipcMain.on('postImagesSuccess', (event, pImageId) => {
-	console.log(pImageId);
+	requestWin.webContents.send('getUserImageRequest', pImageId);
 });
 
 ipcMain.on('deleteImagesSuccess', (event, pImageId) => {
@@ -305,11 +305,11 @@ ipcMain.on('deleteImagesSuccess', (event, pImageId) => {
 // *******************
 // Data to set up session
 // *******************
-ipcMain.on('getUserAvatarSuccess', (event, image, imageName) => {
+ipcMain.on('getUserAvatarSuccess', (event, pImage) => {
 	var avatarPath = userFolder+'/images/avatar/avatar_'+userInfo.avatarId;
 
 	// Write the file and set path to avatar
-	store(image, avatarPath);
+	store(pImage, avatarPath);
 	userAvatar = avatarPath;
 });
 
@@ -319,6 +319,7 @@ ipcMain.on('getUserImageSuccess', (event, image, imageId) => {
 	// Write the file and set path
 	store(image, imagePath);
 	userImagesPath.push(getRelativePath(imagePath));
+	win.webContents.send('loadUserPictures', userImagesPath);
 });
 
 ipcMain.on('getUserPaymentsSuccess', (event, payments) => {
