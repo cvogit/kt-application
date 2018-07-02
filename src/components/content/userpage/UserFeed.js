@@ -54,9 +54,10 @@ class UserFeed extends Component {
 	  request.execute((response) => {
 	  	// Set variables and state
 	  	var tGMailId = response.messages;
-	  	this.state.total += tGMailId.length;
-	  	this.state.nextInboxPageToken = response.nextPageToken;
-
+	  	this.setState({
+	  		total: this.state.total + tGMailId.length,
+	  		nextInboxPageToken : response.nextPageToken,
+	  	});
 
 	   	for( var i = 0; i < tGMailId.length; i++) {
 				var tRequest = gapi.client.gmail.users.messages.get({

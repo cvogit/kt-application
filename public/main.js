@@ -20,16 +20,27 @@ var userLocalInfo = null;
 
 // Current session user data
 
-//Data for user page
+// Data for user page
 var userPageResources 	= null;
 var userAvatar 					= null;
 var userInfo 	 					= null;
 var userImagesPath 	 		= [];
 
+// Data for manager page
+var managerPageResources = null;
+var UserList 		= [];
+var newUserList = [];
+var StudentList 	= [];
+
 // Path to navigate user files
 var userFolder 					= null;
-var userFolderAbsolute 	= null;
-var userFolderRelative 	= null;
+var userFolderAbsolute 	= null; // Electron usage
+var userFolderRelative 	= null; // Reactjs usage
+
+// Path to navigate manager files
+var managerFolder						= null;
+var managerFolderAbsolute 	= null;
+var managerFolderRelative 	= null;
 
 function createWindow() {
 	var screenElectron = electron.screen;
@@ -151,7 +162,7 @@ function readyUserPageResources() {
 		var avatar = userFolder+'/images/avatar/avatar_'+userInfo.avatarId;
 		if ( !isFileExist(avatar)) {
 			// Erase directory for user avatar and fetch avatar if doesn't exist locally
-			jetpack.dir(getAbsolutePath(userFolder+'/images/avatar'), { empty: true,});
+			jetpack.remove(getAbsolutePath(userFolder+'/images/avatar'));
 			isOnline().then(online => {
 				requestWin.webContents.send('getUserAvatarRequest');
 			});
@@ -175,7 +186,36 @@ function readyUserPageResources() {
 }
 
 function readyManagerPageResources() {
+	managerFolder = '/managers/'+userInfo.lastName+'_'+userInfo.firstName+'_'+userInfo.id;
 
+	// Get absolute path and relative path to check for local resources
+	managerFolderAbsolute = getAbsolutePath(managerFolder);
+	managerFolderRelative = getRelativePath(managerFolder);
+
+	// Make the manager folder if doesn't exist
+	jetpack.dir(managerFolderAbsolute);
+	
+
+	// Check active users resources
+	UserList.forEach( (user) => {
+		var userFolder = managerFolderAbsolute + '/users/' + user.firstName +
+																								'_' + user.lastName +  
+																								'_' + user.id + '/images/image_';
+
+		user.imagePath = managerFolderRelative + '/users/' + user.firstName +
+																								'_' + user.lastName +  
+																								'_' + user.id + '/images/image_'
+		// Check user images, if doesn't exist locally, fetch it
+		user.imageId.forEach( (imageId) => {
+			var imagePath = userFolder + imageId.id;
+			if ( !isFileExist(imagePath)) {
+				var relativePath = user.imagePath + imageId.id;
+				isOnline().then(online => {
+					requestWin.webContents.send('getAnotherUserImageRequest', user.id, imageId.id, relativePath);
+				});
+			} 
+		});
+	});
 }
 
 // **********************
@@ -269,7 +309,7 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 		if (role === "user")
 			readyUserPageResources();
 		else if(role === "manager")
-			readyManagerPageResources();
+			requestWin.webContents.send('getManagerResources');
 	});
 
 	win.webContents.send('userRolesSuccess', user[0].roles);
@@ -330,6 +370,19 @@ ipcMain.on('getUserPaymentsSuccess', (event, payments) => {
 	store(payments, avatarPath);
 });
 
+ipcMain.on('getManagerResourcesSuccess', (event, pManagerResources) => {
+	newUserList = pManagerResources.newUsers;
+	UserList 		= pManagerResources.users;
+	StudentList = pManagerResources.students;
+	readyManagerPageResources();
+});
+
+ipcMain.on('getAnotherUserImageSuccess', (event, image, localPath) => {
+	// Write the file
+	store(image, localPath);
+});
+
+
 ipcMain.on('connectionError', (event, arg) => {
 	console.log(arg);
 });
@@ -347,8 +400,16 @@ ipcMain.on('appSelectContent', (event, arg) => {
 											"userInfo": userInfo};
 
 		win.webContents.send('appChangeContent', arg,	userResources);
+	} else if(arg === "manager")	{
+		managerResources = 	{ "UserList"   	: UserList,
+													"newUserList"	: newUserList,
+													"StudentList" : StudentList,
+												};
+
+		win.webContents.send('appChangeContent', arg,	managerResources);
 	}
-	win.webContents.send('appChangeContent', arg);
+	else 
+		win.webContents.send('appChangeContent', arg);
 });
 
 // Set user google data

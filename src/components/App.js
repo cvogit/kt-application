@@ -116,11 +116,6 @@ class App extends Component {
 					? <Loading />
 					: null
 				}
-				<Snackbar
-          active={this.state.snackbarActive}
-          label={this.state.snackbarMessage}
-          timeout={2000}
-        />
       </div>
 			);
 	};

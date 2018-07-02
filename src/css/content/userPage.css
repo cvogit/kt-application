@@ -4,17 +4,17 @@
  }
 
 .userpage-content {
-  background-color: rgba(168, 215, 255, 0.45);
-  margin: 100px auto;
-  padding: 0px;
-  width: 1335px;
-  height: 950px;
-  border: 1px rgba(91, 154, 207, 0.55) solid;
- }
+	background-color: rgba(168, 215, 255, 0.45);
+	margin: 2% auto;
+	padding: 0px;
+	width: 1335px;
+	height: 81.5%;
+	border: 1px rgba(91, 154, 207, 0.55) solid;
+}
 
 .userpage-header {
 	background-color: rgba(209, 75, 17, 0.8);
-	height: 145px;
+	height: 22%;
 	width: 100%;
 	position: relative;
 }
@@ -77,11 +77,11 @@
 		}
 
 	.userpage-main-content {
-		height: 72%;
-		width: 96%;
-		position: relative;
-		top: 25px;
-		margin: auto;
+    height: 72.3%;
+    width: 96%;
+    position: relative;
+    top: 50px;
+    margin: auto;
 	}
 		.dialog-container {
 			max-height: 80%;
@@ -114,10 +114,10 @@
 		}
 
 	.mail-content {
-		float: left;
-    margin: 0 2.5%;
+    float: left;
+    margin: -4% 2.5% 0 2.5%;
     width: 80%;
-    height: 81%;
+    height: 100%;
 	}
 
 	.mail-snippets {

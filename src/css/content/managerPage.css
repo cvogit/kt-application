@@ -1,0 +1,10 @@
+.manager-page-container {
+	height: 100%;
+	width: auto;
+}
+
+.manager-page-content {
+	margin: 0px auto;
+	padding: 0px;
+	height: 88%;
+}

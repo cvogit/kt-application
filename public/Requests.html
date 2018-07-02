@@ -138,18 +138,41 @@
 		});
 	});
 
-	ipcRenderer.on('devTest', (event, arg) => {
-		console.log(arg);
-	});
-
+	// Get mail request
 	ipcRenderer.on('getGoogleMailRequest', (event, arg) => {
-		console.log(arg);
 		axios.get('https://www.googleapis.com/gmail/v1/users/userId/messages', {
 			userId: 				'me',
 			maxResult: 			arg,
 		})
 		.then(function (response) {
 			ipcRenderer.send('resultGoogleMailRequest', response.data);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Get manager resource
+	ipcRenderer.on('getManagerResources', (event) => {
+		axios.get(baseUrl+'/managers/resources')
+		.then(function (response) {
+			ipcRenderer.send('getManagerResourcesSuccess', response.data.result);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Get another user image
+	ipcRenderer.on('getAnotherUserImageRequest', (event, userId, imageId, localPath) => {
+		axios.get(baseUrl+'/users/'+userId+'/images/'+imageId, {
+			responseType : 'arraybuffer'
+		})
+		.then(function (response) {
+			var image = new Buffer(response.data, 'base64');
+
+			// return image and image id
+			ipcRenderer.send('getAnotherUserImageSuccess', image, localPath);
 		})
 		.catch(function (error) {
 			console.log(error);

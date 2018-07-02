@@ -28,7 +28,7 @@ class UserPage extends Component {
 	}
 
 	componentWillMount() {
-		const resources = this.props.resources;
+		const resources 	= this.props.resources;
 		var tAvatar 			= this.props.resources.avatar;
 		if(tAvatar === null)
 			tAvatar = defaultAvatar;

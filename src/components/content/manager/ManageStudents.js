@@ -3,32 +3,32 @@ import React, { Component } from 'react';
 const electron = window.require('electron');
 const ipcRenderer  = electron.ipcRenderer;
 
-class UserHistory extends Component {
+class ManageStudents extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userpageIndex   : 0,
 
 		};
 	}
-	
-	componentWillMount() {
 
+	componentDidMount() {
 	}
-	
-	RenderUserHistory = () => {
+
+	RenderManageStudents = () => {
+		
 		return (
-			<div className="userpage-center-content">
+			<div className="manage-student-content">
+
 			</div>
 			);
 	}
 
 	render() {	
 		return (
-			<this.RenderUserHistory />
+			<this.RenderManageStudents />
 			);
 	}
 }
 
 
-export default UserHistory;
+export default ManageStudents;
