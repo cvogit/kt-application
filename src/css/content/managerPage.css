@@ -8,3 +8,59 @@
 	padding: 0px;
 	height: 88%;
 }
+
+.manager-page-navigation-content {
+	height: 5.2%;
+}
+
+.manage-user-container {
+	height: 94.5%;
+}
+
+.manage-user-content {
+	min-height: 81%;
+	margin: 5% 4%;
+}
+
+.user-list {
+	border-right: 1px dotted gray;
+	float: left;
+	max-height: 700px;
+	width: 	15%;
+	overflow: scroll;
+}
+
+.user-content {
+	border-left: 1px dotted gray;
+	display: flex;
+	max-height: 700px;
+	overflow: scroll;
+	padding: 10px;
+}
+
+.user-wrapper > span > span > span > div > img {
+	max-width: 55px;
+	max-height: 55px;
+	width: auto;
+	height: auto;
+	left: -8px;
+}
+
+.employee-content {
+	height: 700px;
+	width: 80%;
+	float: right;
+}
+
+.report-dropdown {
+	max-width: 300px;
+	width: 100%;
+}
+
+.dropdown-container {
+	display: flex;
+}
+
+.dropdown-content {
+	display: flex;
+}

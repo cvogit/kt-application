@@ -32,8 +32,8 @@ class UserFeed extends Component {
 	}
 
 	componentDidMount() {
-		this.getGoogleMail(50, this.state.nextInboxPageToken, 'Inbox');
-		this.getGoogleMail(50, this.state.nextSentPageToken, 'Sent');
+		this.getGoogleMail(14, this.state.nextInboxPageToken, 'Inbox');
+		this.getGoogleMail(14, this.state.nextSentPageToken, 'Sent');
 	}
 
 	getGoogleMail(pMaxResult = 10, nextPageToken = null, pBox = 'Inbox') {
@@ -55,73 +55,74 @@ class UserFeed extends Component {
 	  	// Set variables and state
 	  	var tGMailId = response.messages;
 	  	this.setState({
-	  		total: this.state.total + tGMailId.length,
 	  		nextInboxPageToken : response.nextPageToken,
 	  	});
 
-	   	for( var i = 0; i < tGMailId.length; i++) {
-				var tRequest = gapi.client.gmail.users.messages.get({
-			    'userId': 'me',
-			    'id': tGMailId[i].id,
-			  });
+	  	if(tGMailId !== undefined) {
+		   	for( var i = 0; i < tGMailId.length; i++) {
+					var tRequest = gapi.client.gmail.users.messages.get({
+				    'userId': 'me',
+				    'id': tGMailId[i].id,
+				  });
 
-				tRequest.execute((response) => { 
-					var tMessageArray = [];
-					var tAttachmentId = [];
-					var tPayload = response.payload;
+					tRequest.execute((response) => { 
+						var tMessageArray = [];
+						var tAttachmentId = [];
+						var tPayload = response.payload;
 
-					if(tPayload) {
-						if(tPayload.body.size === 0) {
-							tPayload.parts.forEach(function(part) {
-								if(part.body.size !== 0) {
-									if(part.body.data) {
-										var tMessage = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
-								  	tMessageArray.push(tMessage);
-								  } else if (part.body.attachmentId) {
-								  	tAttachmentId.push(part.body.attachmentId);
+						if(tPayload) {
+							if(tPayload.body.size === 0) {
+								tPayload.parts.forEach(function(part) {
+									if(part.body.size !== 0) {
+										if(part.body.data) {
+											var tMessage = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+									  	tMessageArray.push(tMessage);
+									  } else if (part.body.attachmentId) {
+									  	tAttachmentId.push(part.body.attachmentId);
+									  }
 								  }
+								});
+							} else {
+								if(tPayload.body.data) {
+									var tMessage = atob(tPayload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+							  	tMessageArray.push(tMessage);
+							  } else if (tPayload.body.attachmentId) {
+							  	tAttachmentId.push(tPayload.body.attachmentId);
 							  }
-							});
-						} else {
-							if(tPayload.body.data) {
-								var tMessage = atob(tPayload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
-						  	tMessageArray.push(tMessage);
-						  } else if (tPayload.body.attachmentId) {
-						  	tAttachmentId.push(tPayload.body.attachmentId);
-						  }
+							}
+							
 						}
-						
-					}
 
-					var tMail;
-					if(pBox  === 'Inbox') {
-						tMail = {
-							Id: this.state.inbox.length,
-							From: response.payload.headers.find( header => header.name === 'From' ),
-							Subject: response.payload.headers.find( header => header.name === 'Subject' ),
-							Snippet: response.snippet,
-							InternalDate: response.internalDate,
-							Date: response.payload.headers.find( header => header.name === 'Date' ),
-							Payload: tMessageArray,
-							AttachmentId: tAttachmentId,
-						};
+						var tMail;
+						if(pBox  === 'Inbox') {
+							tMail = {
+								Id: this.state.inbox.length,
+								From: response.payload.headers.find( header => header.name === 'From' ),
+								Subject: response.payload.headers.find( header => header.name === 'Subject' ),
+								Snippet: response.snippet,
+								InternalDate: response.internalDate,
+								Date: response.payload.headers.find( header => header.name === 'Date' ),
+								Payload: tMessageArray,
+								AttachmentId: tAttachmentId,
+							};
 
-	    			this.addMail(tMail, 'Inbox');
-					} else if(pBox  === 'Sent') {
-						tMail = {
-							Id: this.state.sent.length,
-							To: response.payload.headers.find( header => header.name === 'To' ),
-							Subject: response.payload.headers.find( header => header.name === 'Subject' ),
-							Snippet: response.snippet,
-							InternalDate: response.internalDate,
-							Date: response.payload.headers.find( header => header.name === 'Date' ),
-							Payload: tMessageArray,
-							AttachmentId: tAttachmentId,
-						};
+		    			this.addMail(tMail, 'Inbox');
+						} else if(pBox  === 'Sent') {
+							tMail = {
+								Id: this.state.sent.length,
+								To: response.payload.headers.find( header => header.name === 'To' ),
+								Subject: response.payload.headers.find( header => header.name === 'Subject' ),
+								Snippet: response.snippet,
+								InternalDate: response.internalDate,
+								Date: response.payload.headers.find( header => header.name === 'Date' ),
+								Payload: tMessageArray,
+								AttachmentId: tAttachmentId,
+							};
 
-	    			this.addMail(tMail, 'Sent');
-					}
-	   		});
+		    			this.addMail(tMail, 'Sent');
+						}
+		   		});
+				}
 			}
     });
   }

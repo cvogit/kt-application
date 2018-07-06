@@ -30,7 +30,8 @@ var userImagesPath 	 		= [];
 var managerPageResources = null;
 var UserList 		= [];
 var newUserList = [];
-var StudentList 	= [];
+var StudentList = [];
+var Reports 		= null;
 
 // Path to navigate user files
 var userFolder 					= null;
@@ -194,7 +195,10 @@ function readyManagerPageResources() {
 
 	// Make the manager folder if doesn't exist
 	jetpack.dir(managerFolderAbsolute);
-	
+
+	// Store the current report list into file
+	const reportPath = managerFolder + '/reports';
+	store(Reports, reportPath);
 
 	// Check active users resources
 	UserList.forEach( (user) => {
@@ -206,15 +210,20 @@ function readyManagerPageResources() {
 																								'_' + user.lastName +  
 																								'_' + user.id + '/images/image_'
 		// Check user images, if doesn't exist locally, fetch it
-		user.imageId.forEach( (imageId) => {
-			var imagePath = userFolder + imageId.id;
+		user.images.forEach( (image) => {
+			var imagePath = userFolder + image.imageId;
 			if ( !isFileExist(imagePath)) {
-				var relativePath = user.imagePath + imageId.id;
+				var relativePath = user.imagePath + image.imageId;
 				isOnline().then(online => {
-					requestWin.webContents.send('getAnotherUserImageRequest', user.id, imageId.id, relativePath);
+					requestWin.webContents.send('getAnotherUserImageRequest', user.id, image.imageId, relativePath);
 				});
 			} 
 		});
+	});
+
+	// Check student resources
+	StudentList.forEach( (student) => {
+
 	});
 }
 
@@ -308,8 +317,10 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 	userRoles.map(function(role){
 		if (role === "user")
 			readyUserPageResources();
-		else if(role === "manager")
+		else if(role === "manager") {
+			// TODO get how many report already on local file and not load those again
 			requestWin.webContents.send('getManagerResources');
+		}
 	});
 
 	win.webContents.send('userRolesSuccess', user[0].roles);
@@ -374,6 +385,7 @@ ipcMain.on('getManagerResourcesSuccess', (event, pManagerResources) => {
 	newUserList = pManagerResources.newUsers;
 	UserList 		= pManagerResources.users;
 	StudentList = pManagerResources.students;
+	Reports 		= pManagerResources.reports;
 	readyManagerPageResources();
 });
 
@@ -427,4 +439,20 @@ ipcMain.on('registerSuccess', (event, result) => {
 // To:   UserPictures.js
 ipcMain.on('getUserPictures', (event) => {
 	win.webContents.send('loadUserPictures', userImagesPath);
+});
+
+
+// Give the necessary reports to window
+// From: Employee, Student components
+// To: 	 Employee, Student components
+ipcMain.on('getReports', (event, request, idArray) => {
+	
+	// Look for the reports belong to the employee and return it
+	var result = [];
+	if(request === 'employee') {
+		idArray.forEach( (index) => {
+			result.push(Reports[index.id - 1]);
+		});
+		win.webContents.send('employeeReportsResult', result);
+	}	
 });

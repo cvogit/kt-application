@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../assets/react-toolbox/theme.css';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
-import theme from '../assets/react-toolbox/theme.js';
+import theme from '../assets/react-toolbox/theme';
 
 import Snackbar from 'react-toolbox/lib/snackbar/Snackbar';
 
