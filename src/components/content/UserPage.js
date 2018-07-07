@@ -12,9 +12,6 @@ import '../../assets/react-toolbox/theme.css';
 import '../../css/content/userPage.css';
 import defaultAvatar from '../../images/default_avatar.png';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class UserPage extends Component {
 	constructor(props) {
 		super(props);

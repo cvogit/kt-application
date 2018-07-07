@@ -14,7 +14,7 @@
 }
 
 .manage-user-container {
-	height: 94.5%;
+	max-height: 85.5%;
 }
 
 .manage-user-content {
@@ -52,6 +52,14 @@
 	float: right;
 }
 
+.employee-tabs {
+	height: 50px;
+}
+
+.employee-report {
+	height: 650px;
+}
+
 .report-dropdown {
 	max-width: 300px;
 	width: 100%;
@@ -62,5 +70,28 @@
 }
 
 .dropdown-content {
-	display: flex;
+	width: 100%;
+}
+
+.dropdown-content > strong {
+	float: left;
+	margin: 0 0 0 10px;
+}
+
+.dropdown-content > small {
+	float: right;
+	margin: 3px 10px 0 0;
+}
+
+.report-container {
+	height: 569px;
+	border: 1px dotted gray;
+}
+
+.report-content {
+	height: 600px;
+	width: 98%;
+	margin: 8.5px 1%;
+	text-align: left;
+	overflow-y: scroll;
 }

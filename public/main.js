@@ -446,13 +446,33 @@ ipcMain.on('getUserPictures', (event) => {
 // From: Employee, Student components
 // To: 	 Employee, Student components
 ipcMain.on('getReports', (event, request, idArray) => {
-	
 	// Look for the reports belong to the employee and return it
 	var result = [];
 	if(request === 'employee') {
 		idArray.forEach( (index) => {
 			result.push(Reports[index.id - 1]);
 		});
+		console.log("Sending reports");
 		win.webContents.send('employeeReportsResult', result);
+	}	
+});
+
+// Give the students informations to window
+// From: Employee, Student components
+// To: 	 Employee, Student components
+ipcMain.on('getStudents', (event, request, idArray) => {
+	var result = [];
+
+	// Look for the students belong to the employee and return it
+	if(request === 'teacher') {
+		idArray.forEach( (student) => {
+			for( index in StudentList ) {
+				if(StudentList[index].id === student.studentId) {
+					result.push(StudentList[index]);
+					break;
+				}
+			}
+		});
+		win.webContents.send('employeeStudentsResult', result);
 	}	
 });

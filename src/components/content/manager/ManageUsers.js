@@ -7,7 +7,6 @@ import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
 import EmployeeContent from './Employee/EmployeeContent';
 
 import defaultAvatar from '../../../images/default_avatar.png';
-import redNotification from '../../../images/red_notification.jpg';
 
 class ManageUsers extends Component {
 	constructor(props) {
@@ -80,11 +79,10 @@ class ManageUsers extends Component {
 
 		// Render the current select user information
 		if(this.state.listClicked && (this.state.userIndex !== null)) {
-			const index = this.state.userIndex;
 			if(this.state.listClicked === 'user') {
-				renderUserContent = <EmployeeContent employee={userList[index]} />
+				renderUserContent = <EmployeeContent employee={userList[this.state.userIndex]} />
 			} else if (this.state.listClicked === 'newUser') {
-				renderUserContent = <EmployeeContent employee={newUserList[index]} />
+				renderUserContent = <EmployeeContent employee={newUserList[this.state.userIndex]} />
 			}
 		} else 
 			renderUserContent = null;

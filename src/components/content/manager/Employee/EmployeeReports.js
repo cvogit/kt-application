@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Tab from 'react-toolbox/lib/tabs/Tab';
-import Tabs from 'react-toolbox/lib/tabs/Tabs';
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown';
 
 const electron = window.require('electron');
@@ -20,20 +18,33 @@ class EmployeeReports extends Component {
 	}
 
 	componentDidMount() {
-		ipcRenderer.send('getReports', 'employee', this.props.employee.reports);
+		ipcRenderer.send("getReports", 'employee', this.props.employee.reports);
 		ipcRenderer.on('employeeReportsResult', this.handleLoadReports);
 	}
 
-	handleLoadReports(event, result) {
+	componentWillUnmount() {
+		ipcRenderer.removeListener('employeeReportsResult', this.handleLoadReports);
+	}
+
+	componentDidUpdate(prevProps) {
+  // Typical usage (don't forget to compare props):
+  if (this.props.employee.id !== prevProps.employee.id) {
+  	console.log("Request reports");
+    ipcRenderer.send("getReports", 'employee', this.props.employee.reports);
+  }
+}
+
+	handleLoadReports(event, reports) {
+		console.log("Receiving new reports");
 		// Asign value property to each report for dropdown
 		var count = this.state.reports.length;
-		result.forEach( (report) => {
+		reports.forEach( (report) => {
 			report['value'] = count;
 			count++;
 		});
 
 		this.setState({
-			reports: result,
+			reports: reports,
 			reportSelected: 0,
 		});
 	}
@@ -61,12 +72,10 @@ class EmployeeReports extends Component {
 
 		const Reports 			= this.state.reports;
 		var SelectedReport 	= null;
-		var studentName = null;
-		var content 		= null;
+		var content 				= null;
 
 		if(Reports.length !== 0) {
 			SelectedReport 	= Reports[this.state.reportSelected];
-			studentName 		= SelectedReport.student.firstName + ' ' + SelectedReport.student.lastName;
 			content 				= SelectedReport.content;
 		}
 
@@ -82,8 +91,7 @@ class EmployeeReports extends Component {
           value={this.state.reportSelected}
         />
         <div className="report-container">
-        	<h4>{studentName}</h4>
-        	<span>{content}</span>
+        	<div className="report-content">{content}</div>
         </div>
       </div>
 			);

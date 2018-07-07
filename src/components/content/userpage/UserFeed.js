@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import ReactPaginate 	from 'react-paginate';
 import Button from 'react-toolbox/lib/button/Button';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
-import Navigation from 'react-toolbox/lib/navigation/Navigation';
 import MailSnippet 	from './MailSnippet';
 
 /* global gapi */
-
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
 
 class UserFeed extends Component {
 	constructor(props) {
@@ -180,7 +175,6 @@ class UserFeed extends Component {
 
 		// Variable render the mail snippets
 		var mailSnippets = null;
-		var currentPageSnippets = null;
 
 		// Variable to render the pagination
 		const count 			= this.state.offset;

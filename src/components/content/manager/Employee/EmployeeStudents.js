@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 
-import Tab from 'react-toolbox/lib/tabs/Tab';
-import Tabs from 'react-toolbox/lib/tabs/Tabs';
+const electron = window.require('electron');
+const ipcRenderer  = electron.ipcRenderer;
 
 class EmployeeStudents extends Component { 
 	constructor(props) {
 		super(props);
 		this.state = {
-			EmployeepageIndex: 0,
+			
 		};
+
+		this.handleLoadStudents = this.handleLoadStudents.bind(this);
+	}
+
+	componentDidMount() {
+		ipcRenderer.send('getStudents', 'teacher', this.props.employee.teacher[0].students);
+		ipcRenderer.on('employeeStudentsResult', this.handleLoadStudents);
+	}
+
+	handleLoadStudents(event, students) {
+		console.log(students);
 	}
 
 	RenderEmployeeStudents = () => {

@@ -9,9 +9,6 @@ import ManageUsers 		from './manager/ManageUsers';
 
 import '../../css/content/managerPage.css';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class ManagerPage extends Component {
 	constructor(props) {
 		super(props);

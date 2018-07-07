@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 
-
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class UserEdit extends Component {
 	constructor(props) {
 		super(props);

@@ -147,7 +147,7 @@ class UserPictures extends Component {
 				const inputImage = this.state.uploadImageBase64;
 				dialog = 	<Dialog className="dialog-container" active={dialogActive} type="normal">
 										<div className="image-preview-container">
-											<img src={inputImage} alt="Image preview." />
+											<img src={inputImage} alt="Selected." />
 											<input className="file-input" type="file" onChange={selectImageFile} />
 										</div>
 										<Button label='Upload' onClick={() => this.handleUploadImageRequest()} />

@@ -11,33 +11,42 @@ class EmployeeContent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			EmployeepageIndex: 0,
+			EmployeePageIndex: 0,
 		};
 		this.handleFixedTabChange = this.handleFixedTabChange.bind(this);
 	}
 
 	handleFixedTabChange(index) {
 		this.setState({
-			employeePageIndex: index
+			EmployeePageIndex: index
 		});
+	}
+
+	componentWillReceiveProps(props) {
+    this.setState({ 
+    	EmployeePageIndex: 0
+    });
 	}
 
 
 	RenderManageEmployees = () => {
-		var employeePageCenter = <EmployeeReports employee={this.props.employee} />;
-		const employeePageIndex = this.state.employeePageIndex;
+		var employeePageCenter = null;
+		var employeePageIndex = this.state.EmployeePageIndex;
+		var employee = this.props.employee;
 
-		if(employeePageIndex === 0) {
-			employeePageCenter = <EmployeeReports employee={this.props.employee} />
-		} else if(employeePageIndex === 1) {
-			employeePageCenter = <EmployeeStudents />
-		} else if(employeePageIndex === 2) {
-			employeePageCenter = <EmployeeInfo />
-		} 
+		if(employee !== null) {
+			if(employeePageIndex === 0) {
+				employeePageCenter = <EmployeeReports 	employee={employee} />
+			} else if(employeePageIndex === 1) {
+				employeePageCenter = <EmployeeStudents 	employee={employee} />
+			} else if(employeePageIndex === 2) {
+				employeePageCenter = <EmployeeInfo />
+			} 
+		}
 
 		return (
 			<div className="employee-content" >
-				<Tabs index={employeePageIndex} onChange={this.handleFixedTabChange} fixed>
+				<Tabs className="employee-tabs" index={employeePageIndex} onChange={this.handleFixedTabChange} fixed>
 					<Tab label='Reports'></Tab>
 					<Tab label='Students'></Tab>
 					<Tab label='Info'></Tab>

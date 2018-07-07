@@ -68,11 +68,13 @@ class Sidebar extends Component {
 		const currentDate = date.getDate();
 		const currentMonth = this.getMonthFromDate(date);
 
-		const getTabs = rolesArray.map(function(role){
+		const renderTabs = rolesArray.map(function(role){
 			if (activeTab === role)
 				return <Button className="tab-active" key={role} label={role} accent onClick={tabSelect} value={role} />
 			else if ( role !== '')
 				return <Button className="tab" key={role} label={role} accent onClick={tabSelect} value={role} />	
+			else
+				return null;
 		});
 
 
@@ -86,7 +88,7 @@ class Sidebar extends Component {
 					<h4 className="sidebar-date"> {currentDate} </h4>
 				</div>
 				<Navigation type='vertical'>
-					{ getTabs } 
+					{ renderTabs } 
 				</Navigation>
 			</div>
 		);
