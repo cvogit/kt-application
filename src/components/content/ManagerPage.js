@@ -38,8 +38,13 @@ class ManagerPage extends Component {
 		const managerPageIndex = this.state.managerPageIndex;
 		var managerPageCenter = null;
 
+		console.log(this.state.managerResources);
+
 		if(managerPageIndex === 0) {
-			managerPageCenter = <ManageUsers resource={this.state.managerResources} />
+			managerPageCenter = <ManageUsers 	folder={this.state.managerResources.managerFolder} 
+																				users={this.state.managerResources.managerUserList} 
+																				newUsers={this.state.managerResources.managerNewUserList} 
+																				/>
 		} else if(managerPageIndex === 1) {
 			managerPageCenter = <ManageStudents resource={this.state.managerResources} />
 		} 

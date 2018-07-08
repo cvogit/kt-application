@@ -4,39 +4,22 @@ import List from 'react-toolbox/lib/list/List';
 import ListItem from 'react-toolbox/lib/list/ListItem';
 import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class EmployeeStudents extends Component { 
 	constructor(props) {
 		super(props);
 		this.state = {
 			students: [],
 		};
-
-		this.handleLoadStudents = this.handleLoadStudents.bind(this);
-	}
-
-	componentDidMount() {
-		ipcRenderer.send('getStudents', 'employee', this.props.employee.teacher[0].students);
-		ipcRenderer.on('employeeStudentsResult', this.handleLoadStudents);
-	}
-
-	componentWillUnmount() {
-		ipcRenderer.removeListener('employeeStudentsResult', this.handleLoadStudents);
-	}
-
-	handleLoadStudents(event, students) {
-		this.setState({
-			students: students,
-		});
 	}
 
 	RenderEmployeeStudents = () => {
 
-		const Students = this.state.students;
+		const teacherResource = this.props.teacher;
 
-		var renderStudentList = Students.map( (student, index) => {
+
+		const students = teacherResource[0].students;
+		
+		var renderStudentList = students.map( (student, index) => {
 			return <ListItem 	className="student-wrapper"
 												label={student.id}
 												key={student.id}

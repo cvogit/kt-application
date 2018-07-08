@@ -2,49 +2,23 @@ import React, { Component } from 'react';
 
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
-
 class EmployeeReports extends Component { 
 	constructor(props) {
 		super(props);
 		this.state = {
-			reports: [],
-			reportSelected: '',
+			reportSelected: 0,
 		};
 
-		this.handleLoadReports = this.handleLoadReports.bind(this);
 		this.handleReportChange = this.handleReportChange.bind(this);
 	}
 
-	componentDidMount() {
-		ipcRenderer.send("getReports", 'employee', this.props.employee.reports);
-		ipcRenderer.on('employeeReportsResult', this.handleLoadReports);
-	}
-
-	componentWillUnmount() {
-		ipcRenderer.removeListener('employeeReportsResult', this.handleLoadReports);
-	}
-
-	componentDidUpdate(prevProps) {
-  // Typical usage (don't forget to compare props):
-	  if (this.props.employee.id !== prevProps.employee.id) {
-	    ipcRenderer.send("getReports", 'employee', this.props.employee.reports);
+	shouldComponentUpdate(prevProps, prevState) {
+	  if (prevProps.reports !== this.props.reports) {
+	    this.setState({
+	    	reportSelected: 0,
+	    })
 	  }
-	}
-
-	handleLoadReports(event, reports) {
-		// Asign value property to each report for dropdown
-		var count = this.state.reports.length;
-		reports.forEach( (report) => {
-			report['value'] = count;
-			count++;
-		});
-
-		this.setState({
-			reports: reports,
-			reportSelected: 0,
-		});
+	  return true;
 	}
 
 	handleReportChange(value) {
@@ -54,7 +28,7 @@ class EmployeeReports extends Component {
 	}
 
 	reportDropdown (report) {
-    const name = report.student.firstName + ' ' + report.student.lastName + ': ' + report.student.studentId;
+    const name = report.student.firstName + ' ' + report.student.lastName + ': ' + report.studentId;
 
     return (
       <div className="dropdown-container">
@@ -68,12 +42,24 @@ class EmployeeReports extends Component {
 
 	RenderEmployeeReports = () => {
 
-		const Reports 			= this.state.reports;
+		var Reports = this.props.reports;
+		var count 	= 0;
+		Reports.forEach( (report) => {
+			report['value'] = count;
+			count++;
+		});
+
 		var SelectedReport 	= null;
 		var content 				= null;
 
 		if(Reports.length !== 0) {
-			SelectedReport 	= Reports[this.state.reportSelected];
+			if(this.state.reportSelected >= Reports.length) {
+				SelectedReport 	= Reports[0];
+			} else
+				SelectedReport 	= Reports[this.state.reportSelected];
+
+			console.log(this.state.reportSelected);
+			console.log(SelectedReport);
 			content 				= SelectedReport.content;
 		}
 

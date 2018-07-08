@@ -35,14 +35,14 @@ class ManageUsers extends Component {
 	}
 
 	RenderManageUsers = () => {
-		const resource = this.props.resource;
 		var renderUserList;
 		var renderNewUserList;
 		var renderUserContent;
 
-		var userList 		= resource.UserList;
-		var newUserList = resource.newUserList;
-		
+		var userList 		= this.props.users;
+		var newUserList = this.props.newUsers;
+		const managerFolder = this.props.folder;
+
 		// Render a list of active users
 		if(userList.length === 0) {
 			renderUserList = null;
@@ -50,8 +50,9 @@ class ManageUsers extends Component {
 			var index = 0;
      	renderUserList = userList.map( (user, index) => {
      		var avatarPath = defaultAvatar;
-     		if(user.avatarId !== 0)
-     			avatarPath = user.imagePath + user.avatarId;
+     		if(user.avatarId !== 0) {
+     			avatarPath = managerFolder + '/users/' + user.firstName + '_' + user.lastName + '_' + user.id +  '/images/image_' + user.avatarId;
+     		}
 
 				return <ListItem 	className="user-wrapper"
 													label={user.id}

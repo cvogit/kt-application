@@ -183,14 +183,14 @@
 			var image = new Buffer(response.data, 'base64');
 
 			// return image and image id
-			ipcRenderer.send('getAnotherUserImageSuccess', image, localPath);
+			ipcRenderer.send('getImageSuccess', image, localPath);
 		})
 		.catch(function (error) {
 			console.log(error);
 		});
 	});
 
-	// Get another user image
+	// Get another user avatar
 	ipcRenderer.on('getAnotherUserAvatarRequest', (event, userId, localPath) => {
 		axios.get(baseUrl+'/users/'+userId+'/avatar', {
 			responseType : 'arraybuffer'
@@ -199,7 +199,23 @@
 			var image = new Buffer(response.data, 'base64');
 
 			// return image and image id
-			ipcRenderer.send('getAnotherUserAvatarSuccess', image, localPath);
+			ipcRenderer.send('getImageSuccess', image, localPath);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Get a student image
+	ipcRenderer.on('getStudentImageRequest', (event, studentId, imageId, localPath) => {
+		axios.get(baseUrl+'/students/'+studentId+'/images/'+imageId, {
+			responseType : 'arraybuffer'
+		})
+		.then(function (response) {
+			var image = new Buffer(response.data, 'base64');
+
+			// return image and image id
+			ipcRenderer.send('getImageSuccess', image, localPath);
 		})
 		.catch(function (error) {
 			console.log(error);
