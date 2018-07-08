@@ -18,7 +18,7 @@ class EmployeeStudents extends Component {
 	}
 
 	componentDidMount() {
-		ipcRenderer.send('getStudents', 'teacher', this.props.employee.teacher[0].students);
+		ipcRenderer.send('getStudents', 'employee', this.props.employee.teacher[0].students);
 		ipcRenderer.on('employeeStudentsResult', this.handleLoadStudents);
 	}
 

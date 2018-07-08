@@ -163,6 +163,17 @@
 		});
 	});
 
+	// Get teacher resource
+	ipcRenderer.on('getTeacherResources', (event) => {
+		axios.get(baseUrl+'/teachers/resources')
+		.then(function (response) {
+			ipcRenderer.send('getTeacherResourcesSuccess', response.data.result);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
 	// Get another user image
 	ipcRenderer.on('getAnotherUserImageRequest', (event, userId, imageId, localPath) => {
 		axios.get(baseUrl+'/users/'+userId+'/images/'+imageId, {
@@ -173,6 +184,22 @@
 
 			// return image and image id
 			ipcRenderer.send('getAnotherUserImageSuccess', image, localPath);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Get another user image
+	ipcRenderer.on('getAnotherUserAvatarRequest', (event, userId, localPath) => {
+		axios.get(baseUrl+'/users/'+userId+'/avatar', {
+			responseType : 'arraybuffer'
+		})
+		.then(function (response) {
+			var image = new Buffer(response.data, 'base64');
+
+			// return image and image id
+			ipcRenderer.send('getAnotherUserAvatarSuccess', image, localPath);
 		})
 		.catch(function (error) {
 			console.log(error);

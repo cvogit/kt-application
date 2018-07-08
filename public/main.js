@@ -28,10 +28,17 @@ var userImagesPath 	 		= [];
 
 // Data for manager page
 var managerPageResources = null;
-var UserList 		= [];
-var newUserList = [];
-var StudentList = [];
-var Reports 		= null;
+var managerUserList 		= [];
+var managerNewUserList 	= [];
+var managerStudentList 	= [];
+var managerReportList 	= [];
+
+// Data for teacher
+var teacherInfo = null;
+var teacherPageResources = null;
+var teacherManagerList 	= [];
+var teacherStudentList 	= [];
+var teacherReportList 	= [];
 
 // Path to navigate user files
 var userFolder 					= null;
@@ -42,6 +49,11 @@ var userFolderRelative 	= null; // Reactjs usage
 var managerFolder						= null;
 var managerFolderAbsolute 	= null;
 var managerFolderRelative 	= null;
+
+// Path to navigate teacher files
+var teacherFolder						= null;
+var teacherFolderAbsolute 	= null;
+var teacherFolderRelative 	= null;
 
 function createWindow() {
 	var screenElectron = electron.screen;
@@ -197,11 +209,11 @@ function readyManagerPageResources() {
 	jetpack.dir(managerFolderAbsolute);
 
 	// Store the current report list into file
-	const reportPath = managerFolder + '/reports';
-	store(Reports, reportPath);
+	const reportFilePath = managerFolder + '/reports';
+	store(managerReportList, reportFilePath);
 
 	// Check active users resources
-	UserList.forEach( (user) => {
+	managerUserList.forEach( (user) => {
 		var userFolder = managerFolderAbsolute + '/users/' + user.firstName +
 																								'_' + user.lastName +  
 																								'_' + user.id + '/images/image_';
@@ -222,7 +234,60 @@ function readyManagerPageResources() {
 	});
 
 	// Check student resources
-	StudentList.forEach( (student) => {
+	managerStudentList.forEach( (student) => {
+
+	});
+}
+
+function readyTeacherPageResources() {
+	teacherFolder = '/teachers/'+userInfo.lastName+'_'+userInfo.firstName+'_'+userInfo.id;
+
+	// Get absolute path and relative path to check for local resources
+	teacherFolderAbsolute = getAbsolutePath(teacherFolder);
+	teacherFolderRelative = getRelativePath(teacherFolder);
+
+	// Make the teacher folder if doesn't exist
+	jetpack.dir(teacherFolderAbsolute);
+
+	// Store the current report list into file
+	const reportFilePath = teacherFolder + '/files/reports';
+	store(teacherReportList, reportFilePath);
+
+	// Store the manager list into file
+	const managerFilePath = teacherFolder + '/files/managers';
+	store(teacherManagerList, managerFilePath);
+
+	// Store the student list into file
+	const studentFilePath = teacherFolder + '/files/students';
+	store(teacherStudentList, studentFilePath);
+
+	// Check manager resources
+	teacherManagerList.forEach( (manager) => {
+
+		// Check each manager have their own folder
+		var tManagerFolder = '/managers/' + manager.firstName + '_' + manager.lastName + '_' + manager.id;
+		jetpack.dir(teacherFolderAbsolute + tManagerFolder);
+		
+		// Check for avatar image
+		if(manager.avatarId !== 0) {
+
+			// path for manager avatar
+			var avatarPath = teacherFolder + tManagerFolder + '/images/image_' + manager.avatarId;	
+			if ( !isFileExist(avatarPath)) {
+				isOnline().then(online => {
+					requestWin.webContents.send('getAnotherUserAvatarRequest', manager.id, avatarPath);
+				});
+			} 
+		}
+	});
+
+	// Check studednt resources
+	teacherStudentList.forEach( (student) => {
+
+		// Check each manager have their own folder
+		var tStudentFolder = '/students/' + student.firstName + '_' + student.lastName + '_' + student.id;
+		jetpack.dir(teacherFolderAbsolute + tStudentFolder);
+		
 
 	});
 }
@@ -321,6 +386,10 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 			// TODO get how many report already on local file and not load those again
 			requestWin.webContents.send('getManagerResources');
 		}
+		else if(role === "teacher") {
+			// TODO get how many report already on local file and not load those again
+			requestWin.webContents.send('getTeacherResources');
+		}
 	});
 
 	win.webContents.send('userRolesSuccess', user[0].roles);
@@ -382,11 +451,28 @@ ipcMain.on('getUserPaymentsSuccess', (event, payments) => {
 });
 
 ipcMain.on('getManagerResourcesSuccess', (event, pManagerResources) => {
-	newUserList = pManagerResources.newUsers;
-	UserList 		= pManagerResources.users;
-	StudentList = pManagerResources.students;
-	Reports 		= pManagerResources.reports;
+	managerNewUserList 	= pManagerResources.newUsers;
+	managerUserList 		= pManagerResources.users;
+	managerStudentList 	= pManagerResources.students;
+	managerReportList 	= pManagerResources.reports;
 	readyManagerPageResources();
+});
+
+ipcMain.on('getTeacherResourcesSuccess', (event, pTeacherResources) => {
+	teacherReportList 	= pTeacherResources.reports;
+	teacherStudentList 	= pTeacherResources.students;
+	teacherManagerList  = pTeacherResources.managers;
+	teacherInfo = {};
+	teacherInfo['id'] 					= pTeacherResources.id;
+	teacherInfo['numStudents'] 	= pTeacherResources.numStudents;
+	teacherInfo['userId'] 			= pTeacherResources.userId;
+	readyTeacherPageResources();
+});
+
+ipcMain.on('getAnotherUserAvatarSuccess', (event, image, localPath) => {
+	// Write the file
+	console.log(localPath);
+	store(image, localPath);
 });
 
 ipcMain.on('getAnotherUserImageSuccess', (event, image, localPath) => {
@@ -413,9 +499,9 @@ ipcMain.on('appSelectContent', (event, arg) => {
 
 		win.webContents.send('appChangeContent', arg,	userResources);
 	} else if(arg === "manager")	{
-		managerResources = 	{ "UserList"   	: UserList,
-													"newUserList"	: newUserList,
-													"StudentList" : StudentList,
+		managerResources = 	{ "UserList"   				: managerUserList,
+													"managerNewUserList": managerNewUserList,
+													"managerStudentList": managerStudentList,
 												};
 
 		win.webContents.send('appChangeContent', arg,	managerResources);
@@ -450,12 +536,12 @@ ipcMain.on('getReports', (event, request, idArray) => {
 	var result = [];
 	if(request === 'employee') {
 		idArray.forEach( (index) => {
-			result.push(Reports[index.id - 1]);
+			result.push(managerReportList[index.id - 1]);
 		});
 		win.webContents.send('employeeReportsResult', result);
 	}	else if(request === 'student') {
 		idArray.forEach( (index) => {
-			result.push(Reports[index.id - 1]);
+			result.push(managerReportList[index.id - 1]);
 		});
 		win.webContents.send('studeentReportsResult', result);
 	}	
@@ -468,11 +554,11 @@ ipcMain.on('getStudents', (event, request, idArray) => {
 	var result = [];
 
 	// Look for the students belong to the employee and return it
-	if(request === 'teacher') { 
+	if(request === 'employee') { 
 		idArray.forEach( (student) => {
-			for( index in StudentList ) {
-				if(StudentList[index].id === student.studentId) {
-					result.push(StudentList[index]);
+			for( index in managerStudentList ) {
+				if(managerStudentList[index].id === student.studentId) {
+					result.push(managerStudentList[index]);
 					break;
 				}
 			}
