@@ -28,14 +28,12 @@ class EmployeeReports extends Component {
 
 	componentDidUpdate(prevProps) {
   // Typical usage (don't forget to compare props):
-  if (this.props.employee.id !== prevProps.employee.id) {
-  	console.log("Request reports");
-    ipcRenderer.send("getReports", 'employee', this.props.employee.reports);
-  }
-}
+	  if (this.props.employee.id !== prevProps.employee.id) {
+	    ipcRenderer.send("getReports", 'employee', this.props.employee.reports);
+	  }
+	}
 
 	handleLoadReports(event, reports) {
-		console.log("Receiving new reports");
 		// Asign value property to each report for dropdown
 		var count = this.state.reports.length;
 		reports.forEach( (report) => {
@@ -56,7 +54,7 @@ class EmployeeReports extends Component {
 	}
 
 	reportDropdown (report) {
-    const name = report.student.firstName + ' ' + report.student.lastName;
+    const name = report.student.firstName + ' ' + report.student.lastName + ': ' + report.student.studentId;
 
     return (
       <div className="dropdown-container">

@@ -452,8 +452,12 @@ ipcMain.on('getReports', (event, request, idArray) => {
 		idArray.forEach( (index) => {
 			result.push(Reports[index.id - 1]);
 		});
-		console.log("Sending reports");
 		win.webContents.send('employeeReportsResult', result);
+	}	else if(request === 'student') {
+		idArray.forEach( (index) => {
+			result.push(Reports[index.id - 1]);
+		});
+		win.webContents.send('studeentReportsResult', result);
 	}	
 });
 
@@ -464,7 +468,7 @@ ipcMain.on('getStudents', (event, request, idArray) => {
 	var result = [];
 
 	// Look for the students belong to the employee and return it
-	if(request === 'teacher') {
+	if(request === 'teacher') { 
 		idArray.forEach( (student) => {
 			for( index in StudentList ) {
 				if(StudentList[index].id === student.studentId) {
