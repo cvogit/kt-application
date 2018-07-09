@@ -70,6 +70,7 @@
       "LIST",
       "NAVIGATION",
       "PROGRESS_BAR",
+      "TABLE",
       "TABS",
       "TIME_PICKER",
       "TOOLTIP",

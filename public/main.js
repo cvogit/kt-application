@@ -350,6 +350,16 @@ ipcMain.on('deleteImagesRequest', (event, pImageDeleteArray) => {
 	});
 });
 
+// Get the image id and send a delete request
+ipcMain.on('AssignStudentRequest', (event, pTeacherId, pStudentId) => {
+	requestWin.webContents.send('assignStudentRequest', pTeacherId, pStudentId);
+});
+
+// Get the image id and send a delete request
+ipcMain.on('UnAssignStudentRequest', (event, pTeacherId, pStudentId) => {
+	requestWin.webContents.send('unAssignStudentRequest', pTeacherId, pStudentId);
+});
+
 // ***********************
 // Results from the server
 // ***********************

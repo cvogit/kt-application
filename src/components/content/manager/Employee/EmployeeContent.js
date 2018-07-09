@@ -34,13 +34,11 @@ class EmployeeContent extends Component {
 		var employeePageIndex = this.state.EmployeePageIndex;
 		var employee = this.props.employee;
 
-		console.log(employee);
-
 		if(employee !== null) {
 			if(employeePageIndex === 0) {
 				employeePageCenter = <EmployeeReports 	reports={employee.reports} />
 			} else if(employeePageIndex === 1) {
-				employeePageCenter = <EmployeeStudents 	teacher={employee.teacher} />
+				employeePageCenter = <EmployeeStudents 	teacher={employee.teacher} students={this.props.students} />
 			} else if(employeePageIndex === 2) {
 				employeePageCenter = <EmployeeInfo />
 			} 

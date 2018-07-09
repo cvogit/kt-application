@@ -215,7 +215,29 @@
 			var image = new Buffer(response.data, 'base64');
 
 			// return image and image id
-			ipcRenderer.send('getImageSuccess', image, localPath);
+			ipcRenderer.send('requestSuccess', response.data);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Assign a student to a teacher
+	ipcRenderer.on('assignStudentRequest', (event, teacherId, studentId) => {
+		axios.post(baseUrl+'/teachers/'+teacherId+'/assign/'+studentId)
+		.then(function (response) {
+			ipcRenderer.send('requestSuccess', response.data);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
+	// Unassign a student from a teacher
+	ipcRenderer.on('unAssignStudentRequest', (event, teacherId, studentId) => {
+		axios.delete(baseUrl+'/teachers/'+teacherId+'/unassign/'+studentId)
+		.then(function (response) {
+			ipcRenderer.send('requestSuccess', response.data);
 		})
 		.catch(function (error) {
 			console.log(error);

@@ -81,7 +81,7 @@ class ManageUsers extends Component {
 		// Render the current select user information
 		if(this.state.listClicked && (this.state.userIndex !== null)) {
 			if(this.state.listClicked === 'user') {
-				renderUserContent = <EmployeeContent employee={userList[this.state.userIndex]} />
+				renderUserContent = <EmployeeContent employee={userList[this.state.userIndex]} students={this.props.students} />
 			} else if (this.state.listClicked === 'newUser') {
 				renderUserContent = <EmployeeContent employee={newUserList[this.state.userIndex]} />
 			}

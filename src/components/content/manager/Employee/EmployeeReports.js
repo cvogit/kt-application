@@ -57,9 +57,7 @@ class EmployeeReports extends Component {
 				SelectedReport 	= Reports[0];
 			} else
 				SelectedReport 	= Reports[this.state.reportSelected];
-
-			console.log(this.state.reportSelected);
-			console.log(SelectedReport);
+				
 			content 				= SelectedReport.content;
 		}
 

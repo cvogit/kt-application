@@ -95,3 +95,37 @@
 	text-align: left;
 	overflow-y: scroll;
 }
+
+.employee-students {
+	height: 95%;
+	margin: 2.5%;
+}
+
+.add-student-button {
+	margin: 0 auto;
+}
+
+.student-list-container {
+	height: 100%;
+	width: 50%;
+	float: left;
+}
+
+.unassigned-student-container {
+	border-left: 1px dotted gray;
+	height: 100%;
+	width: 25%;
+	float: right;
+}
+
+.unassigned-student-list {
+	margin: 30px 0;
+}
+
+.tablecell {
+	text-align: left !important;
+}
+
+.tablecell-right {
+	text-align: right !important;
+}
