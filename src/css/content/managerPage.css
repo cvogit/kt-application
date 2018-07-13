@@ -25,7 +25,7 @@
 .user-list {
 	border-right: 1px dotted gray;
 	float: left;
-	max-height: 700px;
+	height: 700px;
 	width: 	15%;
 	overflow: scroll;
 }
@@ -128,4 +128,18 @@
 
 .tablecell-right {
 	text-align: right !important;
+}
+
+.left-content {
+	float: left;
+	width: 60%;
+}
+
+.right-content {
+	border-left: 1px dotted gray;
+	float:right;
+	height: 100%;
+	width: 30%;
+	margin: 0 0 0 10%;
+	padding: 20px 5px;
 }

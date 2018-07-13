@@ -200,7 +200,7 @@ function readyUserPageResources() {
 }
 
 function readyManagerPageResources() {
-	managerFolder = '/managers/'+userInfo.firstName+'_'+userInfo.lastName+'_'+userInfo.id;
+	managerFolder = '/managers/'+userInfo.lastName+'_'+userInfo.firstName+'_'+userInfo.id;
 
 	// Get absolute path and relative path to check for local resources
 	managerFolderAbsolute = getAbsolutePath(managerFolder);
@@ -223,17 +223,20 @@ function readyManagerPageResources() {
 
 	// Check active users resources
 	managerUserList.forEach( (user) => {
-		var imagePath = '/users/' + user.firstName + '_' + user.lastName + '_' + user.id + '/images/image_';
 
-		// Check user images, if doesn't exist locally, fetch it
-		user.images.forEach( (image) => {
-			if ( !isFileExist(managerFolderAbsolute+imagePath + image.imageId)) {
-				var relativePath = managerFolderRelative + imagePath + image.imageId;
-				isOnline().then(online => {
-					requestWin.webContents.send('getAnotherUserImageRequest', user.id, image.imageId, relativePath);
-				});
-			} 
-		});
+		if(user.images) {
+			var imagePath = '/users/' + user.lastName + '_' + user.firstName + '_' + user.id + '/images/image_';
+
+			// Check user images, if doesn't exist locally, fetch it
+			user.images.forEach( (image) => {
+				if ( !isFileExist(managerFolderAbsolute+imagePath + image.imageId)) {
+					var relativePath = managerFolderRelative + imagePath + image.imageId;
+					isOnline().then(online => {
+						requestWin.webContents.send('getAnotherUserImageRequest', user.id, image.imageId, relativePath);
+					});
+				} 
+			});
+		}
 	});
 
 	// Check student resources
@@ -268,7 +271,7 @@ function readyTeacherPageResources() {
 	teacherManagerList.forEach( (manager) => {
 
 		// Check each manager have their own folder
-		var tManagerFolder = '/managers/' + manager.firstName + '_' + manager.lastName + '_' + manager.id;
+		var tManagerFolder = '/managers/' + manager.lastName + '_' + manager.firstName + '_' + manager.id;
 		jetpack.dir(teacherFolderAbsolute + tManagerFolder);
 		
 		// Check for avatar image
@@ -288,7 +291,7 @@ function readyTeacherPageResources() {
 	teacherStudentList.forEach( (student) => {
 
 		// Check each student have their own folder
-		var tStudentFolder = '/students/' + student.firstName + '_' + student.lastName + '_' + student.id;
+		var tStudentFolder = '/students/' + student.lastName + '_' + student.firstName + '_' + student.id;
 		jetpack.dir(teacherFolderAbsolute + tStudentFolder);
 		
 		// Check for student images
@@ -358,6 +361,11 @@ ipcMain.on('AssignStudentRequest', (event, pTeacherId, pStudentId) => {
 // Get the image id and send a delete request
 ipcMain.on('UnAssignStudentRequest', (event, pTeacherId, pStudentId) => {
 	requestWin.webContents.send('unAssignStudentRequest', pTeacherId, pStudentId);
+});
+
+// Activate an unactivated employee
+ipcMain.on('addEmployeeRequest', (event, pUserId) => {
+	requestWin.webContents.send('addUserRequest', pUserId);
 });
 
 // ***********************
@@ -526,7 +534,7 @@ ipcMain.on('appSelectContent', (event, arg) => {
 													"managerStudentList": managerStudentList,
 													"managerReportList"	: managerReportList,
 												};
-
+												
 		win.webContents.send('appChangeContent', arg,	managerResources);
 	} else if(arg === "teacher")	{
 		teacherResources = 	{ 
@@ -537,7 +545,7 @@ ipcMain.on('appSelectContent', (event, arg) => {
 													"teacherReportList"	: teacherReportList,
 												};
 
-		win.webContents.send('appChangeContent', arg,	managerResources);
+		win.webContents.send('appChangeContent', arg,	teacherResources);
 	}
 	else 
 		win.webContents.send('appChangeContent', arg);

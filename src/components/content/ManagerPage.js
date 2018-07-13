@@ -4,8 +4,8 @@ import Tab 	from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
 import Banner 				from '../commons/Banner';
-import ManageStudents from './manager/ManageStudents';
-import ManageUsers 		from './manager/ManageUsers';
+import ManageStudents from './managerpage/ManageStudents';
+import ManageUsers 		from './managerpage/ManageUsers';
 
 import '../../css/content/managerPage.css';
 
@@ -19,11 +19,9 @@ class ManagerPage extends Component {
 		this.handleFixedTabChange = this.handleFixedTabChange.bind(this);
 	}
 
-	componentWillMount() {
-		const resources 	= this.props.resources;
-
+	componentDidMount() {
 		this.setState({
-			managerResources: 	resources,
+			managerResources: this.props.resources,
 		});
 	}
 
@@ -34,17 +32,18 @@ class ManagerPage extends Component {
 	}
 
 	RenderManagerPage = () => {
-		
+		const managerResources = this.state.managerResources;
 		const managerPageIndex = this.state.managerPageIndex;
 		var managerPageCenter = null;
+		console.log(managerResources);
 
-		if(managerPageIndex === 0) {
-			managerPageCenter = <ManageUsers 	folder={this.state.managerResources.managerFolder} 
-																				users={this.state.managerResources.managerUserList} 
-																				newUsers={this.state.managerResources.managerNewUserList}
-																				students={this.state.managerResources.managerStudentList} 
+		if(managerPageIndex === 0 && managerResources) {
+			managerPageCenter = <ManageUsers 	folder={managerResources.managerFolder} 
+																				users={managerResources.managerUserList} 
+																				newUsers={managerResources.managerNewUserList}
+																				students={managerResources.managerStudentList} 
 																				/>
-		} else if(managerPageIndex === 1) {
+		} else if(managerPageIndex === 1 && managerResources) {
 			managerPageCenter = <ManageStudents resource={this.state.managerResources} />
 		} 
 

@@ -244,4 +244,16 @@
 		});
 	});
 
+	// Activate a user
+	ipcRenderer.on('addUserRequest', (event, pUserId) => {
+		axios.put(baseUrl+'/users/'+pUserId+'/activate')
+		.then(function (response) {
+			ipcRenderer.send('requestSuccess', response.data);
+			console.log(response);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
 </script>

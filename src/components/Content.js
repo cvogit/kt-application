@@ -17,6 +17,7 @@ class Content extends Component {
 			content : "home",
 			userPageResources: null,
 			managerPageResources: null,
+			teacherPageResources: null,
 
 		};
 		this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -35,6 +36,10 @@ class Content extends Component {
 			this.setState({
 				managerPageResources: resources,
 			});
+		} else if( page === 'teacher' ) {
+			this.setState({
+				teacherPageResources: resources,
+			});
 		}
 
 		this.setState({
@@ -45,7 +50,7 @@ class Content extends Component {
 	RenderContent = () => {
 		const stateContent = this.state.content;
 		let content = null; 
-
+		
 		if(stateContent === "home")
 			content = <HomePage />;
 		else if(stateContent === "user")
@@ -53,7 +58,7 @@ class Content extends Component {
 		else if(stateContent === "manager")
 			content = <ManagerPage resources={this.state.managerPageResources} />;
 		else if(stateContent === "teacher")
-			content = <TeacherPage />;
+			content = <TeacherPage resources={this.state.teacherPageResources} />;
 
 		return (
 			<div className="content"> { content } </div>

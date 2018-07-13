@@ -4,7 +4,8 @@ import List from 'react-toolbox/lib/list/List';
 import ListItem from 'react-toolbox/lib/list/ListItem';
 import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
 
-import EmployeeContent from './Employee/EmployeeContent';
+import EmployeeContent 	from './Employee/EmployeeContent';
+import NewEmployee 			from './Employee/NewEmployee';
 
 import defaultAvatar from '../../../images/default_avatar.png';
 
@@ -51,14 +52,14 @@ class ManageUsers extends Component {
      	renderUserList = userList.map( (user, index) => {
      		var avatarPath = defaultAvatar;
      		if(user.avatarId !== 0) {
-     			avatarPath = managerFolder + '/users/' + user.firstName + '_' + user.lastName + '_' + user.id +  '/images/image_' + user.avatarId;
+     			avatarPath = managerFolder + '/users/' + user.lastName + '_' + user.firstName + '_' + user.id +  '/images/image_' + user.avatarId;
      		}
 
 				return <ListItem 	className="user-wrapper"
 													label={user.id}
 													key={user.id}
 													avatar={avatarPath}
-								          caption={user.firstName + ' ' + user.lastName}
+								          caption={user.lastName + ' ' + user.firstName}
 								          rightIcon={user.newReports}
 								          onClick={() => this.renderUserContent(index)} />
 			});		
@@ -73,7 +74,7 @@ class ManageUsers extends Component {
 													label={user.id}
 													key={user.id}
 													avatar={defaultAvatar}
-								          caption={user.firstName + ' ' + user.lastName}
+								          caption={user.lastName + ' ' + user.firstName}
 								          onClick={() => this.renderNewUserContent(index)} />
 			});		
 		}
@@ -83,7 +84,7 @@ class ManageUsers extends Component {
 			if(this.state.listClicked === 'user') {
 				renderUserContent = <EmployeeContent employee={userList[this.state.userIndex]} students={this.props.students} />
 			} else if (this.state.listClicked === 'newUser') {
-				renderUserContent = <EmployeeContent employee={newUserList[this.state.userIndex]} />
+				renderUserContent = <NewEmployee employee={newUserList[this.state.userIndex]} />
 			}
 		} else 
 			renderUserContent = null;

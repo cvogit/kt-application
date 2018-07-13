@@ -97,7 +97,7 @@ class EmployeeStudents extends Component {
 
 		const students = this.state.students;
 		const unAssignedStudents = this.state.unAssignedStudents;
-		console.log(unAssignedStudents);
+		
 		return (	
 			<div className="employee-students" >
 				<div className="student-list-container">
