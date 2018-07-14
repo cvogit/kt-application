@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import '../assets/react-toolbox/theme.css';
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
 import theme from '../assets/react-toolbox/theme';
+import Snackbar from 'react-toolbox/lib/snackbar/Snackbar';
+
 
 import Dashboard from './Dashboard';
 import Loading from './commons/Loading';
@@ -68,6 +70,7 @@ class App extends Component {
 			snackbarMessage: message,
 			snackbarActive: true,
 		});
+		setTimeout(this.handleSnackbarTimeout, 3000);
 	}
 
 	handleSnackbarTimeout(event, instance) {
@@ -113,6 +116,11 @@ class App extends Component {
 					? <Loading />
 					: null
 				}
+				<Snackbar
+					className="snackbar"
+          label={this.state.snackbarMessage}
+          active={this.state.snackbarActive}
+      	/>
       </div>
 			);
 	};

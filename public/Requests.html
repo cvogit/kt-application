@@ -20,9 +20,12 @@
 		})
 		.then(function (response) {
 			ipcRenderer.send('registerSuccess', response.data);
+			ipcRenderer.send('snackbarMessage', "Registered, waiting approval.");
+
 		})
 		.catch(function (error) {
 			ipcRenderer.send('registerFailure', error.response.data);
+			ipcRenderer.send('snackbarMessage', "Unable to register, please contact administrator.");
 		});
 	});
 
@@ -49,14 +52,14 @@
 					ipcRenderer.send('userInfoSuccess', response.data.result);
 				})
 				.catch(function (error) {
-					ipcRenderer.send('connectionError');
+			ipcRenderer.send('snackbarMessage', "Unable to login, please contact administrator.");
 				});
 			}
 			else 
-				ipcRenderer.send('connectionError', {'message' : {'error' : 'Unable to login.'}});
+				ipcRenderer.send('snackbarMessage', "Unable to login, please contact administrator.");	
 		})
 		.catch(function (error){
-				ipcRenderer.send('connectionError', error.response.data);
+				ipcRenderer.send('snackbarMessage', "Unable to login, please contact administrator.");	
 		});
 	});
  
@@ -121,6 +124,7 @@
 		})
 		.then(function (response) {
 			ipcRenderer.send('postImagesSuccess', response.data.result);
+			ipcRenderer.send('snackbarMessage', "The image is uploaded.");	
 		})
 		.catch(function (error) {
 			console.log(error);

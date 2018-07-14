@@ -372,6 +372,10 @@ ipcMain.on('addEmployeeRequest', (event, pUserId) => {
 // Results from the server
 // ***********************
 
+ipcMain.on('snackbarMessage', (event, pMessage) => {
+	win.webContents.send('snackbarMessage', pMessage);
+});
+
 // To: Register
 ipcMain.on('registerSuccess', (event, result) => {
 	win.webContents.send('snackbarMessage', 'Registered, awaiting confirmation.');
@@ -382,9 +386,7 @@ ipcMain.on('registerFailure', (event, arg) => {
 
 // To: App
 ipcMain.on('loginSuccess', (event,arg) => {
-	win.webContents.send('loginSuccess');
-	win.webContents.send('snackbarMessage', 'Logged in.');
-});
+	win.webContents.send('loginSuccess');});
 ipcMain.on('loginFailure', (event, arg) => {
 	win.webContents.send('loginFailure');
 });
@@ -433,9 +435,6 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 // To: Homepage
 ipcMain.on('getAnnouncementsSuccess', (event, data) => {
 	win.webContents.send('updateAnnouncements', data.result, data.offset, data.total);
-});
-ipcMain.on('getAnnouncementsFailure', (event, data) => {
-	console.log(data);
 });
 
 ipcMain.on('postImagesSuccess', (event, pImageId) => {
@@ -510,7 +509,7 @@ ipcMain.on('getImageSuccess', (event, image, localPath) => {
 
 
 ipcMain.on('connectionError', (event, arg) => {
-	console.log(arg);
+	win.webContents.send('snackbarMessage', 'Unable to connect to server.');
 });
 
 
