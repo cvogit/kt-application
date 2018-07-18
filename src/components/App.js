@@ -61,7 +61,8 @@ class App extends Component {
 
 	LoggedOut(event)	{
 		this.setState({
-			isLoggedIn: 	false,
+			isLoggedIn	: 	false,
+			isLoading		: 	false,
 		});
 	}
 

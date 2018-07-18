@@ -386,7 +386,8 @@ ipcMain.on('registerFailure', (event, arg) => {
 
 // To: App
 ipcMain.on('loginSuccess', (event,arg) => {
-	win.webContents.send('loginSuccess');});
+	win.webContents.send('loginSuccess');
+});
 ipcMain.on('loginFailure', (event, arg) => {
 	win.webContents.send('loginFailure');
 });
@@ -516,6 +517,55 @@ ipcMain.on('connectionError', (event, arg) => {
 // ****************
 // Client data flow
 // ****************
+
+// From: Sidebar.js
+ipcMain.on('appSignOut', (event) => {
+
+	// Reset session data
+	userGoogle = null;
+
+	// User data
+	userLocalInfo = null;
+
+	// Data for user page
+	userPageResources 	= null;
+	userAvatar 					= null;
+	userInfo 	 					= null;
+	userImagesPath 	 		= [];
+
+	// Data for manager page
+	managerInfo = null;
+	managerPageResources = null;
+	managerUserList 		= [];
+	managerNewUserList 	= [];
+	managerStudentList 	= [];
+	managerReportList 	= [];
+
+	// Data for teacher
+	teacherInfo = null;
+	teacherPageResources = null;
+	teacherManagerList 	= [];
+	teacherStudentList 	= [];
+	teacherReportList 	= [];
+
+	// Path to navigate user files
+	userFolder 					= null;
+	userFolderAbsolute 	= null; // Electron usage
+	userFolderRelative 	= null; // Reactjs usage
+
+	// Path to navigate manager files
+	managerFolder						= null;
+	managerFolderAbsolute 	= null;
+	managerFolderRelative 	= null;
+
+	// Path to navigate teacher files
+	teacherFolder						= null;
+	teacherFolderAbsolute 	= null;
+	teacherFolderRelative 	= null;
+
+	win.webContents.send('loggedOut');
+});
+
 
 // From: Sidebar.js
 // To:   Content.js

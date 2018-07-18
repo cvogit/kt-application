@@ -6,6 +6,9 @@
 # testing
 /coverage
 /public/users
+/public/managers
+/public/teachers
+
 
 # production
 /build
@@ -13,3 +16,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/.project

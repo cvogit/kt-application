@@ -24,6 +24,7 @@ class TeacherContentStudent extends Component {
 		const teacherPageIndex = this.state.teacherPageIndex;
 
 		console.log(teacherPageIndex);
+		console.log(this.props);
 
 		return (
 			<div className="teacher-page-content">

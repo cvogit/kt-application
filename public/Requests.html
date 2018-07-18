@@ -52,7 +52,7 @@
 					ipcRenderer.send('userInfoSuccess', response.data.result);
 				})
 				.catch(function (error) {
-			ipcRenderer.send('snackbarMessage', "Unable to login, please contact administrator.");
+					ipcRenderer.send('snackbarMessage', "Unable to login, please contact administrator.");
 				});
 			}
 			else 
@@ -252,8 +252,7 @@
 	ipcRenderer.on('addUserRequest', (event, pUserId) => {
 		axios.put(baseUrl+'/users/'+pUserId+'/activate')
 		.then(function (response) {
-			ipcRenderer.send('requestSuccess', response.data);
-			console.log(response);
+			ipcRenderer.send('snackbarMessage', "User is activated.");
 		})
 		.catch(function (error) {
 			console.log(error);

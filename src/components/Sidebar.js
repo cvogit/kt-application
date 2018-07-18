@@ -19,6 +19,7 @@ class Sidebar extends Component {
 
 		this.handleHomeButton 	= this.handleHomeButton.bind(this);
 		this.handleRolesSet 		= this.handleRolesSet.bind(this);
+		this.handleSignOut 			= this.handleSignOut.bind(this);
 		this.handleTabSelect 		= this.handleTabSelect.bind(this);
 		this.getMonthFromDate 	= this.getMonthFromDate.bind(this);
 	}
@@ -50,6 +51,12 @@ class Sidebar extends Component {
 		});
 		
 		ipcRenderer.send('appSelectContent', event.target.value);
+	}
+
+	handleSignOut(event) {
+		event.preventDefault();
+	
+		ipcRenderer.send('appSignOut');
 	}
 
 	getMonthFromDate(pDate) {
@@ -89,6 +96,7 @@ class Sidebar extends Component {
 				</div>
 				<Navigation type='vertical'>
 					{ renderTabs } 
+					<Button className="sign-out" onClick={this.handleSignOut} label="Sign out" value="sign out" />
 				</Navigation>
 			</div>
 		);
