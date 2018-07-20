@@ -255,7 +255,23 @@
 			ipcRenderer.send('snackbarMessage', "User is activated.");
 		})
 		.catch(function (error) {
-			console.log(error);
+			ipcRenderer.send('snackbarMessage', "Cannot activate user or user is already activated.");
+		});
+	});
+
+	// Add a student
+	ipcRenderer.on('addStudentRequest', (event, firstName, lastName, DoB) => {
+		console.log("hee0");
+		axios.post(baseUrl+'/students', {
+			firstName: 				firstName,
+			lastName: 				lastName,
+			DoB: 							DoB
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "Student is added.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "Cannot add student.");
 		});
 	});
 

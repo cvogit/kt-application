@@ -31,17 +31,19 @@ class EmployeeStudents extends Component {
 	componentDidMount() {
 
 		const teacherResource = this.props.teacher;
-		const students = teacherResource[0].students;
+		var students = [];
 
 		// Set the list of student assigned to the employee
 		var studentList = [];
-		students.forEach( (student) => {
-			var newStudent = {};
-			newStudent.name = student.firstName + ' ' + student.lastName;
-			newStudent.id 	= student.id;
-			newStudent.DoB 	= student.DoB;
-			studentList.push(newStudent);
-		});
+		if(teacherResource[0].students) {
+			teacherResource[0].students.forEach( (student) => {
+				var newStudent = {};
+				newStudent.name = student.firstName + ' ' + student.lastName;
+				newStudent.id 	= student.id;
+				newStudent.DoB 	= student.DoB;
+				studentList.push(newStudent);
+			});
+		}
 
 		// Set the list of students not assigned to the employee
 		const allStudents 	= this.props.students;

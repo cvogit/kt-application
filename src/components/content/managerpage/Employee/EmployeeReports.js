@@ -44,22 +44,25 @@ class EmployeeReports extends Component {
 
 		var Reports = this.props.reports;
 		var count 	= 0;
-		Reports.forEach( (report) => {
-			report['value'] = count;
-			count++;
-		});
-
 		var SelectedReport 	= null;
 		var content 				= null;
 
-		if(Reports.length !== 0) {
-			if(this.state.reportSelected >= Reports.length) {
-				SelectedReport 	= Reports[0];
-			} else
-				SelectedReport 	= Reports[this.state.reportSelected];
-				
-			content 				= SelectedReport.content;
-		}
+		if(Reports) {
+			Reports.forEach( (report) => {
+				report['value'] = count;
+				count++;
+			});
+
+			if(Reports.length !== 0) {
+				if(this.state.reportSelected >= Reports.length) {
+					SelectedReport 	= Reports[0];
+				} else
+					SelectedReport 	= Reports[this.state.reportSelected];
+					
+				content 				= SelectedReport.content;
+			}
+		} else 
+			Reports = [];
 
 		return (
 			<div className="employee-report" >

@@ -368,6 +368,11 @@ ipcMain.on('addEmployeeRequest', (event, pUserId) => {
 	requestWin.webContents.send('addUserRequest', pUserId);
 });
 
+// Activate an unactivated employee
+ipcMain.on('addStudentRequest', (event, firstName, lastName, DoB) => {
+	requestWin.webContents.send('addStudentRequest', firstName, lastName, DoB);
+});
+
 // ***********************
 // Results from the server
 // ***********************
@@ -507,7 +512,6 @@ ipcMain.on('getImageSuccess', (event, image, localPath) => {
 	// Write the file
 	store(image, localPath);
 });
-
 
 ipcMain.on('connectionError', (event, arg) => {
 	win.webContents.send('snackbarMessage', 'Unable to connect to server.');
