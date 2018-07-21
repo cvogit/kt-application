@@ -368,9 +368,14 @@ ipcMain.on('addEmployeeRequest', (event, pUserId) => {
 	requestWin.webContents.send('addUserRequest', pUserId);
 });
 
-// Activate an unactivated employee
+// Add a new student
 ipcMain.on('addStudentRequest', (event, firstName, lastName, DoB) => {
 	requestWin.webContents.send('addStudentRequest', firstName, lastName, DoB);
+});
+
+// Add a new report
+ipcMain.on('addReportRequest', (event, report, studentId) => {
+	requestWin.webContents.send('addReportRequest', report, studentId);
 });
 
 // ***********************

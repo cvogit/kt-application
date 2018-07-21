@@ -45,3 +45,9 @@
 .teacher-page-dialog {
 	width: 500px;
 }
+
+.teacher-page-right {
+	height: 100%; 
+	width: 85%;
+	float: left;
+}

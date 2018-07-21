@@ -124,7 +124,7 @@
 		})
 		.then(function (response) {
 			ipcRenderer.send('postImagesSuccess', response.data.result);
-			ipcRenderer.send('snackbarMessage', "The image is uploaded.");	
+			ipcRenderer.send('snackbarMessage', "(OK) The image is uploaded.");	
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -230,7 +230,7 @@
 	ipcRenderer.on('assignStudentRequest', (event, teacherId, studentId) => {
 		axios.post(baseUrl+'/teachers/'+teacherId+'/assign/'+studentId)
 		.then(function (response) {
-			ipcRenderer.send('requestSuccess', response.data);
+			ipcRenderer.send('snackbarMessage', "(OK) Student is assigned.");
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -241,7 +241,7 @@
 	ipcRenderer.on('unAssignStudentRequest', (event, teacherId, studentId) => {
 		axios.delete(baseUrl+'/teachers/'+teacherId+'/unassign/'+studentId)
 		.then(function (response) {
-			ipcRenderer.send('requestSuccess', response.data);
+			ipcRenderer.send('snackbarMessage', "(OK) Student is unassigned.");
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -252,7 +252,7 @@
 	ipcRenderer.on('addUserRequest', (event, pUserId) => {
 		axios.put(baseUrl+'/users/'+pUserId+'/activate')
 		.then(function (response) {
-			ipcRenderer.send('snackbarMessage', "User is activated.");
+			ipcRenderer.send('snackbarMessage', "(OK) User is activated.");
 		})
 		.catch(function (error) {
 			ipcRenderer.send('snackbarMessage', "Cannot activate user or user is already activated.");
@@ -261,17 +261,30 @@
 
 	// Add a student
 	ipcRenderer.on('addStudentRequest', (event, firstName, lastName, DoB) => {
-		console.log("hee0");
 		axios.post(baseUrl+'/students', {
 			firstName: 				firstName,
 			lastName: 				lastName,
 			DoB: 							DoB
 		})
 		.then(function (response) {
-			ipcRenderer.send('snackbarMessage', "Student is added.");
+			ipcRenderer.send('snackbarMessage', "(OK) Student is added.");
 		})
 		.catch(function (error) {
 			ipcRenderer.send('snackbarMessage', "Cannot add student.");
+		});
+	});
+
+	// Add a report
+	ipcRenderer.on('addReportRequest', (event, report, studentId) => {
+		axios.post(baseUrl+'/reports', {
+			studentId: 		studentId,
+			report: 			report,
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) Report is submitted.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "Cannot submit report.");
 		});
 	});
 

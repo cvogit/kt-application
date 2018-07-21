@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown';
 
+import {Editor, EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
+
 class EmployeeReports extends Component { 
 	constructor(props) {
 		super(props);
@@ -45,7 +47,7 @@ class EmployeeReports extends Component {
 		var Reports = this.props.reports;
 		var count 	= 0;
 		var SelectedReport 	= null;
-		var content 				= null;
+		var content 				= EditorState.createEmpty();
 
 		if(Reports) {
 			Reports.forEach( (report) => {
@@ -59,7 +61,7 @@ class EmployeeReports extends Component {
 				} else
 					SelectedReport 	= Reports[this.state.reportSelected];
 					
-				content 				= SelectedReport.content;
+				content 				= EditorState.createWithContent(convertFromRaw( JSON.parse(SelectedReport.content)));
 			}
 		} else 
 			Reports = [];
@@ -76,7 +78,9 @@ class EmployeeReports extends Component {
           value={this.state.reportSelected}
         />
         <div className="report-container">
-        	<div className="report-content">{content}</div>
+        	<div className="report-content">
+        		<Editor editorState={content} />
+        	</div>
         </div>
       </div>
 			);

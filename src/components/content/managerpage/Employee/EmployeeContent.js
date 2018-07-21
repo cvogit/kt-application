@@ -30,7 +30,6 @@ class EmployeeContent extends Component {
 
 
 	RenderManageEmployees = () => {
-		console.log("as");
 		var employeePageCenter = null;
 		var employeePageIndex = this.state.EmployeePageIndex;
 		var employee = this.props.employee;

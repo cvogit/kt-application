@@ -2,30 +2,22 @@ import React, { Component } from 'react';
 
 import Button from 'react-toolbox/lib/button/Button';
 
-import Table 					from 'react-toolbox/lib/table/Table';
-import TableHead			from 'react-toolbox/lib/table/TableHead';
-import TableRow				from 'react-toolbox/lib/table/TableRow';
-import TableCell			from 'react-toolbox/lib/table/TableCell';
-
-import Tooltip			from 'react-toolbox/lib/tooltip/Tooltip';
+import { List, ListItem, ListSubHeader, ListDivider, ListCheckbox } from 'react-toolbox/lib/list';
 
 const electron = window.require('electron');
 const ipcRenderer  = electron.ipcRenderer;
-
-const TooltipCell = Tooltip(TableCell);
 
 class EmployeeStudents extends Component { 
 	constructor(props) {
 		super(props);
 		this.state = {
 			students: [],
-			selected: [],
 			unAssignedStudents: [],
-			unAssignedSelected: [],
 		};
 
 		this.handleAddStudent 		= this.handleAddStudent.bind(this);
 		this.handleRemoveStudent 	= this.handleRemoveStudent.bind(this);
+		this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -38,9 +30,10 @@ class EmployeeStudents extends Component {
 		if(teacherResource[0].students) {
 			teacherResource[0].students.forEach( (student) => {
 				var newStudent = {};
-				newStudent.name = student.firstName + ' ' + student.lastName;
+				newStudent.name = student.firstName + ' ' + student.lastName + ' (' + student.id + ')';
 				newStudent.id 	= student.id;
 				newStudent.DoB 	= student.DoB;
+				newStudent.checked = false;
 				studentList.push(newStudent);
 			});
 		}
@@ -48,7 +41,7 @@ class EmployeeStudents extends Component {
 		// Set the list of students not assigned to the employee
 		const allStudents 	= this.props.students;
 		var 	unAssignedStudents = allStudents;
-		students.forEach( (student) => {
+		teacherResource[0].students.forEach( (student) => {
 			unAssignedStudents = unAssignedStudents.filter( (unAddStudent) => {
 				if(student.id !== unAddStudent.id) {
 					return unAddStudent;
@@ -59,8 +52,9 @@ class EmployeeStudents extends Component {
 		var unAssignedStudentList = [];
 		unAssignedStudents.forEach( (student) => {
 			var newStudent = {};
-			newStudent.name 	= student.firstName + ' ' + student.lastName;
+			newStudent.name 	= student.firstName + ' ' + student.lastName + ' (' + student.id + ')';
 			newStudent.id 		= student.id;
+			newStudent.checked = false;
 			unAssignedStudentList.push(newStudent);
 		});
 
@@ -71,28 +65,36 @@ class EmployeeStudents extends Component {
 		});
 	}
 
-	handleAssignedStudentRowSelect = selected => {
-		const students = this.state.students;
-		this.setState({ selected: selected.map(student => students[student].id) });
-	};
-
-	handleUnAssignedStudentRowSelect = selected => {
-		const students = this.state.unAssignedStudents;
-		this.setState({ unAssignedSelected: selected.map(student => students[student].id) });
-	};
-
 	handleAddStudent() {
 		const teacherId = this.props.teacher[0].id;
-		this.state.unAssignedSelected.forEach( (studentId) => {
-			ipcRenderer.send('AssignStudentRequest', teacherId, studentId);
+		this.state.unAssignedStudents.forEach( (student) => {
+			if(student.checked)
+				ipcRenderer.send('AssignStudentRequest', teacherId, student.id);
 		});
 	}
 
 	handleRemoveStudent() {
 		const teacherId = this.props.teacher[0].id;
-		this.state.selected.forEach( (studentId) => {
-			ipcRenderer.send('UnAssignStudentRequest', teacherId, studentId);
+		this.state.students.forEach( (student) => {
+			if(student.checked)
+				ipcRenderer.send('UnAssignStudentRequest', teacherId, student.id);
 		});
+	}
+
+	handleCheckboxChange(table, index) {
+		if(table === 'assigned') {
+			var students = this.state.students;
+			students[index].checked = !students[index].checked;
+			this.setState({
+				students: students
+			})
+		} else if(table === 'unassigned') {
+			var students = this.state.unAssignedStudents;
+			students[index].checked = !students[index].checked;
+			this.setState({
+				unAssignedStudents: students
+			})
+		}
 	}
 
 	RenderEmployeeStudents = () => {
@@ -104,41 +106,34 @@ class EmployeeStudents extends Component {
 			<div className="employee-students" >
 				<div className="student-list-container">
 					<Button className="remove-student-button" onClick={this.handleRemoveStudent} icon='delete' floating />
-					<Table multiSelectable onRowSelect={this.handleAssignedStudentRowSelect} style={{ marginTop: 10 }}>
-						<TableHead>
-							<TooltipCell tooltip="Students assigned to the teacher.">
-								Assigned Students
-							</TooltipCell>
-							<TableCell className="tablecell" numeric>Id</TableCell>
-							<TableCell className="tablecell" numeric>Name</TableCell>
-							<TableCell className="tablecell-right" numeric>DoB</TableCell>
-						</TableHead>
-						{students.map((student, index) => (
-							<TableRow key={index} selected={this.state.selected.indexOf(student.id) !== -1}>
-								<TableCell className="tablecell" numeric>{student.id}</TableCell>
-								<TableCell className="tablecell" >{student.name}</TableCell>
-								<TableCell className="tablecell-right" >{student.DoB}</TableCell>
-							</TableRow>
+					<List selectable ripple>
+		        <ListSubHeader caption='Assigned Students' />
+		        {students.map((student, index) => (
+							<ListCheckbox
+								key={index}
+			          caption={student.name}
+			          className="ListCheckBox"
+			          checked={student.checked}
+			          onChange={() => this.handleCheckboxChange('assigned', index)}
+			        />
 						))}
-					</Table>
+		      </List>
 				</div>
+
 				<div className="unassigned-student-container">
 					<Button className="add-student-button" onClick={this.handleAddStudent} icon='add' floating />
-					<Table multiSelectable onRowSelect={this.handleUnAssignedStudentRowSelect} style={{ marginTop: 10 }}>
-						<TableHead>
-							<TooltipCell tooltip="Students not assigned to the teacher.">
-								Not Assigned Students
-							</TooltipCell>
-							<TableCell className="tablecell" numeric>Id</TableCell>
-							<TableCell className="tablecell-right" numeric>Name</TableCell>
-						</TableHead>
-						{unAssignedStudents.map((student, index) => (
-							<TableRow key={index} selected={this.state.unAssignedSelected.indexOf(student.id) !== -1}>
-								<TableCell className="tablecell" numeric>{student.id}</TableCell>
-								<TableCell className="tablecell-right" >{student.name}</TableCell>
-							</TableRow>
+					<List selectable ripple>
+		        <ListSubHeader caption='Unassigned Students' />
+		        {unAssignedStudents.map((student, index) => (
+							<ListCheckbox
+								key={index}
+			          caption={student.name}
+			          className="ListCheckBox"
+			          checked={student.checked}
+			          onChange={() => this.handleCheckboxChange('unassigned', index)}
+			        />
 						))}
-					</Table>
+		      </List>
 				</div>
 			</div>
 			);

@@ -7,6 +7,9 @@ import List 		from 'react-toolbox/lib/list/List';
 import ListItem from 'react-toolbox/lib/list/ListItem';
 import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
 
+import Student from '../student/Student';
+
+
 import defaultAvatar from '../../../images/default_avatar.png';
 
 const electron = window.require('electron');
@@ -67,18 +70,18 @@ class TeacherContentStudent extends Component {
 		this.setState({
 			studentIndex: studentIndex,
 		});
+		console.log(this.state.students[studentIndex]);
 	}
 
 	RenderTeacherContentStudent = () => {
 		var studentList = this.state.students;
 		const teacherFolder = this.state.folder;
 
-		var renderStudentList = null;
+		var renderStudentList 		= null;
+		var renderStudentContent 	= null;
 
 		// Render a list of students
-		if(studentList.length === 0) {
-			renderStudentList = null;
-		} else {
+		if(studentList.length !== 0) {
 			var index = 0;
      	renderStudentList = studentList.map( (student, index) => {
      		var avatarPath = defaultAvatar;
@@ -93,6 +96,10 @@ class TeacherContentStudent extends Component {
 								          caption={student.lastName + ' ' + student.firstName}
 								          onClick={() => this.renderStudentContent(index)} />
 			});		
+		}
+
+		if(studentList.length !== 0) {
+			renderStudentContent = <Student student={studentList[this.state.studentIndex]} />;
 		}
 
 		return (
@@ -114,7 +121,7 @@ class TeacherContentStudent extends Component {
 			    </div>
 				</div>
 				<div className="teacher-page-right">
-
+					{renderStudentContent}
 				</div>
 			</div>
 			);
