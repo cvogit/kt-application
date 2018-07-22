@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GoogleSignIn 		from '../commons/GoogleSignIn';
+import GoogleSignIn 		from './GoogleSignIn';
 
 import '../../css/Welcome/login.css';
 
@@ -16,6 +16,7 @@ class Login extends Component {
 		};
 
 		this.handleSetGoogleUser 		= this.handleSetGoogleUser.bind(this);
+		this.handleEmailChange 		= this.handleEmailChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleLoginSubmit 		= this.handleLoginSubmit.bind(this);
 	}
@@ -28,6 +29,10 @@ class Login extends Component {
 		var profile 	= googleUser.getBasicProfile();
 		const email 	= profile.getEmail();
 		this.setState({email: email});
+	}
+
+	handleEmailChange(event) {
+		this.setState({email: event.target.value});
 	}
 
 	handlePasswordChange(event) {
@@ -46,9 +51,9 @@ class Login extends Component {
 				<div className="login-header">
 					<h1>Login</h1>
 				</div>
-				<GoogleSignIn onGoogleSignIn={this.handleSetGoogleUser} />
 				<form className="login-form">
 					<label>
+						<input type="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
 						<input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} />
 					</label>
 					<input className="login-btn" type="submit" onClick={this.handleLoginSubmit} value="Login" />

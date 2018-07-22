@@ -4,13 +4,12 @@
 	const ipcRenderer  = electron.ipcRenderer;
 	const axios 	= require('axios');
 
-	const baseUrl = 'http://localhost';
+	const baseUrl =  'http://localhost'; //'http://ec2-13-57-32-222.us-west-1.compute.amazonaws.com';
 
 	var user = null;
 
 	// Register
 	ipcRenderer.on('postRegisterRequest', (event, arg) => {
-		console.log("Sending register request.");
 		axios.post(baseUrl+'/register', {
 			firstName: 				arg.firstName,
 			lastName: 				arg.lastName,
@@ -19,18 +18,17 @@
 			password_confirmation: 			arg.confirmPassword,
 		})
 		.then(function (response) {
-			ipcRenderer.send('registerSuccess', response.data);
 			ipcRenderer.send('snackbarMessage', "Registered, waiting approval.");
-
 		})
 		.catch(function (error) {
-			ipcRenderer.send('registerFailure', error.response.data);
 			ipcRenderer.send('snackbarMessage', "Unable to register, please contact administrator.");
 		});
 	});
 
 	// Login
 	ipcRenderer.on('getLoginRequest', (event, arg) => {
+		console.log(baseUrl+'/login');
+		console.log(arg.email);
 		axios.get(baseUrl+'/login', {
 		params: {
 				email: 		arg.email,
@@ -40,6 +38,7 @@
 		.then(function (response) {
 			if ( response.data.result.userId && response.data.result.token)
 			{
+				console.log(response);
 				axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.result.token;
 				const userId = response.data.result.userId;
 				// Prep app for initial resource loading

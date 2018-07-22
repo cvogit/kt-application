@@ -35,7 +35,7 @@
 }
 .login-form {
 	height: 	55%;
-	margin: 	0;
+	margin: 	20px 0px;
 	padding:	0 25px;
 	width : 	100%;
 	cursor: 	pointer;
@@ -43,7 +43,7 @@
 .login-form > label {
 	width:250px;
 }
-input[type="password"] {
+input[type="password"], input[type="email"] {
 	background: center left no-repeat, linear-gradient(to bottom, #d6d7d7, #dee0e0);
 	border: 1px solid #a1a3a3;
 	border-radius: 4px;

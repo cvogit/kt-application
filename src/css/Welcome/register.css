@@ -4,7 +4,7 @@
 	border-radius: 5px;
 	height:				300px;
 	margin:				25px auto;
-	width:				300px;
+	width:				500px;
 }
 .register-header {
 	height: 14%;
@@ -122,7 +122,7 @@ input[type="email"], input[type="password"], input[type="password"]{
 	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #31524d, 0px 5px 3px #999;
 }
 .toggle-login {
-	margin: 30px auto 0 auto;
+	margin: 0px auto 0 auto;
 }
 .toggle-login > a {
 	display: table;

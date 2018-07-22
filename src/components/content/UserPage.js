@@ -3,9 +3,7 @@ import Tab from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
 import Banner 				from '../commons/Banner';
-import UserFeed 			from './userpage/UserFeed';
 import UserPictures 	from './userpage/UserPictures';
-import UserHistory 		from './userpage/UserHistory';
 import UserEdit 			from './userpage/UserEdit';
 
 import '../../assets/react-toolbox/theme.css';
@@ -52,14 +50,10 @@ class UserPage extends Component {
 		var userpageCenter;
 
 		if(userpageIndex === 0) {
-			userpageCenter = <UserFeed />
+			userpageCenter = <UserEdit />
 		} else if(userpageIndex === 1) {
 			userpageCenter = <UserPictures />
-		} else if(userpageIndex === 2) {
-			userpageCenter = <UserHistory />
-		} else if(userpageIndex === 3) {
-			userpageCenter = <UserEdit />
-		}
+		} 
 
 		return (
 			<div className="userpage-container">
@@ -82,10 +76,8 @@ class UserPage extends Component {
 						<div className="userpage-navigation-container">
 							<div className="userpage-navigation-content">
 				 				<Tabs index={userpageIndex} onChange={this.handleFixedTabChange} fixed>
-				          <Tab label='Feeds'></Tab>
+				          <Tab label='Info'></Tab>
 				          <Tab label='Pictures'></Tab>
-				          <Tab label='History'></Tab>
-				          <Tab label='Edit'></Tab>
 				        </Tabs>
 							</div>
 						</div>
