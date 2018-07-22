@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import GoogleSignIn 		from './GoogleSignIn';
 
 import '../../css/Welcome/login.css';
 
@@ -45,8 +44,8 @@ class Login extends Component {
 	}
 
 	RenderLoginForm = () => {
-		const loginFailure  = this.state.loginFailure;
-		return (
+
+			return (
 			<div className="login-container">
 				<div className="login-header">
 					<h1>Login</h1>

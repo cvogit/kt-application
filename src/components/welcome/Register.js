@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import GoogleSignIn 		from './GoogleSignIn';
 
 import '../../css/Welcome/register.css';
 

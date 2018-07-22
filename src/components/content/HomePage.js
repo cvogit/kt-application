@@ -46,8 +46,6 @@ class HomePage extends Component {
   };
 
 	RenderHomePage = () => {
-		const count 			= this.state.offset;
-		const pagination 	=	this.state.pagination;
 		const pageCount 	= this.state.offset / 5;
 		const currentPage = this.state.selected * 5;
 

@@ -48,7 +48,6 @@ class ManageUsers extends Component {
 		if(userList.length === 0) {
 			renderUserList = null;
 		} else {
-			var index = 0;
      	renderUserList = userList.map( (user, index) => {
      		var avatarPath = defaultAvatar;
      		if(user.avatarId !== 0) {

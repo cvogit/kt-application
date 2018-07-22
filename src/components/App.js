@@ -97,15 +97,7 @@ class App extends Component {
 	RenderApp = () => {
 		const isLoggedIn 	= this.state.isLoggedIn;
 		const isLoading  	= this.state.isLoading;
-		const isError 		= this.state.isError;
-		const errorContent= this.state.errorContent;
 		
-		var snackbar = null;
-		if(this.state.snackbarActive) {
-			snackbar =	<div className="snackbar">
-										<h3>{this.state.snackbarMessage}</h3>
-									</div>
-		}
 		return (
 			<div className="app-body">
 				{	isLoggedIn 

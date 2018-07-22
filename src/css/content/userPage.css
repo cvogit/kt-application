@@ -49,7 +49,7 @@
 		}
 
 			.avatar {
-				border-radius: none !important;
+				border-radius: 0% !important;
 				height: auto;
 				width:  110%;
 				left: -5%;

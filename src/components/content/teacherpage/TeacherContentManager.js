@@ -40,7 +40,6 @@ class TeacherContentManager extends Component {
 		if(managerList.length === 0) {
 			renderManagerList = null;
 		} else {
-			var index = 0;
      	renderManagerList = managerList.map( (manager, index) => {
      		var avatarPath = defaultAvatar;
      		if(manager.avatarId !== 0) {

@@ -49,6 +49,8 @@ class UserPage extends Component {
 
 		var userpageCenter;
 
+		console.log(this.state.userResources);
+		
 		if(userpageIndex === 0) {
 			userpageCenter = <UserEdit />
 		} else if(userpageIndex === 1) {
