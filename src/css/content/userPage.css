@@ -91,6 +91,54 @@
 			max-height: 80%;
 			overflow-y: scroll;
 		}
+
+.user-page-center-container {
+	height: 78%;
+}
+
+
+.user-page-left {
+	float: left;
+	height: 90%;
+	width: 14%;
+	margin: 0 2%;
+}
+
+.user-page-right {
+	float: left;
+	height: 90%;
+	width: 80%;
+	margin: 0 0%;
+}
+
+.user-profile-container {
+	height: 100%;
+}
+	.user-profile-content {
+		height: 95%;
+		background-color: white;
+		padding: 2.5% 5%;
+	}
+
+	.info-container {
+		display: block;
+		height: 40px;
+		width: 100%;
+	}
+
+	.info-title {
+		clear: left;
+		float: left;
+		width: 50px;
+	}
+
+	.info-field {
+		float: left;
+    text-align: left;
+    width: 300px;
+    margin: 0 40px;
+	}
+
 /*
 	UserFeed.js
 */
@@ -192,6 +240,12 @@
 				height: 100%;
 				overflow: hidden;
 			}
+
+/*
+	UserEdit.js
+*/
+
+
 
 /*
 	UserPictures.js

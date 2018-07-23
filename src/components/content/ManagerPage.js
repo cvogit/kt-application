@@ -35,7 +35,6 @@ class ManagerPage extends Component {
 		const managerResources = this.state.managerResources;
 		const managerPageIndex = this.state.managerPageIndex;
 		var managerPageCenter = null;
-		console.log(managerResources);
 
 		if(managerPageIndex === 0 && managerResources) {
 			managerPageCenter = <ManageUsers 	folder={managerResources.managerFolder} 

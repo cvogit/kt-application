@@ -71,7 +71,7 @@ class App extends Component {
 			snackbarMessage: message,
 			snackbarActive: true,
 		});
-		setTimeout(this.handleSnackbarTimeout, 3000);
+		//setTimeout(this.handleSnackbarTimeout, 3000);
 	}
 
 	handleSnackbarTimeout(event, instance) {
@@ -84,7 +84,7 @@ class App extends Component {
 			errorContent: 	arg,
 		});
 
-		setTimeout(this.ResetError, 3000);
+		setTimeout(this.ResetError, 5000);
 	}
 
 	ResetError() {

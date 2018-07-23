@@ -467,6 +467,11 @@ ipcMain.on('deleteImagesSuccess', (event, pImageId) => {
 	win.webContents.send('loadUserPictures', userImagesPath);
 });
 
+ipcMain.on('putUserInfoRequest', (event, pEmail, pPhoneNum) => {
+	console.log(pEmail);
+	requestWin.webContents.send('putUserInfoRequest', pEmail, pPhoneNum);
+});
+
 // *******************
 // Data to set up session
 // *******************

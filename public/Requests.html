@@ -27,8 +27,6 @@
 
 	// Login
 	ipcRenderer.on('getLoginRequest', (event, arg) => {
-		console.log(baseUrl+'/login');
-		console.log(arg.email);
 		axios.get(baseUrl+'/login', {
 		params: {
 				email: 		arg.email,
@@ -38,7 +36,6 @@
 		.then(function (response) {
 			if ( response.data.result.userId && response.data.result.token)
 			{
-				console.log(response);
 				axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.result.token;
 				const userId = response.data.result.userId;
 				// Prep app for initial resource loading
@@ -254,7 +251,7 @@
 			ipcRenderer.send('snackbarMessage', "(OK) User is activated.");
 		})
 		.catch(function (error) {
-			ipcRenderer.send('snackbarMessage', "Cannot activate user or user is already activated.");
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot activate user or user is already activated.");
 		});
 	});
 
@@ -269,7 +266,7 @@
 			ipcRenderer.send('snackbarMessage', "(OK) Student is added.");
 		})
 		.catch(function (error) {
-			ipcRenderer.send('snackbarMessage', "Cannot add student.");
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot add student.");
 		});
 	});
 
@@ -283,7 +280,22 @@
 			ipcRenderer.send('snackbarMessage', "(OK) Report is submitted.");
 		})
 		.catch(function (error) {
-			ipcRenderer.send('snackbarMessage', "Cannot submit report.");
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot submit report.");
+		});
+	});
+
+	// Change user info
+	ipcRenderer.on('putUserInfoRequest', (event, email, phoneNum) => {
+		console.log(baseUrl+'/users/'+user.id)
+		axios.put(baseUrl+'/users/'+user.id, {
+			email: 			email,
+			phoneNum: 	phoneNum,
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) User information is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot submit report.");
 		});
 	});
 

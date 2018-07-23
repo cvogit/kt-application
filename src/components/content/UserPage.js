@@ -49,10 +49,8 @@ class UserPage extends Component {
 
 		var userpageCenter;
 
-		console.log(this.state.userResources);
-		
 		if(userpageIndex === 0) {
-			userpageCenter = <UserEdit />
+			userpageCenter = <UserEdit user={this.state.userResources.userInfo} />
 		} else if(userpageIndex === 1) {
 			userpageCenter = <UserPictures />
 		} 

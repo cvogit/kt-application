@@ -82,7 +82,6 @@ class TeacherContentStudent extends Component {
 
 		// Render a list of students
 		if(studentList.length !== 0) {
-			var index = 0;
      	renderStudentList = studentList.map( (student, index) => {
      		var avatarPath = defaultAvatar;
      		if(student.avatarId !== 0) {
