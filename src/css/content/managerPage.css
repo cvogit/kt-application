@@ -140,3 +140,18 @@
 	margin: 0 0 0 10%;
 	padding: 20px 5px;
 }
+
+/*
+	EmployeeInfo.js
+*/
+
+.employee-info {
+	height: 100%;
+	margin: 2% 5%;
+}
+
+.user-profile-content {
+	border-bottom: 1px dotted gray;
+	border-left: 1px dotted gray;
+	border-right: 1px dotted gray;
+}

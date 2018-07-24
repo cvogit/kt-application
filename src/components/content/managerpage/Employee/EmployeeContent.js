@@ -40,7 +40,7 @@ class EmployeeContent extends Component {
 			} else if(employeePageIndex === 1) {
 				employeePageCenter = <EmployeeStudents 	teacher={employee.teacher} students={this.props.students} />
 			} else if(employeePageIndex === 2) {
-				employeePageCenter = <EmployeeInfo />
+				employeePageCenter = <EmployeeInfo user={employee} />
 			} 
 		}
 
