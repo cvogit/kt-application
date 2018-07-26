@@ -71,7 +71,7 @@ class App extends Component {
 			snackbarMessage: message,
 			snackbarActive: true,
 		});
-		//setTimeout(this.handleSnackbarTimeout, 3000);
+		setTimeout(this.handleSnackbarTimeout, 6000);
 	}
 
 	handleSnackbarTimeout(event, instance) {

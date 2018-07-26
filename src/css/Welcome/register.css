@@ -2,14 +2,13 @@
 	background: #f1f1f1;
 	border: 1px solid #000;
 	border-radius: 5px;
-	height:				300px;
-	margin:				25px auto;
-	width:				500px;
+	height:				90%;
+	margin:				1% auto;
+	width:				30%;
 }
 .register-header {
 	height: 14%;
 	margin: 0;
-	font: 10px/18px 'Lucida Grande', Arial, sans-serif;
 	color: #000;
 	text-align: center;
 	text-shadow: 0 1px rgba(255, 255, 255, 0.25);
@@ -23,23 +22,25 @@
 	border-radius: 	5px 5px 0 0;
 }
 .register-header h1 {
-	line-height: 40px;
-	font: bold 20px 'Open Sans', sans-serif;
+	font: bold 2vh 'Open Sans', sans-serif;
 	color: #fff;
 	text-align: center;
 	text-shadow: 0 1px white;
 	margin: 	0;
-	padding: 	10px 0 0 0;
+	padding: 	1vh 0 0 0;
 	pointer-events:none;
 }
 .register-form {
 	color: green; 
 	background-color: transparent; 
 	text-decoration: none;
-	width: 	84%;
+	width: 	86%;
 	height: 60%;
 	margin: auto;
 	cursor: pointer;
+}
+.register-form > label {
+	margin: 1vh 0;
 }
 .register-form a {
 	color: green; 
@@ -68,28 +69,35 @@ input[type="name"] {
 	box-shadow: 0 1px #fff;
 	box-sizing: border-box;
 	color: #696969;
-	height: 	39px;
+	height: 	4vh;
+	margin:   none;
 	padding:	0 0 0 12px;
 	transition: box-shadow 0.3s;
 	width: 		49%;
 }
 .firstName {
-	margin: 	14px 1% 0 0;
+	margin: 	0 1% 0 0;
 }
 .lastName {
-	margin: 	14px 0 0 1%;
+	margin: 	0 0 0 1%;
 }
 input[type="name"]:focus {
 	box-shadow: 0 0 4px 1px rgba(55, 166, 155, 0.3);
 	outline: 0;
 }
+input[type="name"] {
+	font-size: 1.5vh !important;
+}
 input[type="email"], input[type="password"], input[type="password"]{
+	font: 1.5vh;
+	margin: 1vh 0 0 0;
 	width: 100%;
 }
 .register-btn {
-	width: 160px;
-	height:35px;
+	width: 10vw;
+	height:3vh;
 	display:block;
+	float: right;
 	font-family:Arial, "Helvetica", sans-serif;
 	font-size:16px;
 	font-weight:bold;
@@ -98,8 +106,8 @@ input[type="email"], input[type="password"], input[type="password"]{
 	text-transform:uppercase;
 	text-align:center;
 	text-shadow:1px 1px 0px #37a69b;
+	top: -4vh;
 	padding:2.5px 0 0 0;
-	margin: -20px 0 0 auto;
 	position:relative;
 	cursor:pointer;
 	background-color: #5b9acf;
@@ -109,7 +117,6 @@ input[type="email"], input[type="password"], input[type="password"]{
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius:5px;
-	bottom: 20px;
 	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #497a78, 0px 10px 5px #999;
 }
 .register-btn:hover {

@@ -14,7 +14,7 @@ class Login extends Component {
 			loginFailure: false,
 		};
 
-		this.handleSetGoogleUser 		= this.handleSetGoogleUser.bind(this);
+		this.handleSetGoogleUser 	= this.handleSetGoogleUser.bind(this);
 		this.handleEmailChange 		= this.handleEmailChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleLoginSubmit 		= this.handleLoginSubmit.bind(this);
@@ -55,9 +55,11 @@ class Login extends Component {
 						<input type="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
 						<input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} />
 					</label>
-					<input className="login-btn" type="submit" onClick={this.handleLoginSubmit} value="Login" />
-					<p className="password-reset"><a>Forgot your password?</a></p>
-					<p className="toggle-register"><a onClick={this.props.handleWelcomeToggle}>Register</a></p>
+					<div className="button-container">
+						<input className="login-btn" type="submit" onClick={this.handleLoginSubmit} value="Login" />
+						<p className="password-reset"><a>Forgot your password?</a></p>
+						<p className="toggle-register"><a onClick={this.props.handleWelcomeToggle}>Register</a></p>
+					</div>
 				</form>
 			</div>
 			);

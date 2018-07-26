@@ -6,8 +6,7 @@ import '../css/sidebar/sidebar.css';
 
 import homeIcon from '../images/home_icon.png';
 
-const electron = window.require('electron');
-const ipcRenderer  = electron.ipcRenderer;
+const { ipcRenderer } = window.require('electron');
 
 class Sidebar extends Component {
 	constructor(props) {

@@ -61,16 +61,19 @@ function createWindow() {
 	var mainScreen = screenElectron.getPrimaryDisplay();
 	var dimensions = mainScreen.size;
 	
-	win = new BrowserWindow({backgroundColor: '#fff', show: false, height: dimensions.height, width: dimensions.width});
+	win = new BrowserWindow({
+		backgroundColor: '#fff', 
+		show: false, 
+		height: dimensions.height, 
+		width: dimensions.width
+	});
 	win.webContents.openDevTools();
 
 	// Open default browser when url is click
-	/*
 	win.webContents.on('will-navigate', function(e, url) {
 	  e.preventDefault();
 	  electron.shell.openExternal(url);
 	});
-	*/
 
 	win.setResizable(false);
 	showWindow();
@@ -88,7 +91,7 @@ function showWindow() {
 function createRequestWindow() {
 	requestWin = new BrowserWindow({width:800, height:600, show:false});
 	requestWin.loadURL(isDev ? `file://${path.join(__dirname, './Requests.html')}` : `file://${path.join(__dirname, '../build/Requests.html')}`);
-	requestWin.webContents.openDevTools();
+	//requestWin.webContents.openDevTools();
 	
 	requestWin.on('closed', () => requestWin = null);
 }
