@@ -4,8 +4,8 @@ import Tab 	from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
 import Banner 				from '../commons/Banner';
-import ManageStudents from './managerpage/ManageStudents';
-import ManageUsers 		from './managerpage/ManageUsers';
+import ManageStudents 	from './managerpage/ManageStudents';
+import ManageEmployees 	from './managerpage/ManageEmployees';
 
 import '../../css/content/managerPage.css';
 
@@ -37,13 +37,16 @@ class ManagerPage extends Component {
 		var managerPageCenter = null;
 
 		if(managerPageIndex === 0 && managerResources) {
-			managerPageCenter = <ManageUsers 	folder={managerResources.managerFolder} 
-																				users={managerResources.managerUserList} 
-																				newUsers={managerResources.managerNewUserList}
-																				students={managerResources.managerStudentList} 
-																				/>
+			managerPageCenter = <ManageEmployees 	folder={managerResources.managerFolder} 
+																						users={managerResources.managerUserList} 
+																						newUsers={managerResources.managerNewUserList}
+																						students={managerResources.managerStudentList} 
+																						/>
 		} else if(managerPageIndex === 1 && managerResources) {
-			managerPageCenter = <ManageStudents resource={this.state.managerResources} />
+			managerPageCenter = <ManageStudents folder={managerResources.managerFolder} 
+																					students={managerResources.managerStudentList} 
+																					inactiveStudents={managerResources.managerInactiveStudentList} 
+																					/>
 		} 
 
 		return (

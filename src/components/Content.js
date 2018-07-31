@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import HomePage 		from './content/HomePage';
 import ManagerPage 	from './content/ManagerPage';
-import TeacherPage 	from './content/TeacherPage';
 import UserPage 		from './content/UserPage';
 
 import '../css/content.css';
@@ -45,6 +44,8 @@ class Content extends Component {
 		this.setState({
 			content: page,
 		});
+
+		console.log(resources);
 	}
 
 	RenderContent = () => {
@@ -58,7 +59,7 @@ class Content extends Component {
 		else if(stateContent === "manager")
 			content = <ManagerPage resources={this.state.managerPageResources} />;
 		else if(stateContent === "teacher")
-			content = <TeacherPage resources={this.state.teacherPageResources} />;
+			content = null;//<TeacherPage resources={this.state.teacherPageResources} />;
 
 		return (
 			<div className="content"> { content } </div>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import EmployeeInfo from './EmployeeInfo';
-import EmployeeStudents from './EmployeeStudents';
-import EmployeeReports from './EmployeeReports';
+import EmployeeInfo 		from './EmployeeInfo';
+import EmployeeReports 	from './EmployeeReports';
 
 import Tab from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
@@ -33,13 +32,17 @@ class EmployeeContent extends Component {
 		var employeePageCenter = null;
 		var employeePageIndex = this.state.EmployeePageIndex;
 		var employee = this.props.employee;
+		console.log(employee);
 
 		if(employee !== null) {
+			// TODO = verifies with client about reports owner and updater display in employee page
+			/*
 			if(employeePageIndex === 0) {
-				employeePageCenter = <EmployeeReports 	reports={employee.reports} />
-			} else if(employeePageIndex === 1) {
-				employeePageCenter = <EmployeeStudents 	teacher={employee.teacher} students={this.props.students} />
-			} else if(employeePageIndex === 2) {
+				employeePageCenter = <EmployeeReports reports={employee.reports} />
+			} else 
+			*/
+
+			if(employeePageIndex === 0) {
 				employeePageCenter = <EmployeeInfo user={employee} />
 			} 
 		}
@@ -47,8 +50,6 @@ class EmployeeContent extends Component {
 		return (
 			<div className="employee-content" >
 				<Tabs className="employee-tabs" index={employeePageIndex} onChange={this.handleFixedTabChange} fixed>
-					<Tab label='Reports'></Tab>
-					<Tab label='Students'></Tab>
 					<Tab label='Info'></Tab>
 				</Tabs>
 				{employeePageCenter}

@@ -30,7 +30,7 @@ class EmployeeReports extends Component {
 	}
 
 	reportDropdown (report) {
-    const name = report.student.firstName + ' ' + report.student.lastName + ': ' + report.studentId;
+    const name = report.student.name + ': ' + report.studentId;
 
     return (
       <div className="dropdown-container">
@@ -49,6 +49,8 @@ class EmployeeReports extends Component {
 		var SelectedReport 	= null;
 		var content 				= EditorState.createEmpty();
 
+		// Have to reassign reports value in case of new reports being submit
+		// might scrap this feature later on
 		if(Reports) {
 			Reports.forEach( (report) => {
 				report['value'] = count;
@@ -58,10 +60,12 @@ class EmployeeReports extends Component {
 			if(Reports.length !== 0) {
 				if(this.state.reportSelected >= Reports.length) {
 					SelectedReport 	= Reports[0];
-				} else
+				} else {
 					SelectedReport 	= Reports[this.state.reportSelected];
+				}
 					
-				content 				= EditorState.createWithContent(convertFromRaw( JSON.parse(SelectedReport.content)));
+					console.log(SelectedReport);
+				//content 				= EditorState.createWithContent(convertFromRaw( JSON.parse(SelectedReport.content)));
 			}
 		} else 
 			Reports = [];

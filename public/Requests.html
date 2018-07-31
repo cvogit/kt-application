@@ -4,12 +4,13 @@
 	const ipcRenderer  = electron.ipcRenderer;
 	const axios 	= require('axios');
 
-	const baseUrl =  'http://ec2-13-57-32-222.us-west-1.compute.amazonaws.com';
+	const baseUrl =  'http://localhost';
 
 	var user = null;
 
 	// Register
 	ipcRenderer.on('postRegisterRequest', (event, arg) => {
+		console.log(arg);
 		axios.post(baseUrl+'/register', {
 			firstName: 				arg.firstName,
 			lastName: 				arg.lastName,
@@ -40,7 +41,6 @@
 				const userId = response.data.result.userId;
 				// Prep app for initial resource loading
 				ipcRenderer.send('loginSuccess');
-
 				// Fetch user basic information
 				axios.get(baseUrl+'/users/'+userId)
 				.then(function (response) {
@@ -256,11 +256,11 @@
 	});
 
 	// Add a student
-	ipcRenderer.on('addStudentRequest', (event, firstName, lastName, DoB) => {
+	ipcRenderer.on('addStudentRequest', (event, firstName, lastName, birthday) => {
 		axios.post(baseUrl+'/students', {
 			firstName: 				firstName,
 			lastName: 				lastName,
-			DoB: 							DoB
+			birthday: 				birthday
 		})
 		.then(function (response) {
 			ipcRenderer.send('snackbarMessage', "(OK) Student is added.");
@@ -281,6 +281,19 @@
 		})
 		.catch(function (error) {
 			ipcRenderer.send('snackbarMessage', "(Error) Cannot submit report.");
+		});
+	});
+
+	// Update a report
+	ipcRenderer.on('putReportRequest', (event, report, reportId, reportPart) => {
+		axios.put(baseUrl+'/reports/'+reportId+'/contents/'+reportPart, {
+			content: 			report
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The report is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Unable to update the report.");
 		});
 	});
 

@@ -94,38 +94,42 @@ input[type="email"], input[type="password"], input[type="password"]{
 	width: 100%;
 }
 .register-btn {
-	width: 10vw;
-	height:3vh;
-	display:block;
-	float: right;
-	font-family:Arial, "Helvetica", sans-serif;
-	font-size:16px;
-	font-weight:bold;
-	color:#fff;
-	text-decoration:none;
-	text-transform:uppercase;
-	text-align:center;
-	text-shadow:1px 1px 0px #37a69b;
-	top: -4vh;
-	padding:2.5px 0 0 0;
-	position:relative;
-	cursor:pointer;
+	width: 9vw;
+	height: 3vh;
+	top: -5vh;
+	float:right;
+	font-family: Arial, "Helvetica", sans-serif;
+	font-size: 1.3vh;
+	font-weight: bold;
+	color: #fff;
+	text-decoration: none;
+	text-transform:  uppercase;
+	text-align: center;
+	text-shadow: 1px 1px 0px #37a69b;
+	padding: 0.5% 0 0 0;
+	margin: 2% auto 3% auto;
+	position: relative;
+	cursor: pointer;
 	background-color: #5b9acf;
-	border: none;  
+	border: none;
+	background-image: -webkit-gradient(linear,left top, left bottom,from(#3db0a6),to(#3111));
+	background-image: -webkit-linear-gradient(top,#3db0a6,#3111);
+	background-image: -o-linear-gradient(top,#3db0a6,#3111);
 	background-image: linear-gradient(to bottom,#3db0a6,#3111);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-	border-bottom-left-radius:5px;
+	border-bottom-left-radius: 5px;
 	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #497a78, 0px 10px 5px #999;
+	bottom: 2%;
 }
 .register-btn:hover {
 	transition-duration: 0.2s;
-	background-color: #3689d0;
+	background-color: #2783d0;
 }
 .register-btn:active {
 	transition-duration: 0.1s;
-	top: 0.5px;
+	top: -5vh;
 	box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #31524d, 0px 5px 3px #999;
 }
 .toggle-login {

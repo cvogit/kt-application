@@ -4,8 +4,9 @@
 }
 
 .report-dropdown {
-	max-width: 300px;
-	width:100%;
+  max-width: 300px;
+  width: 100%;
+  height: 12%;
 	float:left;
 }
 
@@ -14,11 +15,43 @@
 	margin: 2%;
 }
 
+
+.report-parts-container {
+  width: 100%;
+}
+
+.report-parts-tabs {
+  width: 20%;
+  display: inline-block;
+  float: left;
+}
+
+.report-parts-update-button {
+  height: 100%;
+  float: left;
+  margin: 0.5% 0 0 5%;
+}
+
+.report-content-button {
+  float: left;
+  min-width: 40px !important;
+  margin: 0%;
+  padding: 0% 0% 0% 0.5%;
+}
+
 .report-container {
-	height: 569px;
+	height: 88%;
   border: 1px dotted gray;
   float: left;
   width: 100%;
+}
+
+.report-content {
+  height: 100%;
+  width: 98%;
+  margin: 8.5px 1%;
+  text-align: left;
+  overflow-y: scroll;
 }
 
 .report-dialog {
@@ -99,6 +132,10 @@
 }
 
 .DraftEditor-root {
+  float: left;
+  margin: 3% 0 0 0;
+  height: 85%;
+  width: 100%;
 }
 
 .submit-report-button {

@@ -32,6 +32,7 @@ var managerPageResources = null;
 var managerUserList 		= [];
 var managerNewUserList 	= [];
 var managerStudentList 	= [];
+var managerInactiveStudentList 	= [];
 var managerReportList 	= [];
 
 // Data for teacher
@@ -70,10 +71,12 @@ function createWindow() {
 	win.webContents.openDevTools();
 
 	// Open default browser when url is click
+	/*
 	win.webContents.on('will-navigate', function(e, url) {
 	  e.preventDefault();
 	  electron.shell.openExternal(url);
 	});
+	*/
 
 	win.setResizable(false);
 	showWindow();
@@ -91,7 +94,7 @@ function showWindow() {
 function createRequestWindow() {
 	requestWin = new BrowserWindow({width:800, height:600, show:false});
 	requestWin.loadURL(isDev ? `file://${path.join(__dirname, './Requests.html')}` : `file://${path.join(__dirname, '../build/Requests.html')}`);
-	//requestWin.webContents.openDevTools();
+	requestWin.webContents.openDevTools();
 	
 	requestWin.on('closed', () => requestWin = null);
 }
@@ -214,11 +217,15 @@ function readyManagerPageResources() {
 
 	// Store the current user list into file
 	const userFilePath = managerFolder + '/files/users';
-	store(managerReportList, userFilePath);
+	store(managerUserList, userFilePath);
 
-	// Store the current student list into file
+	// Store the current students list into file
 	const studentFilePath = managerFolder + '/files/students';
-	store(managerReportList, studentFilePath);
+	store(managerStudentList, studentFilePath);
+
+	// Store the current students list into file
+	const inactiveStudentFilePath = managerFolder + '/files/inactiveStudents';
+	store(managerInactiveStudentList, inactiveStudentFilePath);
 
 	// Store the current report list into file
 	const reportFilePath = managerFolder + '/files/reports';
@@ -294,7 +301,7 @@ function readyTeacherPageResources() {
 	teacherStudentList.forEach( (student) => {
 
 		// Check each student have their own folder
-		var tStudentFolder = '/students/' + student.lastName + '_' + student.firstName + '_' + student.id;
+		var tStudentFolder = '/students/' + student.name + '_' + student.id;
 		jetpack.dir(teacherFolderAbsolute + tStudentFolder);
 		
 		// Check for student images
@@ -331,7 +338,6 @@ ipcMain.on('getLoginRequest', (event, arg) => {
 		if(online)
 			requestWin.webContents.send('getLoginRequest', arg);
 		else {
-			//requestWin.webContents.send('getLoginRequest', arg);
 			win.webContents.send('offlineError', "There is no Internet connection");
 		}
 	});
@@ -471,8 +477,11 @@ ipcMain.on('deleteImagesSuccess', (event, pImageId) => {
 });
 
 ipcMain.on('putUserInfoRequest', (event, pEmail, pPhoneNum) => {
-	console.log(pEmail);
 	requestWin.webContents.send('putUserInfoRequest', pEmail, pPhoneNum);
+});
+
+ipcMain.on('putReportRequest', (event, report, reportId, reportPart) => {
+	requestWin.webContents.send('putReportRequest', report, reportId, reportPart);
 });
 
 // *******************
@@ -506,6 +515,7 @@ ipcMain.on('getManagerResourcesSuccess', (event, pManagerResources) => {
 	managerNewUserList 	= pManagerResources.newUsers;
 	managerUserList 		= pManagerResources.users;
 	managerStudentList 	= pManagerResources.students;
+	managerInactiveStudentList = pManagerResources.inactiveStudents;
 	managerReportList 	= pManagerResources.reports;
 	readyManagerPageResources();
 });
@@ -598,6 +608,7 @@ ipcMain.on('appSelectContent', (event, arg) => {
 													"managerUserList"		: managerUserList,
 													"managerNewUserList": managerNewUserList,
 													"managerStudentList": managerStudentList,
+													"managerInactiveStudentList": managerInactiveStudentList,
 													"managerReportList"	: managerReportList,
 												};
 												

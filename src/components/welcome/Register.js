@@ -14,7 +14,6 @@ class Register extends Component {
 			email 			: '',
 			password 		: '',
 			confirmPassword : '',
-			popUp	: {},
 		};
 		this.handleSetGoogleUser 	= this.handleSetGoogleUser.bind(this);
 		this.handleFirstNameChange 	= this.handleFirstNameChange.bind(this);

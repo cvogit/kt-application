@@ -9,7 +9,7 @@ import NewEmployee 			from './Employee/NewEmployee';
 
 import defaultAvatar from '../../../images/default_avatar.png';
 
-class ManageUsers extends Component {
+class ManageEmployees extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -111,4 +111,4 @@ class ManageUsers extends Component {
 }
 
 
-export default ManageUsers;
+export default ManageEmployees;

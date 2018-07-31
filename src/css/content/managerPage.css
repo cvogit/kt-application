@@ -1,3 +1,6 @@
+/*
+	ManagerPage.js
+*/
 .manager-page-container {
 	height: 100%;
 	width: auto;
@@ -12,6 +15,10 @@
 .manager-page-navigation-content {
 	height: 5.2%;
 }
+
+/*
+	ManageEmployees.js
+*/
 
 .manage-user-container {
 	height: 85.5%;
@@ -60,11 +67,6 @@
 	height: 650px;
 }
 
-.report-dropdown {
-	max-width: 300px;
-	width: 100%;
-}
-
 .dropdown-container {
 	display: flex;
 }
@@ -81,19 +83,6 @@
 .dropdown-content > small {
 	float: right;
 	margin: 3px 10px 0 0;
-}
-
-.report-container {
-	height: 569px;
-	border: 1px dotted gray;
-}
-
-.report-content {
-	height: 600px;
-	width: 98%;
-	margin: 8.5px 1%;
-	text-align: left;
-	overflow-y: scroll;
 }
 
 .employee-students {
@@ -154,4 +143,33 @@
 	border-bottom: 1px dotted gray;
 	border-left: 1px dotted gray;
 	border-right: 1px dotted gray;
+}
+
+/*
+	ManageStudent.js
+*/
+
+.manage-student-container {
+	height: 85.5%;
+}
+
+.manage-student-content {
+	height: 89.5%;
+	margin: 5% 4%;
+}
+
+.student-list {
+	border-right: 1px dotted gray;
+	float: left;
+	height: 700px;
+	width: 	15%;
+	overflow: scroll;
+}
+
+.student-wrapper > span > span > span > div > img {
+	max-width: 55px;
+	max-height: 55px;
+	width: auto;
+	height: auto;
+	left: -8px;
 }

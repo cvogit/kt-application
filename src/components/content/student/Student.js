@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import Tab 	from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
-import Reports from './Reports';
+import Reports from './ReportList';
 
 import '../../../css/student.css';
-
 
 class Student extends Component {
 	constructor(props) {
@@ -42,8 +41,8 @@ class Student extends Component {
 			<div className="student-container">
 				<Tabs index={this.state.studentIndex} onChange={this.handleFixedTabChange} fixed>
           <Tab label='Reports'></Tab>
-          <Tab label='Images'></Tab>
           <Tab label='Info'></Tab>
+          <Tab label='Images'></Tab>
         </Tabs>
         {studentContent}
 			</div>

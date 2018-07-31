@@ -1,5 +1,5 @@
 .student-container {
-	margin: 5%;
-	border: 1px dotted gray;
-	height: 85%;
+	height: 100%;
+	width: 85%;
+	float: right;
 }

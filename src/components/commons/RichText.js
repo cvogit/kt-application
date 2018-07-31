@@ -4,7 +4,7 @@ import {Editor, EditorState, RichUtils} from 'draft-js';
 
 import '../../css/reports.css';
 
-class RichText extends React.Component {
+class RichText extends Component {
   constructor(props) {
     super(props);
     this.state = {editorState: EditorState.createEmpty()};
