@@ -1,6 +1,6 @@
-.report {
+.report-list-container {
 	margin: 0 5%;
-	height:95%;
+	height: 94.3%;
 }
 
 .report-dropdown {
@@ -14,7 +14,6 @@
 	float: left;
 	margin: 2%;
 }
-
 
 .report-parts-container {
   width: 100%;

@@ -6,7 +6,7 @@ import Dropdown from 'react-toolbox/lib/dropdown/Dropdown';
 
 import {Editor, EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
 
-import Report from './Report';
+import Report 			from './Report';
 import RichText from '../../commons/RichText';
 
 import '../../../css/reports.css';
@@ -127,7 +127,7 @@ class ReportList extends Component {
 		}
 
 		return (
-			<div className="report" >
+			<div className="report-list-container" >
 				<Dialog className="report-dialog" active={this.state.addReportDialog} type="large" onOverlayClick={this.handleReportExit}>
 			    <RichText editorState={this.state.editorState} stateChange={this.handleEditorStateChange}/>
 			    <Button className="submit-report-button" icon='add' label='Submit' onClick={this.handleAddReportRequest} raised primary />

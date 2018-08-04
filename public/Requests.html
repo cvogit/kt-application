@@ -256,10 +256,9 @@
 	});
 
 	// Add a student
-	ipcRenderer.on('addStudentRequest', (event, firstName, lastName, birthday) => {
+	ipcRenderer.on('addStudentRequest', (event, studentName, birthday) => {
 		axios.post(baseUrl+'/students', {
-			firstName: 				firstName,
-			lastName: 				lastName,
+			name: 			studentName,
 			birthday: 				birthday
 		})
 		.then(function (response) {

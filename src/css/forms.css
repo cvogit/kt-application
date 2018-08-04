@@ -1,0 +1,55 @@
+.student-forms-container {
+	height: 94.3%;
+}
+
+.forms-tabs {
+	width: 40vw;
+}
+
+.form {
+	border-right: 1px dotted gray;
+	border-left: 1px dotted gray;
+	border-bottom: 1px dotted gray;
+	padding: 5% 0%;
+	max-height: 93%;
+	overflow-y: scroll;
+	min-width: 45vw;
+	width: 70%;
+	margin: auto;
+}
+
+.form-name {
+	background-color: #5b9acf;
+	color: white;
+	font-size: 3vh;
+	margin: 0 0 5vh 0;
+}
+
+.form-item {
+	display: table;
+	text-align: left;
+	margin: 20px 40px;
+}
+
+.form-question {
+	font-size: 2vh;
+	font-weight: bold;
+}
+
+.form-icon-question {
+	float: left;
+	padding: 0.1vw 2vw;
+}
+
+.form-answer {
+	color: #4c4c4c;
+	float: left;
+	font-size: 1.5vh;
+	font-weight: lighter;
+	margin: 10px 0 0 20px;
+}
+
+.form-icon {
+	float: left;
+	line-height: 110%;
+}

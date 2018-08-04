@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import Tab 	from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
-import Reports from './ReportList';
+import ReportList from './ReportList';
+import StudentForms 	from './StudentForms';
 
 import '../../../css/student.css';
 
@@ -29,9 +30,9 @@ class Student extends Component {
 
 		if(this.props.student !== null) {
 			if(studentIndex === 0) {
-				studentContent = <Reports reports={this.props.student.reports} studentId={this.props.student.id} />
+				studentContent = <ReportList reports={this.props.student.reports} studentId={this.props.student.id} />
 			} else if(studentIndex === 1) {
-				studentContent = <div />
+				studentContent = <StudentForms forms={this.props.student.forms} />
 			} else if(studentIndex === 2) {
 				studentContent = <div />
 			} 
@@ -39,9 +40,9 @@ class Student extends Component {
 
 		return (
 			<div className="student-container">
-				<Tabs index={this.state.studentIndex} onChange={this.handleFixedTabChange} fixed>
+				<Tabs className="student-tabs" index={this.state.studentIndex} onChange={this.handleFixedTabChange} fixed>
           <Tab label='Reports'></Tab>
-          <Tab label='Info'></Tab>
+          <Tab label='Forms'></Tab>
           <Tab label='Images'></Tab>
         </Tabs>
         {studentContent}

@@ -23,8 +23,7 @@ class TeacherContentStudent extends Component {
 			studentIndex: 0,
 			folder: null,
 			addStudentDialog: false,
-			firstName: '',
-			lastName: '',
+			studentName: '',
 			DoB: '',
 		};
 
@@ -47,7 +46,7 @@ class TeacherContentStudent extends Component {
   };
 
 	handleAddStudentRequest() {
-		ipcRenderer.send('addStudentRequest', this.state.firstName, this.state.lastName, this.state.DoB);
+		ipcRenderer.send('addStudentRequest', this.state.studentName, this.state.DoB);
 		this.setState({
     	addStudentDialog: false,
     });
@@ -85,14 +84,14 @@ class TeacherContentStudent extends Component {
      	renderStudentList = studentList.map( (student, index) => {
      		var avatarPath = defaultAvatar;
      		if(student.avatarId !== 0) {
-     			avatarPath = teacherFolder + '/students/' + student.lastName + '_' + student.firstName + '_' + student.id +  '/images/image_' + student.avatarId;
+     			avatarPath = teacherFolder + '/students/' + student.name + student.id +  '/images/image_' + student.avatarId;
      		}
 
 				return <ListItem 	className="user-wrapper"
 													label={student.id}
 													key={student.id}
 													avatar={avatarPath}
-								          caption={student.lastName + ' ' + student.firstName}
+								          caption={student.name}
 								          onClick={() => this.renderStudentContent(index)} />
 			});		
 		}
@@ -104,8 +103,7 @@ class TeacherContentStudent extends Component {
 		return (
 			<div className="teacher-page-main">
 				<Dialog className="teacher-page-dialog" active={this.state.addStudentDialog} type="large" onOverlayClick={this.handleDialogExit}>
-					<Input type='text' label='Last Name' name='lastName' value={this.state.lastName} onChange={this.handleAddStudentChange.bind(this, 'lastName')} maxLength={32} />
-					<Input type='text' label='First Name' name='firstName' value={this.state.firstName} onChange={this.handleAddStudentChange.bind(this, 'firstName')} maxLength={32} />
+					<Input type='text' label='Name' name='student name' value={this.state.studentName} onChange={this.handleAddStudentChange.bind(this, 'studentName')} maxLength={32} />
 					<Input type='date' label='DoB' name='DoB' value={this.state.DoB} onChange={this.handleAddStudentChange.bind(this, 'DoB')} maxLength={32} />
 
 			    <Button icon='add' label='Submit' onClick={this.handleAddStudentRequest} raised primary />

@@ -378,8 +378,8 @@ ipcMain.on('addEmployeeRequest', (event, pUserId) => {
 });
 
 // Add a new student
-ipcMain.on('addStudentRequest', (event, firstName, lastName, DoB) => {
-	requestWin.webContents.send('addStudentRequest', firstName, lastName, DoB);
+ipcMain.on('addStudentRequest', (event, studentName, DoB) => {
+	requestWin.webContents.send('addStudentRequest', studentName, DoB);
 });
 
 // Add a new report

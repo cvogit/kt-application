@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Button from 'react-toolbox/lib/button/Button';
+import Dialog from 'react-toolbox/lib/dialog/Dialog';
+import Input  from 'react-toolbox/lib/input/Input';
 import List from 'react-toolbox/lib/list/List';
 import ListItem from 'react-toolbox/lib/list/ListItem';
 import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
@@ -7,16 +10,42 @@ import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
 import Student from '../student/Student.js'
 import defaultAvatar from '../../../images/default_avatar.png';
 
+const electron = window.require('electron');
+const ipcRenderer  = electron.ipcRenderer;
+
 class ManageStudents extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			addStudentDialog: false,
 			listClicked: 	null,
 			studentIndex: null,
+			studentName: '',
+			DoB: '',
 		};
 
+		this.handleAddStudentChange 	= this.handleAddStudentChange.bind(this);
+		this.handleAddStudentRequest 	= this.handleAddStudentRequest.bind(this);
+		this.handleOpenAddStudentDialog 	= this.handleOpenAddStudentDialog.bind(this);
 		this.renderInactiveStudentContent = this.renderInactiveStudentContent.bind(this);
 		this.renderStudentContent 				= this.renderStudentContent.bind(this);
+	}
+
+	handleAddStudentChange = (name, value) => {
+    this.setState({...this.state, [name]: value});
+  };
+
+	handleAddStudentRequest() {
+		ipcRenderer.send('addStudentRequest', this.state.studentName, this.state.DoB);
+		this.setState({
+    	addStudentDialog: false,
+    });
+	}
+
+	handleOpenAddStudentDialog() {
+    this.setState({
+    	addStudentDialog: true,
+    });
 	}
 
 	renderInactiveStudentContent(studentIndex) {
@@ -91,8 +120,15 @@ class ManageStudents extends Component {
 
 		return (
 			<div className="manage-student-container">
+				<Dialog className="add-student-dialog" active={this.state.addStudentDialog} type="large" onOverlayClick={this.handleDialogExit}>
+					<Input type='text' label='Name' name='student name' value={this.state.studentName} onChange={this.handleAddStudentChange.bind(this, 'studentName')} maxLength={32} />
+					<Input type='date' label='DoB' name='DoB' value={this.state.DoB} onChange={this.handleAddStudentChange.bind(this, 'DoB')} maxLength={32} />
+
+			    <Button icon='add' label='Submit' onClick={this.handleAddStudentRequest} raised primary />
+      	</Dialog>
 				<div className="manage-student-content">
 					<List selectable ripple className="student-list">
+			    	<Button icon='add' label='Add student' onClick={this.handleOpenAddStudentDialog} accent primary />
 		        <ListSubHeader caption='Current' />
 		        {renderStudentList}
 		        <ListSubHeader caption='Inactive' />

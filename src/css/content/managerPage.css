@@ -150,18 +150,18 @@
 */
 
 .manage-student-container {
-	height: 85.5%;
+	height: 92.5%;
 }
 
 .manage-student-content {
-	height: 89.5%;
-	margin: 5% 4%;
+	height: 98%;
+	margin: 1% 4%;
 }
 
 .student-list {
 	border-right: 1px dotted gray;
 	float: left;
-	height: 700px;
+	height: 100%;
 	width: 	15%;
 	overflow: scroll;
 }
