@@ -296,7 +296,7 @@
 		});
 	});
 
-	// Change user info
+	// Update user info
 	ipcRenderer.on('putUserInfoRequest', (event, email, phoneNum) => {
 		console.log(baseUrl+'/users/'+user.id)
 		axios.put(baseUrl+'/users/'+user.id, {
@@ -311,4 +311,221 @@
 		});
 	});
 
+	// Update basic form 
+	ipcRenderer.on('updateBasicFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6, pQuestion_7, pQuestion_8, pQuestion_9) => {
+		axios.put(baseUrl+'/forms/basic/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6,
+			question_7: 	pQuestion_7,
+			question_8: 	pQuestion_8,
+			question_9: 	pQuestion_9
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update birth form 
+	ipcRenderer.on('updateBirthFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4) => {
+		axios.put(baseUrl+'/forms/birth/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update education form 
+	ipcRenderer.on('updateEducationFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6) => {
+		axios.put(baseUrl+'/forms/education/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update family form 
+	ipcRenderer.on('updateFamilyFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6, pQuestion_7, pQuestion_8, pQuestion_9, pQuestion_10, pQuestion_11, pQuestion_12) => {
+		axios.put(baseUrl+'/forms/family/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6,
+			question_7: 	pQuestion_7,
+			question_8: 	pQuestion_8,
+			question_9: 	pQuestion_9,
+			question_10: 	pQuestion_10,
+			question_11: 	pQuestion_11,
+			question_12: 	pQuestion_12
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update illness form 
+	ipcRenderer.on('updateIllnessFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6, pQuestion_7, pQuestion_8, pQuestion_9, pQuestion_10, pQuestion_11, pQuestion_12, pQuestion_13, pQuestion_14, pQuestion_15, pQuestion_16, pQuestion_17, pQuestion_18, pQuestion_19, pQuestion_20, pQuestion_21, pQuestion_22, pQuestion_23, pQuestion_24, pQuestion_25, pQuestion_26, pQuestion_27, pQuestion_28, pQuestion_29, pQuestion_30, pQuestion_31) => {
+		axios.put(baseUrl+'/forms/illness/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6,
+			question_7: 	pQuestion_7,
+			question_8: 	pQuestion_8,
+			question_9: 	pQuestion_9,
+			question_10: 	pQuestion_10,
+			question_11: 	pQuestion_11,
+			question_12: 	pQuestion_12,
+			question_13: 	pQuestion_13,
+			question_14: 	pQuestion_14,
+			question_15: 	pQuestion_15,
+			question_16: 	pQuestion_16,
+			question_17: 	pQuestion_17,
+			question_18: 	pQuestion_18,
+			question_19: 	pQuestion_19,
+			question_20: 	pQuestion_20,
+			question_21: 	pQuestion_21,
+			question_22: 	pQuestion_22,
+			question_23: 	pQuestion_23,
+			question_24: 	pQuestion_24,
+			question_25: 	pQuestion_25,
+			question_26: 	pQuestion_26,
+			question_27: 	pQuestion_27,
+			question_28: 	pQuestion_28,
+			question_29: 	pQuestion_29,
+			question_30: 	pQuestion_30,
+			question_31: 	pQuestion_31
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update infancy form 
+	ipcRenderer.on('updateInfancyFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6, pQuestion_7) => {
+		axios.put(baseUrl+'/forms/infancy/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6,
+			question_7: 	pQuestion_7
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update pregnancy form 
+	ipcRenderer.on('updatePregnancyFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6, pQuestion_7, pQuestion_8, pQuestion_9, pQuestion_10, pQuestion_11, pQuestion_12, pQuestion_13, pQuestion_14, pQuestion_15) => {
+		axios.put(baseUrl+'/forms/pregnancy/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6,
+			question_7: 	pQuestion_7,
+			question_8: 	pQuestion_8,
+			question_9: 	pQuestion_9,
+			question_10: 	pQuestion_10,
+			question_11: 	pQuestion_11,
+			question_12: 	pQuestion_12,
+			question_13: 	pQuestion_13,
+			question_14: 	pQuestion_14,
+			question_15: 	pQuestion_15
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update present form 
+	ipcRenderer.on('updatePresentFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4) => {
+		axios.put(baseUrl+'/forms/present/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
+
+	// Update toddler form 
+	ipcRenderer.on('updateToddlerFormRequest', (event, formId, pQuestion_1, pQuestion_2, pQuestion_3, pQuestion_4, pQuestion_5, pQuestion_6, pQuestion_7, pQuestion_8, pQuestion_9, pQuestion_10, pQuestion_11, pQuestion_12, pQuestion_13, pQuestion_14, pQuestion_15, pQuestion_16, pQuestion_17, pQuestion_18, pQuestion_19, pQuestion_20, pQuestion_21, pQuestion_22) => {
+		axios.put(baseUrl+'/forms/toddler/'+formId, {
+			question_1: 	pQuestion_1,
+			question_2: 	pQuestion_2,
+			question_3: 	pQuestion_3,
+			question_4: 	pQuestion_4,
+			question_5: 	pQuestion_5,
+			question_6: 	pQuestion_6,
+			question_7: 	pQuestion_7,
+			question_8: 	pQuestion_8,
+			question_9: 	pQuestion_9,
+			question_10: 	pQuestion_10,
+			question_11: 	pQuestion_11,
+			question_12: 	pQuestion_12,
+			question_13: 	pQuestion_13,
+			question_14: 	pQuestion_14,
+			question_15: 	pQuestion_15,
+			question_16: 	pQuestion_16,
+			question_17: 	pQuestion_17,
+			question_18: 	pQuestion_18,
+			question_19: 	pQuestion_19,
+			question_20: 	pQuestion_20,
+			question_21: 	pQuestion_21,
+			question_22: 	pQuestion_22
+		})
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The form is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
+		});
+	});
 </script>

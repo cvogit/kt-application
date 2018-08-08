@@ -32,26 +32,28 @@ class StudentForms extends Component {
 
 	RenderStudentForm = () => {
 		var form = null;
-		const index = this.state.formIndex;
+		const index 	= this.state.formIndex;
+		const student = this.props.student;
+		const forms  	= this.props.student.forms;
 
 		if(index === 0) {
-			form = <BasicForm form={this.props.forms.basicForm} />;
+			form = <BasicForm form={forms.basicForm} formId={student.basicFormId} />;
 		} else if(index === 1) {
-			form = <PregnancyForm form={this.props.forms.pregnancyForm} />;
+			form = <PregnancyForm form={forms.pregnancyForm} formId={student.pregnancyFormId} />;
 		} else if(index === 2) {
-			form = <BirthForm form={this.props.forms.birthForm} />;
+			form = <BirthForm form={forms.birthForm} formId={student.birthFormId} />;
 		} else if(index === 3) {
-			form = <InfancyForm form={this.props.forms.infancyForm} />;
+			form = <InfancyForm form={forms.infancyForm} formId={student.infancyFormId} />;
 		} else if(index === 4) {
-			form = <ToddlerForm form={this.props.forms.toddlerForm} />;
+			form = <ToddlerForm form={forms.toddlerForm} formId={student.toddlerFormId} />;
 		} else if(index === 5) {
-			form = <FamilyForm form={this.props.forms.familyForm} />;
+			form = <FamilyForm form={forms.familyForm} formId={student.familyFormId} />;
 		} else if(index === 6) {
-			form = <IllnessForm form={this.props.forms.illnessForm} />;
+			form = <IllnessForm form={forms.illnessForm} formId={student.illnessFormId} />;
 		} else if(index === 7) {
-			form = <EducationForm form={this.props.forms.educationForm} />;
+			form = <EducationForm form={forms.educationForm} formId={student.educationFormId} />;
 		} else if(index === 8) {
-			form = <PresentForm form={this.props.forms.presentForm} />;
+			form = <PresentForm form={forms.presentForm} formId={student.presentFormId} />;
 		} 
 
 		return (

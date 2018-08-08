@@ -32,7 +32,7 @@ class Student extends Component {
 			if(studentIndex === 0) {
 				studentContent = <ReportList reports={this.props.student.reports} studentId={this.props.student.id} />
 			} else if(studentIndex === 1) {
-				studentContent = <StudentForms forms={this.props.student.forms} />
+				studentContent = <StudentForms student={this.props.student} />
 			} else if(studentIndex === 2) {
 				studentContent = <div />
 			} 

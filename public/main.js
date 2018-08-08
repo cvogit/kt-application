@@ -476,12 +476,59 @@ ipcMain.on('deleteImagesSuccess', (event, pImageId) => {
 	win.webContents.send('loadUserPictures', userImagesPath);
 });
 
+// Update user info request
 ipcMain.on('putUserInfoRequest', (event, pEmail, pPhoneNum) => {
 	requestWin.webContents.send('putUserInfoRequest', pEmail, pPhoneNum);
 });
 
+// Update a report request
 ipcMain.on('putReportRequest', (event, report, reportId, reportPart) => {
 	requestWin.webContents.send('putReportRequest', report, reportId, reportPart);
+});
+
+// Update a basic form request
+ipcMain.on('updateBasicFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9) => {
+	requestWin.webContents.send('updateBasicFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9);
+});
+
+// Update a birth form request
+ipcMain.on('updateBirthFormRequest', (event, formId, question_1, question_2, question_3, question_4) => {
+	requestWin.webContents.send('updateBirthFormRequest', formId, question_1, question_2, question_3, question_4);
+});
+
+// Update an education form request
+ipcMain.on('updateEducationFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6) => {
+	requestWin.webContents.send('updateEducationFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6);
+});
+
+// Update a family form request
+ipcMain.on('updateFamilyFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12) => {
+	requestWin.webContents.send('updateFamilyFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12);
+});
+
+// Update a illness form request
+ipcMain.on('updateIllnessFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12, question_13, question_14, question_15, question_16, question_17, question_18, question_19, question_20, question_21, question_22, question_23, question_24, question_25, question_26, question_27, question_28, question_29, question_30, question_31) => {
+	requestWin.webContents.send('updateIllnessFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12, question_13, question_14, question_15, question_16, question_17, question_18, question_19, question_20, question_21, question_22, question_23, question_24, question_25, question_26, question_27, question_28, question_29, question_30, question_31);
+});
+
+// Update a family form request
+ipcMain.on('updateInfancyFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7) => {
+	requestWin.webContents.send('updateInfancyFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7);
+});
+
+// Update a pregnancy form request
+ipcMain.on('updatePregnancyFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12, question_13, question_14, question_15) => {
+	requestWin.webContents.send('updatePregnancyFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12, question_13, question_14, question_15);
+});
+
+// Update a birth form request
+ipcMain.on('updatePresentFormRequest', (event, formId, question_1, question_2, question_3, question_4) => {
+	requestWin.webContents.send('updatePresentFormRequest', formId, question_1, question_2, question_3, question_4);
+});
+
+// Update a toddler form request
+ipcMain.on('updateToddlerFormRequest', (event, formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12, question_13, question_14, question_15, question_16, question_17, question_18, question_19, question_20, question_21, question_22) => {
+	requestWin.webContents.send('updateToddlerFormRequest', formId, question_1, question_2, question_3, question_4, question_5, question_6, question_7, question_8, question_9, question_10, question_11, question_12, question_13, question_14, question_15, question_16, question_17, question_18, question_19, question_20, question_21, question_22,);
 });
 
 // *******************

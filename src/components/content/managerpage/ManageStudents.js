@@ -26,6 +26,7 @@ class ManageStudents extends Component {
 
 		this.handleAddStudentChange 	= this.handleAddStudentChange.bind(this);
 		this.handleAddStudentRequest 	= this.handleAddStudentRequest.bind(this);
+		this.handleDialogExit 				= this.handleDialogExit.bind(this);
 		this.handleOpenAddStudentDialog 	= this.handleOpenAddStudentDialog.bind(this);
 		this.renderInactiveStudentContent = this.renderInactiveStudentContent.bind(this);
 		this.renderStudentContent 				= this.renderStudentContent.bind(this);
@@ -39,6 +40,12 @@ class ManageStudents extends Component {
 		ipcRenderer.send('addStudentRequest', this.state.studentName, this.state.DoB);
 		this.setState({
     	addStudentDialog: false,
+    });
+	}
+
+	handleDialogExit() {
+		this.setState({
+    	formEditDialog: false,
     });
 	}
 

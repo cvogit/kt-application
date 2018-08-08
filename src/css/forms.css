@@ -11,7 +11,7 @@
 	border-left: 1px dotted gray;
 	border-bottom: 1px dotted gray;
 	padding: 5% 0%;
-	max-height: 93%;
+	height: 93%;
 	overflow-y: scroll;
 	min-width: 45vw;
 	width: 70%;
@@ -23,6 +23,7 @@
 	color: white;
 	font-size: 3vh;
 	margin: 0 0 5vh 0;
+	text-indent: -9vw;
 }
 
 .form-item {
@@ -51,5 +52,14 @@
 
 .form-icon {
 	float: left;
-	line-height: 110%;
+}
+
+.form-update-button {
+	float: left;
+	top: -7%;
+	width: 9vw;
+}
+
+.form-update-dialog {
+	overflow-y: scroll;
 }
