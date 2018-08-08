@@ -45,17 +45,17 @@ class PregnancyForm extends Component {
 			question_2: form.question_2,
 			question_3: form.question_3,
 			question_4: form.question_4,
-			question_4: form.question_5,
-			question_4: form.question_6,
-			question_4: form.question_7,
-			question_1: form.question_8,
-			question_2: form.question_9,
-			question_3: form.question_10,
-			question_4: form.question_11,
-			question_4: form.question_12,
-			question_4: form.question_13,
-			question_4: form.question_14,
-			question_4: form.question_15
+			question_5: form.question_5,
+			question_6: form.question_6,
+			question_7: form.question_7,
+			question_8: form.question_8,
+			question_8: form.question_9,
+			question_10: form.question_10,
+			question_11: form.question_11,
+			question_12: form.question_12,
+			question_13: form.question_13,
+			question_14: form.question_14,
+			question_15: form.question_15
 		});
 
 	}
@@ -140,8 +140,8 @@ class PregnancyForm extends Component {
 				<FormItem question="Hemorrhage" type="boolean" respond={form.question_5} />
 				<FormItem question="Accidents" type="boolean" respond={form.question_6} />
 				<FormItem question="Mental Breakdown" type="boolean" respond={form.question_7} />
-				<FormItem question="Radiology Treatments" type="boolean" type="boolean" respond={form.question_8} />
-				<FormItem question="Radiology Accidents" type="boolean" type="boolean" respond={form.question_9} />
+				<FormItem question="Radiology Treatments" type="boolean" respond={form.question_8} />
+				<FormItem question="Radiology Accidents" type="boolean" respond={form.question_9} />
 				<FormItem question="Alcohol consumptions" type="boolean" respond={form.question_10} />
 				<FormItem question="Tobacco consumptions" type="boolean" respond={form.question_11} />
 				<FormItem question="Other " respond={form.question_12} />

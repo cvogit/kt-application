@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Button from 'react-toolbox/lib/button/Button';
-import Checkbox from 'react-toolbox/lib/checkbox/Checkbox';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Input  from 'react-toolbox/lib/input/Input';
 
@@ -37,9 +36,9 @@ class InfancyForm extends Component {
 			question_2: form.question_2,
 			question_3: form.question_3,
 			question_4: form.question_4,
-			question_4: form.question_5,
-			question_4: form.question_6,
-			question_4: form.question_7
+			question_5: form.question_5,
+			question_6: form.question_6,
+			question_7: form.question_7
 		});
 
 	}

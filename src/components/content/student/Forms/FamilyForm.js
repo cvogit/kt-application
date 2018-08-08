@@ -110,10 +110,10 @@ class FamilyForm extends Component {
 					<Input type='date' label='Father Birthday' value={this.state.question_6} onChange={this.handleFormInputChange.bind(this, 'question_6')} />
 					<Input type='text' label='Father Occupation' value={this.state.question_7} onChange={this.handleFormInputChange.bind(this, 'question_7')} maxLength={64} />
 					<Input type='text' label='Father Nationality' value={this.state.question_8} onChange={this.handleFormInputChange.bind(this, 'question_8')} maxLength={64} />
-					<Input className="toolbox-textarea" type='text' multiline rows={8} type='text' label='Siblings (name, birthday, and gender)' value={this.state.question_9} onChange={this.handleFormInputChange.bind(this, 'question_9')} maxLength={65535} />
+					<Input className="toolbox-textarea" multiline rows={8} type='text' label='Siblings (name, birthday, and gender)' value={this.state.question_9} onChange={this.handleFormInputChange.bind(this, 'question_9')} maxLength={65535} />
 					<Checkbox label="Parents are together" checked={this.state.question_10} onChange={this.handleFormCheckBoxChange.bind(this, 'question_10')} />
 					<Checkbox label="History of family illness" checked={this.state.question_11} onChange={this.handleFormCheckBoxChange.bind(this, 'question_11')} />
-					<Input className="toolbox-textarea" type='text' multiline rows={8} type='text' label='Details of family illness' value={this.state.question_12} onChange={this.handleFormInputChange.bind(this, 'question_12')} maxLength={65535} />
+					<Input className="toolbox-textarea" multiline rows={8} type='text' label='Details of family illness' value={this.state.question_12} onChange={this.handleFormInputChange.bind(this, 'question_12')} maxLength={65535} />
 
 			   <Button icon='add' label='Submit' onClick={this.handleUpdateFormRequest} raised primary />
       	</Dialog>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Button from 'react-toolbox/lib/button/Button';
-import Checkbox from 'react-toolbox/lib/checkbox/Checkbox';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Input  from 'react-toolbox/lib/input/Input';
 

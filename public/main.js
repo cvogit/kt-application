@@ -26,6 +26,9 @@ var userAvatar 					= null;
 var userInfo 	 					= null;
 var userImagesPath 	 		= [];
 
+// Current content
+var currentContent = 'home';
+
 // Data for manager page
 var managerInfo = null;
 var managerPageResources = null;
@@ -643,13 +646,17 @@ ipcMain.on('appSignOut', (event) => {
 
 // From: Sidebar.js
 // To:   Content.js
-ipcMain.on('appSelectContent', (event, arg) => {
-	if (arg === "user")	{
+ipcMain.on('appSelectContent', (event, page) => {
+
+	// Set current content page
+	currentContent = page;
+	
+	if (page === "user")	{
 		userResources = { "avatar": userAvatar, 
 											"userInfo": userInfo};
 
-		win.webContents.send('appChangeContent', arg,	userResources);
-	} else if(arg === "manager")	{
+		win.webContents.send('appChangeContent', page,	userResources);
+	} else if(page === "manager")	{
 		managerResources = 	{ 
 													"managerFolder"			: managerFolderRelative,
 													"managerUserList"		: managerUserList,
@@ -659,8 +666,8 @@ ipcMain.on('appSelectContent', (event, arg) => {
 													"managerReportList"	: managerReportList,
 												};
 												
-		win.webContents.send('appChangeContent', arg,	managerResources);
-	} else if(arg === "teacher")	{
+		win.webContents.send('appChangeContent', page,	managerResources);
+	} else if(page === "teacher")	{
 		teacherResources = 	{ 
 													"teacherInfo"   		: teacherInfo,
 													"teacherFolder"			: teacherFolderRelative,
@@ -669,10 +676,10 @@ ipcMain.on('appSelectContent', (event, arg) => {
 													"teacherReportList"	: teacherReportList,
 												};
 
-		win.webContents.send('appChangeContent', arg,	teacherResources);
+		win.webContents.send('appChangeContent', page,	teacherResources);
 	}
 	else 
-		win.webContents.send('appChangeContent', arg);
+		win.webContents.send('appChangeContent', page);
 });
 
 // Set user google data
