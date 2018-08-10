@@ -23,11 +23,15 @@ class EmployeeContent extends Component {
 		return (
 			<div className="employee-content" >
 				<div className="left-content">
-					<h4>Name: {employeeName}</h4>
-					<h5>Id: 	{employeeId}</h5>
-				</div>
-				<div className="right-content">
-					<Button icon='add' label='Add Employee' onClick={this.handleAddEmployee} flat primary />
+					<div className="new-employee-container">
+						<Button className="add-employee-button" icon='add' label='Add' onClick={this.handleAddEmployee} raised primary />
+						<div className="new-employee-name">
+							Name: {employeeName}
+						</div>
+						<div className="new-employee-id">
+							Id: 	{employeeId}
+						</div>
+					</div>
 				</div>
       </div>
 			);

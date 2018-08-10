@@ -10,7 +10,6 @@
 
 	// Register
 	ipcRenderer.on('postRegisterRequest', (event, arg) => {
-		console.log(arg);
 		axios.post(baseUrl+'/register', {
 			firstName: 				arg.firstName,
 			lastName: 				arg.lastName,
@@ -285,7 +284,6 @@
 
 	// Update a report
 	ipcRenderer.on('putReportRequest', (event, report, reportId, reportPart) => {
-		console.log(baseUrl+'/reports/'+reportId+'/contents/'+reportPart);
 		axios.put(baseUrl+'/reports/'+reportId+'/contents/'+reportPart, {
 			content: 			report
 		})
@@ -299,7 +297,6 @@
 
 	// Update user info
 	ipcRenderer.on('putUserInfoRequest', (event, email, phoneNum) => {
-		console.log(baseUrl+'/users/'+user.id)
 		axios.put(baseUrl+'/users/'+user.id, {
 			email: 			email,
 			phoneNum: 	phoneNum,

@@ -131,6 +131,23 @@
 }
 
 /*
+	NewEmployee.js
+*/
+
+.add-employee-button {
+	float: left;
+	margin: 0 20px 0 0;
+}
+
+.new-employee-name {
+	text-align: left;
+}
+
+.new-employee-id {
+	text-align: left;
+}
+
+/*
 	EmployeeInfo.js
 */
 
