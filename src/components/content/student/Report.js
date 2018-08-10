@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import Button from 'react-toolbox/lib/button/Button';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
+import Input  from 'react-toolbox/lib/input/Input';
 import Tab 	from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
-import {Editor, EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
-import RichText from '../../commons/RichText';
+import ReportPart from './ReportPart';
 
 const electron = window.require('electron');
 const ipcRenderer  = electron.ipcRenderer;
@@ -16,29 +16,27 @@ class Report extends Component {
 		super(props);
 		this.state = {
 			reportPart: 0,
+			reportUpdateContent: '',
 			dialogActive: false,
-			tEditorState: EditorState.createEmpty(),
 		};
-		this.handleAddReportRequest 	= this.handleAddReportRequest.bind(this);
-		this.handleEditorStateChange 	= this.handleEditorStateChange.bind(this);
-		this.handleReportPartChange 		= this.handleReportPartChange.bind(this);
-		this.handleOpenUpdateReportDialog 	= this.handleOpenUpdateReportDialog.bind(this);
-		this.handleCloseUpdateReportDialog 	= this.handleCloseUpdateReportDialog.bind(this);
 
+		this.handleUpdateReportRequest 		= this.handleUpdateReportRequest.bind(this);
+		this.handleReportPartChange 			= this.handleReportPartChange.bind(this);
+		this.handleOpenUpdateReportDialog 	= this.handleOpenUpdateReportDialog.bind(this);
+		this.handleUpdateReportDialogExit 	= this.handleUpdateReportDialogExit.bind(this);
 	}
 
-	handleAddReportRequest() {
-		const rawDraftContentState = JSON.stringify( convertToRaw(this.state.tEditorState.getCurrentContent()) );
-		ipcRenderer.send('putReportRequest', rawDraftContentState, this.props.report.id, this.state.reportPart);
+	componentDidMount() {
 		this.setState({
-    	dialogActive: false,
+    	reportUpdateContent: this.props.report.content_1,
     });
 	}
 
-	handleEditorStateChange(editorState) {
+	handleUpdateReportRequest() {
+		ipcRenderer.send('putReportRequest', this.state.reportUpdateContent, this.props.report.id, this.state.reportPart + 1);
 		this.setState({
-			tEditorState: editorState,
-		});
+    	dialogActive: false,
+    });
 	}
 
 	handleReportPartChange(index) {
@@ -48,44 +46,57 @@ class Report extends Component {
 	}
 
 	handleOpenUpdateReportDialog() {
+		var currentContent = '';
+
+		if(this.state.reportPart === 0) {
+    	currentContent = this.props.report.content_1;
+    } else if (this.state.reportPart === 1) {
+    	currentContent = this.props.report.content_2;
+    } else if (this.state.reportPart === 2) {
+    	currentContent = this.props.report.content_3;
+    }
 		this.setState({
+			reportUpdateContent: currentContent,
     	dialogActive: true,
     });
 	}
 
-	handleCloseUpdateReportDialog() {
+	handleUpdateReportDialogExit() {
     this.setState({
     	dialogActive: false,
     });
 	}
 
+	handleUpdateReportContentChange = (name, value) => {
+    this.setState({...this.state, [name]: value});
+  };
+
 	RenderReport = () => {
 		const report = this.props.report;
-		var ReportPart 	= "";
-		var editorState = EditorState.createEmpty();
-		var tEditorState = editorState;
+		var renderReport = null;
+		var dialogLabel = 'Report part ';
 
 		// Render the part of the report the user want to look at
+		if(this.state.reportPart === 0) {
+			renderReport = <ReportPart title="Part 1" content={report.content_1} />;
+			dialogLabel += '1';
+		}
+		else if(this.state.reportPart === 1) {
+			renderReport = <ReportPart title="Part 2" content={report.content_2} />;
+			dialogLabel += '2';
+		}
+		else if(this.state.reportPart === 2) {
+			renderReport = <ReportPart title="Part 3" content={report.content_3} />;
+			dialogLabel += '3';
+		}
 
-		if(this.state.reportPart === 0)
-			ReportPart = report.content_1;
-		else if(this.state.reportPart === 1)
-			ReportPart = report.content_2;	
-		else if(this.state.reportPart === 2)
-			ReportPart = report.content_3;
-	
-		if(ReportPart.length !== 0)
-			editorState = EditorState.createWithContent(convertFromRaw( JSON.parse(ReportPart)));
-		else
-			editorState = EditorState.createEmpty();
-
-		tEditorState = editorState;
 
 		return (
       <div className="report-content">
-      	<Dialog className="report-dialog" active={this.state.dialogActive} type="large" onOverlayClick={this.handleCloseUpdateReportDialog}>
-			    <RichText editorState={editorState} stateChange={this.handleEditorStateChange}/>
-			    <Button className="submit-report-button" icon='add' label='Submit' onClick={this.handleAddReportRequest} raised primary />
+      	<Dialog className="report-part-dialog" active={this.state.dialogActive} onOverlayClick={this.handleUpdateReportDialogExit}>
+					<Input className="toolbox-textarea-report-part" type='text' multiline rows={10} label={dialogLabel} value={this.state.reportUpdateContent} onChange={this.handleUpdateReportContentChange.bind(this, 'reportUpdateContent')} maxLength={65535} />
+			    
+			    <Button className="submit-report-button" icon='add' label='Submit' onClick={this.handleUpdateReportRequest} raised primary />
       	</Dialog>
       	<div className="report-parts-container">
 					<Tabs className="report-parts-tabs" index={this.state.reportPart} onChange={this.handleReportPartChange} fixed>
@@ -93,9 +104,9 @@ class Report extends Component {
 						<Tab icon='filter_2'></Tab>
 						<Tab icon='filter_3'></Tab>
 					</Tabs>
-        	<div><Button className="report-parts-update-button" icon='update' label='Update Report' onClick={this.handleOpenUpdateReportDialog} raised primary /></div>
+        	<Button className="report-parts-update-button" icon='update' label='Update Report' onClick={this.handleOpenUpdateReportDialog} raised primary />
 				</div>
-				<Editor editorState={editorState} />
+				{renderReport}
       </div>
 			);
 	}

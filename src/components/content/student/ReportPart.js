@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 
-import {Editor, EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
-
 class ReportPart extends Component { 
 	constructor(props) {
 		super(props);
 	}
 
-	RenderReport = () => {
-		console.log("hey");
-		
+	RenderReportPart = () => {
+
+		const title 	= this.props.title;
+		const content =	this.props.content;
 
 		return (
-      <div>
+      <div className="report-part-container">
+      	<div className="report-part-title">
+      		{title}
+      	</div>
+				<div className="report-part-content">
+      		{content}
+      	</div>
       </div>
 			);
 	}

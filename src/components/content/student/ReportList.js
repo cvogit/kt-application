@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import Button from 'react-toolbox/lib/button/Button';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown';
-
-import {Editor, EditorState, RichUtils, convertFromRaw, convertToRaw} from 'draft-js';
+import Input  from 'react-toolbox/lib/input/Input';
 
 import Report 			from './Report';
-import RichText from '../../commons/RichText';
 
 import '../../../css/reports.css';
 
@@ -22,10 +20,10 @@ class ReportList extends Component {
 			reportPart: 0,
 			reportSelected: null,
 			addReportDialog: false,
-			displayState: EditorState.createEmpty(),
+			addReportContent: '',
 		};
+
 		this.handleAddReportRequest 		= this.handleAddReportRequest.bind(this);
-		this.handleEditorStateChange 		= this.handleEditorStateChange.bind(this);
 		this.handleReportPartChange 		= this.handleReportPartChange.bind(this);
 		this.handleOpenAddReportDialog 	= this.handleOpenAddReportDialog.bind(this);
 		this.handleReportExit 	= this.handleReportExit.bind(this);
@@ -54,17 +52,10 @@ class ReportList extends Component {
 	}
 
 	handleAddReportRequest() {
-		const rawDraftContentState = JSON.stringify( convertToRaw(this.state.editorState.getCurrentContent()) );
-		ipcRenderer.send('addReportRequest', rawDraftContentState, this.props.studentId);
+		ipcRenderer.send('addReportRequest', this.state.addReportContent, this.props.studentId);
 		this.setState({
     	addReportDialog: false,
     });
-	}
-
-	handleEditorStateChange(editorState) {
-		this.setState({
-			editorState: editorState,
-		});
 	}
 
 	handleReportExit(event) {
@@ -88,7 +79,7 @@ class ReportList extends Component {
 		});
 	}
 
-	handleAddReportChange = (name, value) => {
+	handleAddReportContentChange = (name, value) => {
     this.setState({...this.state, [name]: value});
   };
 
@@ -128,8 +119,9 @@ class ReportList extends Component {
 
 		return (
 			<div className="report-list-container" >
-				<Dialog className="report-dialog" active={this.state.addReportDialog} type="large" onOverlayClick={this.handleReportExit}>
-			    <RichText editorState={this.state.editorState} stateChange={this.handleEditorStateChange}/>
+				<Dialog className="report-part-dialog" active={this.state.addReportDialog} onOverlayClick={this.handleReportExit}>
+					<Input className="toolbox-textarea-report-part" type='text' multiline rows={10} label='Report part 1' value={this.state.addReportContent} onChange={this.handleAddReportContentChange.bind(this, 'addReportContent')} maxLength={65535} />
+			    
 			    <Button className="submit-report-button" icon='add' label='Submit' onClick={this.handleAddReportRequest} raised primary />
       	</Dialog>
 				<Dropdown

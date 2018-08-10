@@ -5,9 +5,9 @@ import FontIcon from 'react-toolbox/lib/font_icon/FontIcon';
 class FormItem extends Component { 
 
 	RenderFormItem = () => {
-		console.log(this.props);
 
 		var content = null;
+		
 		if( this.props.type === "boolean" ) {
 			if( this.props.respond ) {
 				content = <div>

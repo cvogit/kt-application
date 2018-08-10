@@ -44,8 +44,6 @@ class Content extends Component {
 		this.setState({
 			content: page,
 		});
-
-		console.log(resources);
 	}
 
 	RenderContent = () => {

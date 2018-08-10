@@ -270,10 +270,10 @@
 	});
 
 	// Add a report
-	ipcRenderer.on('addReportRequest', (event, report, studentId) => {
+	ipcRenderer.on('addReportRequest', (event, content, studentId) => {
 		axios.post(baseUrl+'/reports', {
 			studentId: 		studentId,
-			report: 			report,
+			content: 			content,
 		})
 		.then(function (response) {
 			ipcRenderer.send('snackbarMessage', "(OK) Report is submitted.");
@@ -285,6 +285,7 @@
 
 	// Update a report
 	ipcRenderer.on('putReportRequest', (event, report, reportId, reportPart) => {
+		console.log(baseUrl+'/reports/'+reportId+'/contents/'+reportPart);
 		axios.put(baseUrl+'/reports/'+reportId+'/contents/'+reportPart, {
 			content: 			report
 		})
