@@ -76,7 +76,8 @@
       "TABS",
       "TIME_PICKER",
       "TOOLTIP",
-      "SNACKBAR"
+      "SNACKBAR",
+      "SWITCH"
     ],
     "customProperties": {},
     "output": "assets/react-toolbox"

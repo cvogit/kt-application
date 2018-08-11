@@ -526,4 +526,50 @@
 			ipcRenderer.send('snackbarMessage', "(Error) Cannot update form.");
 		});
 	});
+
+	// Post user teacher role 
+	ipcRenderer.on('postUserRoleTeacher', (event, userId) => {
+		axios.post(baseUrl+'/users/'+userId+'/roles/teacher')
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The role is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update role.");
+		});
+	});
+
+	// Post user consultant role 
+	ipcRenderer.on('postUserRoleConsultant', (event, userId) => {
+		axios.post(baseUrl+'/users/'+userId+'/roles/consultant')
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The role is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update role.");
+		});
+	});
+
+	// Delete user teacher role 
+	ipcRenderer.on('deleteUserRoleTeacher', (event, userId) => {
+		axios.delete(baseUrl+'/users/'+userId+'/roles/teacher')
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The role is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update role.");
+		});
+	});
+
+	// Delete user teacher role 
+	ipcRenderer.on('deleteUserRoleConsultant', (event, userId) => {
+		axios.delete(baseUrl+'/users/'+userId+'/roles/consultant')
+		.then(function (response) {
+			ipcRenderer.send('snackbarMessage', "(OK) The role is updated.");
+		})
+		.catch(function (error) {
+			ipcRenderer.send('snackbarMessage', "(Error) Cannot update role.");
+		});
+	});
+
+
 </script>

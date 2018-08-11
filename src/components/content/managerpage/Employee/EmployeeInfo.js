@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-import Tab from 'react-toolbox/lib/tabs/Tab';
 import Tabs from 'react-toolbox/lib/tabs/Tabs';
 
 class EmployeeInfo extends Component { 
@@ -10,10 +8,9 @@ class EmployeeInfo extends Component {
 	}
 
 	RenderEmployeeInfo = () => {
-		console.log(this.props.user);
 
 		return (
-			<div className="employee-info" >
+			<div className="employee-info-container" >
 				<div className="user-profile-container">
 					<div className="gray-banner-sm" />
 					<div className="user-profile-content">

@@ -21,18 +21,18 @@
 */
 
 .manage-user-container {
-	height: 85.5%;
+	height: 92.5%;
 }
 
 .manage-user-content {
-	height: 85.5%;
-	margin: 5% 4%;
+	height: 98%;
+	margin: 1% 4%;
 }
 
 .user-list {
 	border-right: 1px dotted gray;
 	float: left;
-	height: 700px;
+	height: 100%;
 	width: 	15%;
 	overflow: scroll;
 }
@@ -151,7 +151,7 @@
 	EmployeeInfo.js
 */
 
-.employee-info {
+.employee-info-container {
 	height: 100%;
 	margin: 2% 5%;
 }
@@ -160,6 +160,16 @@
 	border-bottom: 1px dotted gray;
 	border-left: 1px dotted gray;
 	border-right: 1px dotted gray;
+}
+
+/*
+	EmployeeRoles.js
+*/
+
+.employee-roles-container {
+	text-align: left;
+	height: 100%;
+	padding: 50px 20px;
 }
 
 /*
