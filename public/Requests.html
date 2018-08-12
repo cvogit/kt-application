@@ -173,6 +173,17 @@
 		});
 	});
 
+	// Get consultant resource
+	ipcRenderer.on('getConsultantResources', (event) => {
+		axios.get(baseUrl+'/consultants/resources')
+		.then(function (response) {
+			ipcRenderer.send('getConsultantResourcesSuccess', response.data.result);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+	});
+
 	// Get another user image
 	ipcRenderer.on('getAnotherUserImageRequest', (event, userId, imageId, localPath) => {
 		axios.get(baseUrl+'/users/'+userId+'/images/'+imageId, {

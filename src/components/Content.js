@@ -60,6 +60,8 @@ class Content extends Component {
 			content = <ManagerPage resources={this.state.managerPageResources} />;
 		else if(stateContent === "teacher")
 			content = <TeacherPage role='teacher' resources={this.state.teacherPageResources} />;
+		else if(stateContent === "consultant")
+			content = <TeacherPage role='consultant' resources={this.state.teacherPageResources} />;
 
 		return (
 			<div className="content"> { content } </div>

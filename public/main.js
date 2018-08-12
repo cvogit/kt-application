@@ -442,12 +442,13 @@ ipcMain.on('userInfoSuccess', (event, user) => {
 		if (role === "user")
 			readyUserPageResources();
 		else if(role === "manager") {
-			// TODO get how many report already on local file and not load those again
 			requestWin.webContents.send('getManagerResources');
 		}
 		else if(role === "teacher") {
-			// TODO get how many report already on local file and not load those again
 			requestWin.webContents.send('getTeacherResources');
+		}
+		else if(role === "consultant") {
+			requestWin.webContents.send('getConsultantResources');
 		}
 	});
 
@@ -597,6 +598,17 @@ ipcMain.on('getTeacherResourcesSuccess', (event, pTeacherResources) => {
 	readyTeacherPageResources();
 });
 
+ipcMain.on('getConsultantResourcesSuccess', (event, pTeacherResources) => {
+	teacherReportList 	= pTeacherResources.reports;
+	teacherStudentList 	= pTeacherResources.students;
+	teacherManagerList  = pTeacherResources.managers;
+	teacherInfo = {};
+	teacherInfo['id'] 					= pTeacherResources.id;
+	teacherInfo['numStudents'] 	= pTeacherResources.numStudents;
+	teacherInfo['userId'] 			= pTeacherResources.userId;
+	readyTeacherPageResources();
+});
+
 ipcMain.on('getImageSuccess', (event, image, localPath) => {
 	// Write the file
 	store(image, localPath);
@@ -693,9 +705,17 @@ ipcMain.on('appSelectContent', (event, page) => {
 												};
 
 		win.webContents.send('appChangeContent', page,	teacherResources);
+	}	else if(page === "consultant")	{
+		teacherResources = 	{ 
+													"teacherInfo"   		: teacherInfo,
+													"teacherFolder"			: teacherFolderRelative,
+													"teacherManagerList": teacherManagerList,
+													"teacherStudentList": teacherStudentList,
+													"teacherReportList"	: teacherReportList,
+												};
+
+		win.webContents.send('appChangeContent', page,	teacherResources);
 	}
-	else 
-		win.webContents.send('appChangeContent', page);
 });
 
 // Set user google data
