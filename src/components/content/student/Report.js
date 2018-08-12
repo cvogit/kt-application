@@ -75,6 +75,7 @@ class Report extends Component {
 		const report = this.props.report;
 		var renderReport = null;
 		var dialogLabel = 'Report part ';
+		var reportPartUpdateButton = <Button className="report-parts-update-button" icon='update' label='Update Report' onClick={this.handleOpenUpdateReportDialog} raised primary />;
 
 		// Render the part of the report the user want to look at
 		if(this.state.reportPart === 0) {
@@ -90,6 +91,9 @@ class Report extends Component {
 			dialogLabel += '3';
 		}
 
+		if( this.props.role === 'teacher' && this.state.reportPart === 1) {
+			reportPartUpdateButton = <Button className="report-parts-update-button" icon='update' label='Update Report' onClick={this.handleOpenUpdateReportDialog} raised disabled />;
+		}
 
 		return (
       <div className="report-content">
@@ -104,7 +108,7 @@ class Report extends Component {
 						<Tab icon='filter_2'></Tab>
 						<Tab icon='filter_3'></Tab>
 					</Tabs>
-        	<Button className="report-parts-update-button" icon='update' label='Update Report' onClick={this.handleOpenUpdateReportDialog} raised primary />
+        	{reportPartUpdateButton}
 				</div>
 				{renderReport}
       </div>

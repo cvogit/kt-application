@@ -30,13 +30,14 @@ class TeacherPage extends Component {
 
 	RenderTeacherPage = () => {
 		const resources = this.props.resources;
+
 		const teacherFolder = resources.teacherFolder;
 		const managerList 	= resources.teacherManagerList;
 		const studentList 	= resources.teacherStudentList;
 
 		const teacherPageIndex = this.state.teacherPageIndex;
 
-		var renderTeacherContent = <TeacherContentStudent students={studentList} folder={teacherFolder} />;
+		var renderTeacherContent = <TeacherContentStudent role={this.props.role} students={studentList} folder={teacherFolder} />;
 		if(teacherPageIndex === 1)
 			renderTeacherContent = <TeacherContentManager managers={managerList} folder={teacherFolder} />;
 

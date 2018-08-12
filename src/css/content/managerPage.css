@@ -55,8 +55,6 @@
 
 .employee-content {
 	height: 700px;
-	width: 80%;
-	float: right;
 }
 
 .employee-tabs {
@@ -169,7 +167,7 @@
 .employee-roles-container {
 	text-align: left;
 	height: 100%;
-	padding: 50px 20px;
+	padding: 50px 50px;
 }
 
 /*
@@ -199,4 +197,30 @@
 	width: auto;
 	height: auto;
 	left: -8px;
+}
+
+.manager-page-left {
+	height: 100%; 
+	width: 15%;
+	float: left;
+	border-right: 1px dotted gray;
+}
+
+.manager-page-list {
+	float: left;
+	height: 60%;
+	overflow: scroll;
+}
+
+.manager-page-list-bottom {
+	float: left;
+	width: 90%;
+	margin: 0 5%;
+	border-top: 1px dotted gray;
+}
+
+.manager-page-right {
+	height: 100%; 
+	width: 85%;
+	float: left;
 }

@@ -82,7 +82,7 @@ class EmployeeRoles extends Component {
           label="Consultant"
           onChange={this.handleSwitchChange.bind(this, 'consultantRole')}
         />
-        <Button className="" icon='arrow_drop_up' label='Submit Roles' onClick={this.handleSubmitRoles} raised primary />
+        <Button className="button-bottom" icon='arrow_drop_up' label='Submit Roles' onClick={this.handleSubmitRoles} raised primary />
       </div>
 			);
 	}

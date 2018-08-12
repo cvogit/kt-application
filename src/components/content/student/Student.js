@@ -24,13 +24,13 @@ class Student extends Component {
 	}
 
 	RenderStudent = () => {
-		
+
 		var studentIndex = this.state.studentIndex;
 		var studentContent = null;
 
 		if(this.props.student !== null) {
 			if(studentIndex === 0) {
-				studentContent = <ReportList reports={this.props.student.reports} studentId={this.props.student.id} />
+				studentContent = <ReportList role={this.props.role} reports={this.props.student.reports} studentId={this.props.student.id} />
 			} else if(studentIndex === 1) {
 				studentContent = <StudentForms student={this.props.student} />
 			} else if(studentIndex === 2) {

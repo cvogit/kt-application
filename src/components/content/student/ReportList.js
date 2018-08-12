@@ -84,7 +84,7 @@ class ReportList extends Component {
   };
 
 	reportDropdown (report) {
-    const name = report.student[0].name;
+    const name = report.student.name;
     return (
       <div className="dropdown-container">
         <div className="dropdown-content">
@@ -112,7 +112,7 @@ class ReportList extends Component {
 
 	  // Render the part of the report the user want to look at
 		if(ReportSelected !== null && Reports[ReportSelected] !== null) {
-			ReportContent = <Report report={Reports[ReportSelected]} />
+			ReportContent = <Report role={this.props.role} report={Reports[ReportSelected]} />
 		} else {
 			ReportContent = <div className="report-content"></div>;
 		}

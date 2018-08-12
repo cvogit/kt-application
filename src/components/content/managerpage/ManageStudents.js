@@ -133,16 +133,20 @@ class ManageStudents extends Component {
 
 			    <Button icon='add' label='Submit' onClick={this.handleAddStudentRequest} raised primary />
       	</Dialog>
-				<div className="manage-student-content">
-					<List selectable ripple className="student-list">
-			    	<Button icon='add' label='Add student' onClick={this.handleOpenAddStudentDialog} accent primary />
-		        <ListSubHeader caption='Current' />
+      	<div className="manager-page-left">
+					<List selectable ripple className="manager-page-list">
+			    	<ListSubHeader caption='Current' />
 		        {renderStudentList}
 		        <ListSubHeader caption='Inactive' />
 		        {renderInactiveStudentList}
-	        </List>
-	        {renderStudentContent}
-	      </div>
+			    </List>
+			    <div className="manager-page-list-bottom">
+			    	<Button icon='add' label='Add student' onClick={this.handleOpenAddStudentDialog} accent primary />
+			    </div>
+				</div>
+				<div className="manager-page-right">
+					{renderStudentContent}
+				</div>
 			</div>
 			);
 	}

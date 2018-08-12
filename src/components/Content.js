@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 import HomePage 		from './content/HomePage';
+//import ConsultantPage 	from './content/ConsultantPage';
 import ManagerPage 	from './content/ManagerPage';
+import TeacherPage 	from './content/TeacherPage';
 import UserPage 		from './content/UserPage';
 
 import '../css/content.css';
@@ -57,7 +59,7 @@ class Content extends Component {
 		else if(stateContent === "manager")
 			content = <ManagerPage resources={this.state.managerPageResources} />;
 		else if(stateContent === "teacher")
-			content = null;//<TeacherPage resources={this.state.teacherPageResources} />;
+			content = <TeacherPage role='teacher' resources={this.state.teacherPageResources} />;
 
 		return (
 			<div className="content"> { content } </div>

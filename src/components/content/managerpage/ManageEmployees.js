@@ -90,14 +90,16 @@ class ManageEmployees extends Component {
 
 		return (
 			<div className="manage-user-container">
-				<div className="manage-user-content">
-					<List selectable ripple className="user-list">
-		        <ListSubHeader caption='Employees' />
+				<div className="manager-page-left">
+					<List selectable ripple className="manager-page-list">
+			    	<ListSubHeader caption='Employees' />
 		        {renderUserList}
 		        <ListSubHeader caption='New' />
 		        {renderNewUserList}
-	        </List>
-	        {renderUserContent}
+			    </List>
+				</div>
+				<div className="manager-page-right">
+					{renderUserContent}
 				</div>
 			</div>
 			);

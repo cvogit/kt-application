@@ -9,7 +9,6 @@ import ListSubHeader from 'react-toolbox/lib/list/ListSubHeader';
 
 import Student from '../student/Student';
 
-
 import defaultAvatar from '../../../images/default_avatar.png';
 
 const electron = window.require('electron');
@@ -97,7 +96,7 @@ class TeacherContentStudent extends Component {
 		}
 
 		if(studentList.length !== 0) {
-			renderStudentContent = <Student student={studentList[this.state.studentIndex]} />;
+			renderStudentContent = <Student role={this.props.role} student={studentList[this.state.studentIndex]} />;
 		}
 
 		return (
